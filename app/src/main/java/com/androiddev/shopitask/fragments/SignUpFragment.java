@@ -61,14 +61,42 @@ public class SignUpFragment extends Fragment {
                 String userName = editTextUserName.getText().toString();
                 String userEmail = editTextUserEmail.getText().toString();
                 String userPassword = editTextUserPassword.getText().toString();
-                SignUp(userName, userEmail,userPassword);
+
+                if(checkValidInput(userName,userEmail,userPassword)) {
+                  SignUp(userName, userEmail,userPassword);
+                }
+                else {
+                    // TODO FAIL
+                }
+
             }
         });
+    }
+  
+    private boolean checkValidInput(String name, String email, String password) {
+        if (checkName(name) && checkEmail(email) && checkPassword(password))
+            return true;
+        return false;
+    }
+
+    private boolean checkName(String userName) {
+        // TODO Add
+        return true;
+    }
+
+    private boolean checkEmail(String userEmail) {
+        // TODO Add
+        return true;
+    }
+
+    private boolean checkPassword(String userPassword) {
+        // TODO Add
+        return true;
     }
 
     private void SignUp(String name, String email, String password){
         Context context = mainActivity.getApplicationContext();
-        CharSequence text = name+email+password;
+        CharSequence text = "Input: " + name + " | " + email + " | " + password;
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
