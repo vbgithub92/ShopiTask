@@ -1,3 +1,34 @@
 <resources>
     <string name="app_name">ShopiTask</string>
+
+    <!-- Main Activity -->
+
+    <string name="slogan">Let\'s be productive!</string>
+    <string name="login_button">Log In</string>
+    <string name="sign_up_button">Sign Up</string>
+
+    <!-- add -->
+
+    <!-- Task Lists Activity -->
+    <string name="welcome_back">Welcome Back</string>
+    <string name="total_items_to_buy">Total items to buy:</string>
+    <string name="total_tasks">Total tasks:</string>
+
+    <!-- Add New List Activity -->
+    <string name="add_new_list_headline">Let\'s create a new list!</string>
+    <string name="add_new_list_list_name">How should the list be called?</string>
+    <string name="add_new_list_list_name_hint">Enter the list name here</string>
+    <string name="add_new_list_type">What kind of list is it?</string>
+    <string name="add_new_list_privacy">Do you want to share the list with someone?</string>
+    <string name="shopping">Shopping</string>
+    <string name="todo_list">To-Do List</string>
+    <string name="shared">Shared</string>
+    <string name="personal">Personal</string>
+    <string name="done">Done</string>
+
+    <string name="bad_list_name">Invalid List Name. Maybe try another name?</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
 </resources>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".TaskListsActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="@string/welcome_back"
+            android:textSize="40sp"
+            android:gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:textStyle="bold|italic"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="[username]!"
+            android:textSize="40sp"
+            android:gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:textStyle="bold|italic"
+            android:textColor="@color/colorPrimary"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:text="Hard part here"
+            android:textSize="40sp"
+            android:gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:textStyle="bold|italic"
+            android:textColor="@color/colorPrimary"/>
+
+
+        <!--Gridlayout is impossible to work with...-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:orientation="horizontal"
+            android:paddingVertical="10dp"
+            >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:orientation="vertical"
+
+                >
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:text="@string/total_items_to_buy"
+                        android:textSize="20sp"
+                        android:gravity="left|center"
+                        android:fontFamily="sans-serif-black"
+                        android:textStyle="bold|italic"
+                        android:textColor="#000000"
+                        android:shadowColor="@color/colorPrimary"
+                        android:shadowRadius="2"/>
+                    <TextView
+                        android:id="@+id/totalItemsToBuy"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="#"
+                        android:textSize="26sp"
+                        android:gravity="center"
+                        android:fontFamily="sans-serif-black"
+                        android:textStyle="bold|italic"
+                        android:textColor="@color/colorAccent"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:text="@string/total_tasks"
+                        android:textSize="20sp"
+                        android:gravity="left|center"
+                        android:fontFamily="sans-serif-black"
+                        android:textStyle="bold|italic"
+                        android:textColor="@color/colorPrimary"
+                        android:shadowColor="#000000"
+                        android:shadowRadius="2"/>
+                    <TextView
+                        android:id="@+id/totalTasksToDo"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="#"
+                        android:textSize="26sp"
+                        android:gravity="center"
+                        android:fontFamily="sans-serif-black"
+                        android:textStyle="bold|italic"
+                        android:textColor="@color/colorAccent"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+      <!--      Change
+            -->
+            <Button
+                android:id="@+id/addListButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:textSize="80sp"
+                android:text="+"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/circle_button"
+                android:onClick="addListButtonClicked"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
