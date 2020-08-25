@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "648206746992",
+    "firebase_url": "https://shopitask.firebaseio.com",
+    "project_id": "shopitask",
+    "storage_bucket": "shopitask.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:648206746992:android:1ff4048f8f4f453305fbb5",
+        "android_client_info": {
+          "package_name": "com.androiddev.shopitask"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "648206746992-50bvl9n5e3rf25abrks3fmm44g1so519.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlFaGoh12pDx3sxZv--FVNpRvhhjKr3NM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "648206746992-50bvl9n5e3rf25abrks3fmm44g1so519.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
