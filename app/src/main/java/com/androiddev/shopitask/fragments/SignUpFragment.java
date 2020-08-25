@@ -1,6 +1,7 @@
 package com.androiddev.shopitask.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +12,13 @@ import android.widget.Toast;
 
 import com.androiddev.shopitask.MainActivity;
 import com.androiddev.shopitask.R;
+import com.androiddev.shopitask.TaskListsActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.concurrent.Executor;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -94,7 +94,7 @@ public class SignUpFragment extends Fragment {
         return true;
     }
 
-    private void SignUp(String name, String email, String password){
+    private void SignUp(final String name, final String email, final String password){
         Context context = mainActivity.getApplicationContext();
         CharSequence text = "Input: " + name + " | " + email + " | " + password;
         int duration = Toast.LENGTH_SHORT;
@@ -108,15 +108,22 @@ public class SignUpFragment extends Fragment {
                if (!task.isSuccessful()) {
                    Toast.makeText(mainActivity.getApplicationContext(), "fail", Toast.LENGTH_SHORT).show();
                } else {
-                   String mName = editTextUserName.getText().toString();
                    String user_id = mAut.getCurrentUser().getUid();
                    DatabaseReference currentUser = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("userName");
-                   currentUser.setValue(mName);
+                   currentUser.setValue(name);
 
-                   Toast.makeText(mainActivity.getApplicationContext(), "great success!!!", Toast.LENGTH_SHORT).show();
-                   //Intent intent = new Intent(mainActivity , );
-                   //startActivity(intent);
-                   //mainActivity.finish();
+                   mAut.signInWithEmailAndPassword(email, password).addOnCompleteListener(mainActivity, new OnCompleteListener<AuthResult>() {
+                       @Override
+                       public void onComplete(@NonNull Task<AuthResult> task) {
+                           if (!task.isSuccessful()) {
+                               Toast.makeText(mainActivity.getApplicationContext(), "fail", Toast.LENGTH_SHORT).show();
+                           }
+                           else {
+                               Intent intent = new Intent(getActivity(), TaskListsActivity.class);
+                               startActivity(intent);
+                           }
+                       }
+                   });
                }
            }
        });
