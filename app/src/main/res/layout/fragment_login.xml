@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.SignUpFragment">
+    tools:context=".fragments.LoginFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,39 +16,13 @@
             android:layout_weight="1"
             android:fontFamily="sans-serif-black"
             android:gravity="center"
-            android:text="@string/user_name_prompt"
+            android:text="@string/user_email"
             android:textColor="@color/colorAccent"
             android:textSize="30sp"
             android:textStyle="bold|italic" />
 
         <EditText
-            android:id="@+id/newUserName"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:fontFamily="casual"
-            android:hint="@string/user_name"
-            android:maxLength="24"
-            android:maxLines="1"
-            android:inputType="textVisiblePassword"
-            android:imeOptions="actionDone|flagNavigateNext"
-            android:cursorVisible="false" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center"
-            android:text="@string/user_email_prompt"
-            android:textColor="@color/colorAccent"
-            android:textSize="30sp"
-            android:textStyle="bold|italic" />
-
-        <EditText
-            android:id="@+id/newUserEmail"
+            android:id="@+id/existingUserEmail"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -68,13 +42,13 @@
             android:layout_weight="1"
             android:fontFamily="sans-serif-black"
             android:gravity="center"
-            android:text="@string/user_password_prompt"
+            android:text="@string/user_password"
             android:textColor="@color/colorAccent"
             android:textSize="30sp"
             android:textStyle="bold|italic" />
 
         <EditText
-            android:id="@+id/newUserPassword"
+            android:id="@+id/existingUserPassword"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -89,14 +63,14 @@
             android:cursorVisible="false" />
 
         <Button
-            android:id="@+id/initiateSignUpButton"
+            android:id="@+id/initiateLoginButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@drawable/rounded_button"
             android:fontFamily="sans-serif-black"
             android:gravity="center"
-            android:text="@string/sign_up_button"
+            android:text="@string/login_button"
             android:textColor="#FFFFFF"
             android:textSize="26sp"
             android:textStyle="bold" />

@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.androiddev.shopitask.fragments.LoginFragment;
 import com.androiddev.shopitask.fragments.MainFragment;
 import com.androiddev.shopitask.fragments.SignUpFragment;
 
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private Fragment currentFragment;
     private MainFragment mainFragment;
     private SignUpFragment signUpFragment;
+    private LoginFragment loginFragment;
 
     private boolean isAnimating;
 
@@ -59,23 +61,65 @@ public class MainActivity extends AppCompatActivity {
         initListenersForButtons();
     }
 
-    public void loginButtonClicked(View view) {
-        vibe.vibrate(80);
+    public void initListenersForButtons() {
+        // Sign up
+        signUpButton = findViewById(R.id.signUpButton);
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signUpButtonClicked(view);
+            }
+        });
 
-        /* Code to change activity */
+        // Login
+        loginButton = findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginButtonClicked(view);
+            }
+        });
 
-        /*Intent intent = new Intent(this, GameActivity.class);
-        Bundle b = new Bundle();
-        b.putString(DIFFICULTY_KEY, difficulty);
-        intent.putExtra(BUNDLE_KEY, b);
-
-        startActivity(intent);*/
     }
 
     public void signUpButtonClicked(View view) {
+        vibe.vibrate(80);
         signUpFragment = new SignUpFragment();
         currentFragment = signUpFragment;
         changeFragment(currentFragment);
+    }
+
+    public void loginButtonClicked(View view) {
+        vibe.vibrate(80);
+        loginFragment = new LoginFragment();
+        currentFragment = loginFragment;
+        changeFragment(currentFragment);
+
+    }
+
+
+
+    public void nextScreen(View view) {
+
+        Intent intent = new Intent(this, TaskListsActivity.class);
+        Bundle b = new Bundle();
+        intent.putExtra(BUNDLE_KEY, b);
+
+        startActivity(intent);
+    }
+
+
+
+    public void changeFragment(Fragment currentFragment) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainActivityBottomFrame, currentFragment).commit();
+    }
+
+    private  void testIfWorks() {
+        Context context = getApplicationContext();
+        CharSequence text = "THIS WORKS!!!!!!!";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 
     public void animateLogo(View view) {
@@ -99,41 +143,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }, 0, 2000); // Run animation every 2 sec
         }
-    }
-
-    public void nextScreen(View view) {
-
-        Intent intent = new Intent(this, TaskListsActivity.class);
-        Bundle b = new Bundle();
-        intent.putExtra(BUNDLE_KEY, b);
-
-        startActivity(intent);
-    }
-
-    public void initListenersForButtons() {
-        // Sign up
-        signUpButton = findViewById(R.id.signUpButton);
-        signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signUpButtonClicked(view);
-            }
-        });
-
-        // Login
-
-    }
-
-    public void changeFragment(Fragment currentFragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.mainActivityBottomFrame, currentFragment).commit();
-    }
-
-    private  void testIfWorks() {
-        Context context = getApplicationContext();
-        CharSequence text = "THIS WORKS!!!!!!!";
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
     }
 
 }

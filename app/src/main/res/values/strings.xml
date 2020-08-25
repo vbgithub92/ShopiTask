@@ -27,8 +27,13 @@
     <string name="done">Done</string>
 
     <string name="bad_list_name">Invalid List Name. Maybe try another name?</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!--Fragments-->
+    <string name="user_name_prompt">What\'s your name?</string>
+    <string name="user_name">User Name</string>
+    <string name="user_email_prompt">What\'s your email?</string>
+    <string name="user_email">Email</string>
+    <string name="user_password_prompt">Choose a password</string>
+    <string name="user_password">Password</string>
 
 </resources>

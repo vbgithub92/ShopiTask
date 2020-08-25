@@ -17,15 +17,14 @@ import android.widget.Toast;
 import com.androiddev.shopitask.MainActivity;
 import com.androiddev.shopitask.R;
 
-public class SignUpFragment extends Fragment {
+public class LoginFragment extends Fragment {
 
-    private EditText editTextUserName;
     private EditText editTextUserEmail;
     private EditText editTextUserPassword;
 
     private MainActivity mainActivity;
 
-    public SignUpFragment() {
+    public LoginFragment() {
         // Required empty public constructor
     }
 
@@ -33,7 +32,7 @@ public class SignUpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up, container, false);
+        return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
     @Override
@@ -41,39 +40,35 @@ public class SignUpFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mainActivity = ((MainActivity) getActivity());
-        editTextUserName = mainActivity.findViewById(R.id.newUserName);
-        editTextUserEmail = mainActivity.findViewById(R.id.newUserEmail);
-        editTextUserPassword = mainActivity.findViewById(R.id.newUserPassword);
+        editTextUserEmail = mainActivity.findViewById(R.id.existingUserEmail);
+        editTextUserPassword = mainActivity.findViewById(R.id.existingUserPassword);
 
-        Button initiateSignUpButton = mainActivity.findViewById(R.id.initiateSignUpButton);
-        initiateSignUpButton.setOnClickListener(new View.OnClickListener() {
+        Button initiateLoginButton = mainActivity.findViewById(R.id.initiateLoginButton);
+        initiateLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String userName = editTextUserName.getText().toString();
                 String userEmail = editTextUserEmail.getText().toString();
                 String userPassword = editTextUserPassword.getText().toString();
-
-                if(checkValidInput(userName,userEmail,userPassword)) {
-                    // TODO Valid details - try to sign up next
-                    test(userName, userEmail,userPassword);
+                if (checkValidInput(userEmail, userPassword)) {
+                    // TODO Valid input - try to connect next
+                    test(userEmail, userPassword);
                 }
                 else {
-                    // TODO FAIL
+                    // TODO Invalid input - error
+                    test("FAILED", "LOGIN");
                 }
 
             }
         });
     }
 
-    private boolean checkValidInput(String name, String email, String password) {
-        if (checkName(name) && checkEmail(email) && checkPassword(password))
+    private boolean checkValidInput(String email, String password) {
+        // TODO if(checkEmail(email) && checkPassword(password))
+
+        // Just to check if there is an input
+        if (email != null && !email.isEmpty() && password != null && !password.isEmpty())
             return true;
         return false;
-    }
-
-    private boolean checkName(String userName) {
-        // TODO Add
-        return true;
     }
 
     private boolean checkEmail(String userEmail) {
@@ -86,9 +81,9 @@ public class SignUpFragment extends Fragment {
         return true;
     }
 
-    private void test(String name, String email, String password){
+    private void test(String name, String password) {
         Context context = mainActivity.getApplicationContext();
-        CharSequence text = "Input: " + name + " | " + email + " | " + password;
+        CharSequence text = "Login details: " + name + " | " + password;
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
