@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".AddNewListActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/add_new_list_headline"
+            android:textSize="30sp"
+            android:textStyle="bold|italic"
+            android:fontFamily="sans-serif-black"
+            android:textColor="#000000"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="@string/add_new_list_list_name"
+            android:textSize="22sp"
+            android:textColor="@color/colorPrimary"/>
+
+        <EditText
+            android:id="@+id/newListName"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:fontFamily="casual"
+            android:hint="@string/add_new_list_list_name_hint"
+            android:maxLength="24"
+            android:maxLines="1"
+            android:inputType="textVisiblePassword"
+            android:imeOptions="actionDone|flagNavigateNext"
+            android:cursorVisible="false"
+
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="@string/add_new_list_type"
+            android:textSize="22sp"
+            android:textColor="@color/colorPrimary"/>
+
+        <RadioGroup
+            android:id="@+id/listTypeGroup"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:checkedButton="@id/radioButtonShopping"
+            android:layout_weight="0.5"
+            >
+
+            <RadioButton
+                android:id="@+id/radioButtonShopping"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.5"
+                android:textSize="22sp"
+                android:text="@string/shopping"
+                android:fontFamily="casual"
+                android:onClick="radioButtonClicked"
+                android:layout_marginStart="20dp"
+                />
+
+            <RadioButton
+                android:id="@+id/radioButtonToDoList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.5"
+                android:textSize="22sp"
+                android:text="@string/todo_list"
+                android:fontFamily="casual"
+                android:onClick="radioButtonClicked"
+                android:layout_marginStart="20dp"
+                />
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="@string/add_new_list_privacy"
+            android:textSize="22sp"
+            android:textColor="@color/colorPrimary"/>
+
+        <RadioGroup
+            android:id="@+id/listPrivacyTypeGroup"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:checkedButton="@id/radioButtonShared"
+            android:layout_weight="0.5"
+            >
+
+        <RadioButton
+            android:id="@+id/radioButtonShared"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.5"
+            android:textSize="22sp"
+            android:text="@string/shared"
+            android:fontFamily="casual"
+            android:onClick="radioButtonClicked"
+            android:layout_marginStart="20dp"
+            />
+
+        <RadioButton
+            android:id="@+id/radioButtonPersonal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.5"
+            android:textSize="22sp"
+            android:text="@string/personal"
+            android:fontFamily="casual"
+            android:onClick="radioButtonClicked"
+            android:layout_marginStart="20dp"
+            />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/signUpButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:textSize="26sp"
+            android:layout_marginHorizontal="80dp"
+            android:text="@string/done"
+            android:fontFamily="sans-serif-black"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/rounded_button"
+            android:onClick="doneButtonClicked"
+            />
+    </LinearLayout>
+
+</RelativeLayout>
