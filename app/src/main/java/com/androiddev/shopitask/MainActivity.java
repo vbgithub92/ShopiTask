@@ -1,25 +1,20 @@
 package com.androiddev.shopitask;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import com.androiddev.shopitask.fragments.LoginFragment;
 import com.androiddev.shopitask.fragments.MainFragment;
 import com.androiddev.shopitask.fragments.SignUpFragment;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -124,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void animateLogo(View view) {
 
-        if (!isAnimating) {
+    /*    if (!isAnimating) {
             isAnimating = true;
             logo = findViewById(R.id.logo);
             final Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),
@@ -142,7 +137,10 @@ public class MainActivity extends AppCompatActivity {
                     });
                 }
             }, 0, 2000); // Run animation every 2 sec
-        }
+        }*/
+
+    Intent intent = new Intent(this, ListDetailsActivity.class);
+    startActivity(intent);
     }
 
 }
