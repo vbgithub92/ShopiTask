@@ -1,6 +1,7 @@
 package com.androiddev.shopitask.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,11 @@ import androidx.fragment.app.Fragment;
 
 import com.androiddev.shopitask.MainActivity;
 import com.androiddev.shopitask.R;
+import com.androiddev.shopitask.TaskListsActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginFragment extends Fragment {
 
@@ -22,6 +28,8 @@ public class LoginFragment extends Fragment {
     private EditText editTextUserPassword;
 
     private MainActivity mainActivity;
+
+    private FirebaseAuth mAut;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -50,7 +58,7 @@ public class LoginFragment extends Fragment {
                 String userPassword = editTextUserPassword.getText().toString();
                 if (checkValidInput(userEmail, userPassword)) {
                     // TODO Valid input - try to connect next
-                    test(userEmail, userPassword);
+                    login(userEmail, userPassword);
                 }
                 else {
                     // TODO Invalid input - error
@@ -86,5 +94,23 @@ public class LoginFragment extends Fragment {
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+
+    }
+
+    private void login(String email, String password) {
+        mAut = FirebaseAuth.getInstance();
+        mAut.signInWithEmailAndPassword(email, password).addOnCompleteListener(mainActivity, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (!task.isSuccessful()) {
+                    Toast.makeText(mainActivity.getApplicationContext(), "fail", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent intent = new Intent(getActivity(), TaskListsActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
     }
 }
