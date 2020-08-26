@@ -26,10 +26,10 @@
             android:onClick="animateLogo"/>
 
         <FrameLayout
+            android:id="@+id/mainActivityBottomFrame"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:id="@+id/mainActivityBottomFrame"
             android:animateLayoutChanges="true"
             >
 

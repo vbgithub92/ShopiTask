@@ -3,17 +3,16 @@ package com.androiddev.shopitask.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.androiddev.shopitask.MainActivity;
 import com.androiddev.shopitask.R;
@@ -89,9 +88,9 @@ public class LoginFragment extends Fragment {
         return true;
     }
 
-    private void test(String name, String password) {
+    private void test(String email, String password) {
         Context context = mainActivity.getApplicationContext();
-        CharSequence text = "Login details: " + name + " | " + password;
+        CharSequence text = "Login details: " + email + " | " + password;
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
