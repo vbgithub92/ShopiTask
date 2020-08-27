@@ -17,45 +17,93 @@
             android:fontFamily="sans-serif-black"
             android:gravity="center"
             android:text="@string/slogan"
-            android:textColor="@color/colorAccent"
-            android:textSize="30sp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="36sp"
             android:textStyle="bold|italic" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1.5" />
 
-        <Button
-            android:id="@+id/loginButton"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
-            android:background="@drawable/rounded_button"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center"
-            android:text="@string/login_button"
-            android:textColor="#FFFFFF"
-            android:textSize="26sp"
-            android:textStyle="bold" />
+            android:layout_weight="1.5"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5">
+
+            </Space>
+
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/blue_button"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center"
+                android:text="@string/login_button"
+                android:textColor="#FFFFFF"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5">
+
+            </Space>
+
+
+        </LinearLayout>
+
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1.5" />
 
-        <Button
-            android:id="@+id/signUpButton"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
-            android:background="@drawable/rounded_button"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center"
-            android:text="@string/sign_up_button"
-            android:textColor="#FFFFFF"
-            android:textSize="26sp"
-            android:textStyle="bold" />
+            android:layout_weight="1.5"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5">
+
+            </Space>
+
+
+            <Button
+                android:id="@+id/signUpButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/blue_button"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center"
+                android:text="@string/sign_up_button"
+                android:textColor="#FFFFFF"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5">
+
+            </Space>
+
+
+        </LinearLayout>
 
     </LinearLayout>
 

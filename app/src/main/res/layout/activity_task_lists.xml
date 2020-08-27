@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,96 +7,100 @@
     android:background="#FFFFFF"
     tools:context=".TaskListsActivity">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="10dp"
         android:orientation="vertical"
-        android:paddingHorizontal="20dp"
-        >
-        <TextView
+        android:padding="10dp">
+
+        <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
-            android:text="@string/welcome_back"
-            android:textSize="40sp"
-            android:gravity="center"
-            android:fontFamily="sans-serif-black"
-            android:textStyle="bold|italic"
-            android:textColor="#000000"/>
+            android:layout_weight="0.4"/>
 
         <TextView
-            android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:fontFamily="sans-serif-black"
             android:gravity="center"
-            android:text="[username]!"
+            android:text="@string/welcome_back"
             android:textColor="@color/colorPrimary"
             android:textSize="40sp"
             android:textStyle="bold|italic" />
 
         <TextView
+            android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="8"
-            android:text="Hard part here"
-            android:textSize="40sp"
-            android:gravity="center"
+            android:layout_weight="1"
             android:fontFamily="sans-serif-black"
-            android:textStyle="bold|italic"
-            android:textColor="@color/colorPrimary"/>
+            android:gravity="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="40sp"
+            android:textStyle="bold|italic" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.25" />
 
-        <!--Gridlayout is impossible to work with...-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="Hard part here"
+            android:textColor="@color/colorPrimary"
+            android:textSize="40sp"
+            android:textStyle="bold|italic" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
-            android:orientation="horizontal"
-            android:paddingVertical="10dp"
-            >
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:orientation="vertical"
+                android:layout_weight="5"
+                android:orientation="vertical">
 
-                >
-                
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:orientation="horizontal"
-                    >
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
-                        android:text="@string/total_items_to_buy"
-                        android:textSize="20sp"
-                        android:gravity="left|center"
                         android:fontFamily="sans-serif-black"
-                        android:textStyle="bold|italic"
-                        android:textColor="#000000"
-                        android:shadowColor="@color/colorPrimary"
-                        android:shadowRadius="2"/>
+                        android:gravity="left|center"
+                        android:text="@string/total_items_to_buy"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp"
+                        android:textStyle="bold|italic" />
+
                     <TextView
                         android:id="@+id/totalItemsToBuy"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="#"
-                        android:textSize="26sp"
-                        android:gravity="center"
                         android:fontFamily="sans-serif-black"
-                        android:textStyle="bold|italic"
-                        android:textColor="@color/colorAccent"/>
+                        android:gravity="center"
+                        android:text="#"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="26sp"
+                        android:textStyle="bold|italic" />
 
 
                 </LinearLayout>
@@ -106,50 +109,50 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:orientation="horizontal"
-                    >
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
-                        android:text="@string/total_tasks"
-                        android:textSize="20sp"
-                        android:gravity="left|center"
                         android:fontFamily="sans-serif-black"
-                        android:textStyle="bold|italic"
+                        android:gravity="left|center"
+                        android:text="@string/total_tasks"
                         android:textColor="@color/colorPrimary"
-                        android:shadowColor="#000000"
-                        android:shadowRadius="2"/>
+                        android:textSize="20sp"
+                        android:textStyle="bold|italic" />
+
                     <TextView
                         android:id="@+id/totalTasksToDo"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="#"
-                        android:textSize="26sp"
-                        android:gravity="center"
                         android:fontFamily="sans-serif-black"
-                        android:textStyle="bold|italic"
-                        android:textColor="@color/colorAccent"/>
+                        android:gravity="center"
+                        android:text="#"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="26sp"
+                        android:textStyle="bold|italic" />
                 </LinearLayout>
 
             </LinearLayout>
 
-      <!--      Change
-            -->
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
             <Button
                 android:id="@+id/addListButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
+                android:background="@drawable/circle_button"
                 android:gravity="center"
-                android:textSize="80sp"
+                android:onClick="addListButtonClicked"
                 android:text="+"
                 android:textColor="#FFFFFF"
-                android:background="@drawable/circle_button"
-                android:onClick="addListButtonClicked"
-                />
+                android:textSize="36sp" />
 
         </LinearLayout>
 

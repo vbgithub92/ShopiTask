@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.AddToTaskListFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:paddingVertical="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="@string/add_to_task_list_prompt"
+            android:textStyle="bold|italic"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/newTaskName"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:cursorVisible="false"
+            android:fontFamily="casual"
+            android:hint="@string/add_to_task_list_prompt_hint"
+            android:imeOptions="actionDone|flagNavigateNext"
+            android:inputType="textVisiblePassword"
+            android:maxLength="24"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="@string/where"
+            android:textStyle="bold|italic"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/newTaskLocation"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:cursorVisible="false"
+            android:fontFamily="casual"
+            android:hint="@string/where_hint"
+            android:imeOptions="actionDone|flagNavigateNext"
+            android:inputType="textVisiblePassword"
+            android:maxLength="24"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="@string/when"
+            android:textStyle="bold|italic"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp" />
+
+        <DatePicker
+            android:id="@+id/newTaskDate"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:datePickerMode="spinner"
+            android:layout_gravity="center"
+            android:calendarViewShown="false"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.75"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.25"
+                android:text="@string/add_picture"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:gravity="left|center"
+                android:textStyle="bold|italic"
+                tools:ignore="NestedWeights" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.75" />
+
+            <ImageView
+                android:id="@+id/cameraButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.75"
+                android:layout_gravity="end"
+                android:src="@drawable/camera" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.75"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="start|center"
+                android:text="@string/add_to_calendar_prompt"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold|italic"
+                tools:ignore="NestedWeights" />
+
+            <CheckBox
+                android:id="@+id/saveToGoogleCalendarCheckBox"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.75"
+                android:gravity="end|center"
+                android:layoutDirection="rtl"
+                android:layout_marginStart="20dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</FrameLayout>

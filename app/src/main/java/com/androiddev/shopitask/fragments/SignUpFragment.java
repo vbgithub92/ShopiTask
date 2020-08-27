@@ -24,10 +24,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 public class SignUpFragment extends Fragment {
 
     private EditText editTextUserName;
@@ -76,7 +72,8 @@ public class SignUpFragment extends Fragment {
             }
         });
     }
-  
+
+    // TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     private boolean checkValidInput(String name, String email, String password) {
         if (checkName(name) && checkEmail(email) && checkPassword(password))
             return true;
