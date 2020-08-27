@@ -21,6 +21,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -112,9 +114,9 @@ public class SignUpFragment extends Fragment {
                if (!task.isSuccessful()) {
                    Toast.makeText(mainActivity.getApplicationContext(), "fail", Toast.LENGTH_SHORT).show();
                } else {
-                   String user_id = mAut.getCurrentUser().getUid();
-                   DatabaseReference currentUser = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("userName");
-                   currentUser.setValue(name);
+                   FirebaseUser user = mAut.getCurrentUser();
+                   UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
+                   user.updateProfile(profileUpdates);
 
                    mAut.signInWithEmailAndPassword(email, password).addOnCompleteListener(mainActivity, new OnCompleteListener<AuthResult>() {
                        @Override
