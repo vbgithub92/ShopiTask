@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class ListDetailsActivity extends AppCompatActivity {
 
@@ -25,7 +26,7 @@ public class ListDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_details);
-
+        createToolbar();
         initializeViews();
     }
 
@@ -39,7 +40,7 @@ public class ListDetailsActivity extends AppCompatActivity {
         imageViewListMembersIcon = findViewById(R.id.listMembersIcon);
 
         // TODO updateViews(ListType);
-        updateViews(2);
+        updateViews(1);
 
     }
 
@@ -94,5 +95,12 @@ public class ListDetailsActivity extends AppCompatActivity {
     public void startAddToListActivity(View view) {
         Intent intent = new Intent(this, AddToListActivity.class);
         startActivity(intent);
+    }
+
+    private void createToolbar() {
+        // Toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 }

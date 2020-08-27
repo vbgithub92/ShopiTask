@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,33 +7,35 @@
     android:background="#FFFFFF"
     tools:context=".MainActivity">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingVertical="60dp"
         android:paddingHorizontal="20dp"
-        >
+        android:paddingVertical="60dp">
 
         <ImageView
             android:id="@+id/logo"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:src="@drawable/logo"
-            android:onClick="animateLogo"/>
+            android:onClick="animateLogo"
+            android:src="@drawable/logo" />
 
         <FrameLayout
             android:id="@+id/mainActivityBottomFrame"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:animateLayoutChanges="true"
-            >
+            android:animateLayoutChanges="true">
 
         </FrameLayout>
-        
+
 
     </LinearLayout>
 
