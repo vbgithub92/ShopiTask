@@ -30,20 +30,7 @@ public class TaskListsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_lists);
         textUserName = this.findViewById(R.id.username);
-
-        DatabaseReference currentUser = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("userName");
-        currentUser.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                textUserName.setText(dataSnapshot.getValue().toString());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
+        textUserName.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         vibe = (Vibrator) TaskListsActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
