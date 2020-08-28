@@ -1,25 +1,36 @@
 package com.androiddev.shopitask.models;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class List {
-    private String listId;
+    private UUID listId;
     private String ownerId;
+    private String listName;
     private ArrayList<String> contributors;
     private boolean isPrivate;
 
-    public List(String listId, String ownerId, ArrayList<String> contributors, boolean isPrivate) {
-        this.listId = listId;
+    public List(String ownerId, String listName, ArrayList<String> contributors, boolean isPrivate) {
+        this.listId = UUID.randomUUID();;
         this.ownerId = ownerId;
+        this.listName = listName;
         this.contributors = contributors;
         this.isPrivate = isPrivate;
     }
 
-    public String getListId() {
+    public List(UUID listId, String ownerId, String listName, ArrayList<String> contributors, boolean isPrivate) {
+        this.listId = listId;
+        this.ownerId = ownerId;
+        this.listName = listName;
+        this.contributors = contributors;
+        this.isPrivate = isPrivate;
+    }
+
+    public UUID getListId() {
         return listId;
     }
 
-    public void setListId(String listId) {
+    public void setListId(UUID listId) {
         this.listId = listId;
     }
 
@@ -29,6 +40,14 @@ public class List {
 
     public void setOwnerId(String ownerId) {
         this.ownerId = ownerId;
+    }
+
+    public String getListName() {
+        return listName;
+    }
+
+    public void setListName(String listName) {
+        this.listName = listName;
     }
 
     public ArrayList<String> getContributors() {

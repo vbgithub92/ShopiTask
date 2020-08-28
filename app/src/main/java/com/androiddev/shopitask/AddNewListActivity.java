@@ -6,12 +6,20 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
+
+import static com.androiddev.shopitask.MainActivity.BUNDLE_KEY;
+import static com.androiddev.shopitask.MainActivity.IS_PRIVATE_LIST_KEY;
+import static com.androiddev.shopitask.MainActivity.LIST_NAME_KEY;
+import static com.androiddev.shopitask.MainActivity.LIST_TYPE_KEY;
+import static com.androiddev.shopitask.MainActivity.SHOPPING_LIST_TYPE;
+import static com.androiddev.shopitask.MainActivity.TODO_LIST_TYPE;
 
 public class AddNewListActivity extends AppCompatActivity {
 
@@ -29,15 +37,37 @@ public class AddNewListActivity extends AppCompatActivity {
         vibe.vibrate(80);
     }
 
-    public void doneButtonClicked(View view) {
+    public void nextButtonClicked(View view) {
         vibe.vibrate(80);
 
         // Check input
         EditText editTextListName = findViewById(R.id.newListName);
+        RadioButton rbShoppingListType = findViewById(R.id.radioButtonShopping);
+        RadioButton rbToDoListType = findViewById(R.id.radioButtonToDoList);
+        RadioButton rbIsPrivate = findViewById(R.id.radioButtonPersonal);
         String listName = editTextListName.getText().toString();
+        String listType = "";
+        boolean isPrivate = false;
         if(checkValidListName(listName)) {
-            // Return to previous activity
-            Intent intent = new Intent(this, TaskListsActivity.class);
+            // Add items to list
+            if (rbShoppingListType.isChecked()) {
+                listType = SHOPPING_LIST_TYPE;
+            } else if (rbToDoListType.isChecked()) {
+                listType = TODO_LIST_TYPE;
+            }
+
+            if (rbIsPrivate.isChecked()) {
+                isPrivate = true;
+            } else {
+                isPrivate = false;
+            }
+
+            Intent intent = new Intent(this, AddToListActivity.class);
+            Bundle b = new Bundle();
+            b.putString(LIST_NAME_KEY, listName);
+            b.putString(LIST_TYPE_KEY, listType);
+            b.putBoolean(IS_PRIVATE_LIST_KEY, isPrivate);
+            intent.putExtra(BUNDLE_KEY, b);
             startActivity(intent);
         }
         else

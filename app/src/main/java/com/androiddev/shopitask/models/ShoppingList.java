@@ -1,12 +1,24 @@
 package com.androiddev.shopitask.models;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class ShoppingList extends List {
     private ArrayList<ShoppingItem> shoppingItems;
 
-    public ShoppingList(String listId, String ownerId, ArrayList<String> contributors, boolean isPrivate, ArrayList<ShoppingItem> shoppingItems) {
-        super(listId, ownerId, contributors, isPrivate);
+    public ShoppingList(String ownerId, String listName, ArrayList<String> contributors, boolean isPrivate, ArrayList<ShoppingItem> shoppingItems) {
+        super(ownerId, listName, contributors, isPrivate);
+        this.shoppingItems = shoppingItems;
+    }
+
+    public ShoppingList(String ownerId, String listName, ArrayList<String> contributors, boolean isPrivate, ShoppingItem shoppingItem) {
+        super(ownerId, listName, contributors, isPrivate);
+        this.shoppingItems = new ArrayList<>();
+        addShoppingItem(shoppingItem);
+    }
+
+    public ShoppingList(UUID listId, String ownerId, String listName, ArrayList<String> contributors, boolean isPrivate, ArrayList<ShoppingItem> shoppingItems) {
+        super(listId, ownerId, listName, contributors, isPrivate);
         this.shoppingItems = shoppingItems;
     }
 
