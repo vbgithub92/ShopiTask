@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -16,9 +17,17 @@ import com.androiddev.shopitask.fragments.LoginFragment;
 import com.androiddev.shopitask.fragments.MainFragment;
 import com.androiddev.shopitask.fragments.SignUpFragment;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
     final static String BUNDLE_KEY = "BUNDLE_KEY";
+    final static String LIST_NAME_KEY = "LIST_NAME_KEY";
+    final static String LIST_TYPE_KEY = "LIST_TYPE_KEY";
+    final static String IS_PRIVATE_LIST_KEY = "IS_PRIVATE_LIST_KEY";
+    final static String SHOPPING_LIST_TYPE = "SHOPPING_LIST_TYPE";
+    final static String TODO_LIST_TYPE = "TODO_LIST_TYPE";
 
     private ImageView logo;
 
@@ -132,4 +141,12 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
+    public static long getDateFromDatePicker(DatePicker datePicker){
+        int day = datePicker.getDayOfMonth();
+        int month = datePicker.getMonth();
+        int year =  datePicker.getYear();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+        return calendar.getTimeInMillis();
+    }
 }

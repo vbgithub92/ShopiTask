@@ -46,7 +46,7 @@ public class MainFragment extends Fragment {
 
     public void findViewsById(View view) {
         goToLoginFragmentButton = (Button)view.findViewById(R.id.loginButton);
-        goToSignUpFragmentButton = (Button)view.findViewById(R.id.signUpButton);
+        goToSignUpFragmentButton = (Button)view.findViewById(R.id.nextButton);
     }
 
     public void attachListeners() {
