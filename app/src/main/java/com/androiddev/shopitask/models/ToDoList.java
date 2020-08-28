@@ -6,7 +6,6 @@ import java.util.UUID;
 public class ToDoList extends List{
     private ArrayList<ToDoItem> toDoItems;
 
-
     public ToDoList(String ownerId, String listName, ArrayList<String> contributors, boolean isPrivate, ArrayList<ToDoItem> toDoItems) {
         super(ownerId, listName, contributors, isPrivate);
         this.toDoItems = toDoItems;

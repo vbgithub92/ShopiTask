@@ -9,6 +9,7 @@ public class List {
     private String listName;
     private ArrayList<String> contributors;
     private boolean isPrivate;
+    private String listName;
 
     public List(String ownerId, String listName, ArrayList<String> contributors, boolean isPrivate) {
         this.listId = UUID.randomUUID();;
@@ -24,6 +25,7 @@ public class List {
         this.listName = listName;
         this.contributors = contributors;
         this.isPrivate = isPrivate;
+        this.listName = listName;
     }
 
     public UUID getListId() {
@@ -64,5 +66,11 @@ public class List {
 
     public void setPrivate(boolean aPrivate) {
         isPrivate = aPrivate;
+    }
+
+    public String getListName() { return listName;}
+
+    public int getListSize() {
+        return 0;
     }
 }
