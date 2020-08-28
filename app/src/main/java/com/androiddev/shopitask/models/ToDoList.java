@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class ToDoList extends List{
     private ArrayList<ToDoItem> toDoItems;
 
-    public ToDoList(String listId, String ownerId, ArrayList<String> contributors, boolean isPrivate, ArrayList<ToDoItem> toDoItems) {
-        super(listId, ownerId, contributors, isPrivate);
+    public ToDoList(String listId, String ownerId, ArrayList<String> contributors, boolean isPrivate,String listName,  ArrayList<ToDoItem> toDoItems) {
+        super(listId, ownerId, contributors, isPrivate, listName);
         this.toDoItems = toDoItems;
     }
 

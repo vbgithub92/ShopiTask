@@ -7,12 +7,14 @@ public class List {
     private String ownerId;
     private ArrayList<String> contributors;
     private boolean isPrivate;
+    private String listName;
 
-    public List(String listId, String ownerId, ArrayList<String> contributors, boolean isPrivate) {
+    public List(String listId, String ownerId, ArrayList<String> contributors, boolean isPrivate, String listName) {
         this.listId = listId;
         this.ownerId = ownerId;
         this.contributors = contributors;
         this.isPrivate = isPrivate;
+        this.listName = listName;
     }
 
     public String getListId() {
@@ -45,5 +47,11 @@ public class List {
 
     public void setPrivate(boolean aPrivate) {
         isPrivate = aPrivate;
+    }
+
+    public String getListName() { return listName;}
+
+    public int getListSize() {
+        return 0;
     }
 }

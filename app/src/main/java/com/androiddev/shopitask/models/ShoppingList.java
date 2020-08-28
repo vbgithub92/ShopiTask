@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class ShoppingList extends List {
     private ArrayList<ShoppingItem> shoppingItems;
 
-    public ShoppingList(String listId, String ownerId, ArrayList<String> contributors, boolean isPrivate, ArrayList<ShoppingItem> shoppingItems) {
-        super(listId, ownerId, contributors, isPrivate);
+    public ShoppingList(String listId, String ownerId, ArrayList<String> contributors, boolean isPrivate,String listName, ArrayList<ShoppingItem> shoppingItems) {
+        super(listId, ownerId, contributors, isPrivate, listName);
         this.shoppingItems = shoppingItems;
     }
 

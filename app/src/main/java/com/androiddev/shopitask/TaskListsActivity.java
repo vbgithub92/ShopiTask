@@ -4,23 +4,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.androiddev.shopitask.models.List;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class TaskListsActivity extends AppCompatActivity {
+
+    private static final String TAG = "TaskListsActivity";
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter listAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     private Vibrator vibe;
     private String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -31,9 +36,37 @@ public class TaskListsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_lists);
         createToolbar();
-        textUserName = this.findViewById(R.id.username);
-        textUserName.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        findViewsById();
+
+        textUserName.setText(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName());
         vibe = (Vibrator) TaskListsActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initRecyclerView();
+    }
+
+    private void findViewsById() {
+        textUserName = findViewById(R.id.username);
+        recyclerView = findViewById(R.id.my_recycler_view);
+    }
+
+    private void initRecyclerView() {
+        Log.d(TAG, "initRecyclerView:");
+        recyclerView.setHasFixedSize(true); // Not sure
+
+        ArrayList<List> myList = new ArrayList<>();
+
+        for(int i = 0 ; i < 10 ; i++) {
+            myList.add(new List("1","1", null,true,"List #"+i));
+        }
+
+        listAdapter = new ListAdapter(myList,this);
+        recyclerView.setAdapter(listAdapter);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     public void addListButtonClicked(View view) {

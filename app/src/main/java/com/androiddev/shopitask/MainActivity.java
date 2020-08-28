@@ -109,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
             }, 0, 2000); // Run animation every 2 sec
         }*/
 
-        Intent intent = new Intent(this, ListDetailsActivity.class);
-        //Intent intent = new Intent(this, TaskListsActivity.class);
+        //Intent intent = new Intent(this, ListDetailsActivity.class);
+        Intent intent = new Intent(this, TaskListsActivity.class);
         startActivity(intent);
     }
 
