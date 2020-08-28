@@ -1,9 +1,8 @@
 package com.androiddev.shopitask.models;
 
 public enum UOM {
-    UNITS,
+    ITEMS,
     GK,
-    GR,
     L,
     PACKS
 }

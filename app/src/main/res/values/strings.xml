@@ -25,6 +25,7 @@
     <string name="shared">Shared</string>
     <string name="personal">Personal</string>
     <string name="done">Done</string>
+    <string name="next">Next</string>
 
     <string name="bad_list_name">Invalid List Name. Maybe try another name?</string>
 

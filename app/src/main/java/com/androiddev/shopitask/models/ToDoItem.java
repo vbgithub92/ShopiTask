@@ -10,11 +10,11 @@ import java.util.UUID;
 public class ToDoItem {
     private UUID id;
     private String activityName;
-    private Date date;
+    private long date;
     private Location location;
     private Image pic;
 
-    public ToDoItem(String activityName, Date date, Location location, Image pic) {
+    public ToDoItem(String activityName, long date, Location location, Image pic) {
         this.activityName = activityName;
         this.date = date;
         this.location = location;
@@ -22,7 +22,7 @@ public class ToDoItem {
         this.id = UUID.randomUUID();
     }
 
-    public ToDoItem(UUID id, String activityName, Date date, Location location, Image pic) {
+    public ToDoItem(UUID id, String activityName, long date, Location location, Image pic) {
         this.id = id;
         this.activityName = activityName;
         this.date = date;
@@ -38,11 +38,11 @@ public class ToDoItem {
         this.activityName = activityName;
     }
 
-    public Date getDate() {
+    public long getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(long date) {
         this.date = date;
     }
 
