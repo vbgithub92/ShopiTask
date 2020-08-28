@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androiddev.shopitask.models.List;
+import com.androiddev.shopitask.models.ShoppingItem;
+import com.androiddev.shopitask.models.ShoppingList;
+import com.androiddev.shopitask.models.UOM;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -59,9 +62,18 @@ public class TaskListsActivity extends AppCompatActivity {
 
         ArrayList<List> myList = new ArrayList<>();
 
-        for(int i = 0 ; i < 10 ; i++) {
-            myList.add(new List("1","1", null,true,"List #"+i));
+        for(int i = 0 ; i < 4 ; i++) {
+            myList.add(new List("1","List " + i, null,true));
         }
+
+        myList.add(new ShoppingList("1", "Shopping1", null, true,
+                new ShoppingItem("Vasya",10,UOM.L, null)));
+
+        ShoppingList s1 = new ShoppingList("1", "Shopping1", null, true,
+                new ShoppingItem("Vasya",10,UOM.L, null));
+        s1.addShoppingItem(new ShoppingItem("Vasdasa",11,UOM.KG, null));
+
+        myList.add(s1);
 
         listAdapter = new ListAdapter(myList,this);
         recyclerView.setAdapter(listAdapter);
