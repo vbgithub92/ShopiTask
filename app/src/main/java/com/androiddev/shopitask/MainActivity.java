@@ -25,9 +25,10 @@ public class MainActivity extends AppCompatActivity {
     final static String LIST_NAME_KEY = "LIST_NAME_KEY";
     final static String LIST_TYPE_KEY = "LIST_TYPE_KEY";
     final static String IS_PRIVATE_LIST_KEY = "IS_PRIVATE_LIST_KEY";
-    final static String SHOPPING_LIST_TYPE = "SHOPPING_LIST_TYPE";
-    final static String TODO_LIST_TYPE = "TODO_LIST_TYPE";
     final static String LIST_ID_KEY = "LIST_ID_KEY";
+    final static String LIST_OWNER_ID_KEY = "LIST_OWNER_ID_KEY";
+    final static String LIST_SIZE_KEY = "LIST_SIZE_KEY";
+    final static String LIST_KEY = "Selected List";
 
     private ImageView logo;
 

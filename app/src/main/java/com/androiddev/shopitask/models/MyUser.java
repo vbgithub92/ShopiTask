@@ -23,8 +23,8 @@ public class MyUser {
     private String userName;
     private String email;
     private DatabaseReference dbReference;
-
-    ArrayList<List> tasksList = new ArrayList<>();
+    private DatabaseReference generalDbReference;
+    ArrayList<List> tasksList;
 
     public MyUser() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -32,6 +32,7 @@ public class MyUser {
         this.userName = user.getDisplayName();
         this.email = user.getEmail();
         this.dbReference = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid());
+        this.generalDbReference = FirebaseDatabase.getInstance().getReference().child("Users");
         tasksList = new ArrayList<>();
     }
 
@@ -91,6 +92,14 @@ public class MyUser {
 
     public void setDbReference(DatabaseReference dbReference) {
         this.dbReference = dbReference;
+    }
+
+    public DatabaseReference getGeneralDbReference() {
+        return generalDbReference;
+    }
+
+    public void setGeneralDbReference(DatabaseReference generalDbReference) {
+        this.generalDbReference = generalDbReference;
     }
 
     public ArrayList<List> getTasksList() {
