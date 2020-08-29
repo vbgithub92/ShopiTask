@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.androiddev.shopitask.models.ListType;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -18,9 +20,10 @@ import static com.androiddev.shopitask.MainActivity.BUNDLE_KEY;
 import static com.androiddev.shopitask.MainActivity.IS_PRIVATE_LIST_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_ID_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_NAME_KEY;
+import static com.androiddev.shopitask.MainActivity.LIST_OWNER_ID_KEY;
+import static com.androiddev.shopitask.MainActivity.LIST_SIZE_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_TYPE_KEY;
-import static com.androiddev.shopitask.MainActivity.SHOPPING_LIST_TYPE;
-import static com.androiddev.shopitask.MainActivity.TODO_LIST_TYPE;
+
 
 public class AddNewListActivity extends AppCompatActivity {
 
@@ -52,9 +55,9 @@ public class AddNewListActivity extends AppCompatActivity {
         if(checkValidListName(listName)) {
             // Add items to list
             if (rbShoppingListType.isChecked()) {
-                listType = SHOPPING_LIST_TYPE;
+                listType = ListType.SHOPPING.name();
             } else if (rbToDoListType.isChecked()) {
-                listType = TODO_LIST_TYPE;
+                listType = ListType.TODO.name();
             }
 
             if (rbIsPrivate.isChecked()) {
@@ -69,6 +72,8 @@ public class AddNewListActivity extends AppCompatActivity {
             b.putString(LIST_TYPE_KEY, listType);
             b.putBoolean(IS_PRIVATE_LIST_KEY, isPrivate);
             b.putString(LIST_ID_KEY, null);
+            b.putString(LIST_OWNER_ID_KEY, null);
+            b.putInt(LIST_SIZE_KEY ,0);
             intent.putExtra(BUNDLE_KEY, b);
             startActivity(intent);
         }
