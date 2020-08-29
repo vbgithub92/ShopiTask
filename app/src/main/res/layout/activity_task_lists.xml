@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.75"
             android:fontFamily="sans-serif-black"
             android:gravity="center"
             android:text="@string/welcome_back"
@@ -38,17 +38,68 @@
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.75"
             android:fontFamily="sans-serif-black"
             android:gravity="center"
             android:textColor="@color/colorAccent"
             android:textSize="40sp"
             android:textStyle="bold|italic" />
 
-        <Space
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.25" />
+            android:layout_weight="0.5"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold|italic"
+                android:text="@string/type"
+                />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2.5"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold|italic"
+                android:text="@string/list_name" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.75"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold|italic"
+                android:text="@string/items" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.65"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold|italic"
+                android:text=""
+                />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.1"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold|italic"
+                android:text="@string/members" />
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/my_recycler_view"
@@ -57,6 +108,11 @@
             android:layout_height="0dp"
             android:layout_weight="4"
             />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.25" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -79,12 +135,12 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="3"
+                        android:layout_weight="3.5"
                         android:fontFamily="sans-serif-black"
                         android:gravity="left|center"
                         android:text="@string/total_items_to_buy"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold|italic" />
 
                     <TextView
@@ -116,7 +172,7 @@
                         android:gravity="left|center"
                         android:text="@string/total_tasks"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold|italic" />
 
                     <TextView
@@ -137,7 +193,7 @@
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="0.5" />
 
             <Button
                 android:id="@+id/addListButton"

@@ -1,9 +1,10 @@
 package com.androiddev.shopitask.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class List {
+public class List implements Serializable {
     private UUID listId;
     private String ownerId;
     private String listName;
@@ -11,7 +12,7 @@ public class List {
     private boolean isPrivate;
 
     public List(String ownerId, String listName, ArrayList<String> contributors, boolean isPrivate) {
-        this.listId = UUID.randomUUID();;
+        this.listId = UUID.randomUUID();
         this.ownerId = ownerId;
         this.listName = listName;
         this.contributors = contributors;
@@ -70,4 +71,5 @@ public class List {
     public int getListSize() {
         return 0;
     }
+
 }

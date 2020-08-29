@@ -3,7 +3,7 @@ package com.androiddev.shopitask.models;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class ToDoList extends List{
+public class ToDoList extends List {
     private ArrayList<ToDoItem> toDoItems;
 
     public ToDoList(String ownerId, String listName, ArrayList<String> contributors, boolean isPrivate, ArrayList<ToDoItem> toDoItems) {

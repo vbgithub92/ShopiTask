@@ -2,10 +2,11 @@ package com.androiddev.shopitask.models;
 
 import android.media.Image;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-public class ShoppingItem {
+public class ShoppingItem implements Serializable {
     private UUID id;
     private String name;
     private double quantity;
