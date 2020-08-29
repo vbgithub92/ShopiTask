@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -27,6 +28,8 @@ import java.util.Objects;
 
 public class TaskListsActivity extends AppCompatActivity implements ListAdapter.OnListListener {
 
+    private static final String TAG = "TaskListsActivity";
+
     public static final String LIST_KEY = "Selected List";
     private Vibrator vibe;
 
@@ -37,11 +40,11 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
     private String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private TextView textUserName;
 
-    ArrayList<List> tasksListTest = new ArrayList<>();
+    ArrayList<List> tasksList = new ArrayList<>();
 
     private TextView textTotalShoppingItems;
     private TextView textTotalTasks;
-  
+
     private MyUser myUser = new MyUser();
 
     @Override
@@ -58,6 +61,7 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
     @Override
     protected void onStart() {
         super.onStart();
+
         initRecyclerView();
         updateTotals();
     }
@@ -70,9 +74,9 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
     }
 
     private void initRecyclerView() {
-      
+
         recyclerView.setHasFixedSize(true);
-        tasksListTest = new ArrayList<>();
+        tasksList = new ArrayList<>();
         ArrayList<String> listContributors1 = new ArrayList<>(Arrays.asList(
                 "Vlad", "Moshe", "Alex"));
         ArrayList<String> listContributors2 = new ArrayList<>(Arrays.asList(
@@ -121,20 +125,21 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
         ShoppingList shoppingList1 = new ShoppingList("1", "ShoppingList1", listContributors3, false, shoppingItems1);
         ShoppingList shoppingList2 = new ShoppingList("1", "ShoppingList2", listContributors4, false, shoppingItems2);
 
-        tasksListTest.add(todoList1);
-        tasksListTest.add(todoList2);
-        tasksListTest.add(shoppingList1);
-        tasksListTest.add(shoppingList2);
+        //// Test
+        //tasksList.add(todoList1);
+        //tasksList.add(todoList2);
+        //tasksList.add(shoppingList1);
+        //tasksList.add(shoppingList2);
 
-        // Test
         //listAdapter = new ListAdapter(tasksListTest, this, this);
-        ArrayList<List> myList = new ArrayList<>();
 
-        myList.addAll(myUser.getToDoLists());
-        myList.addAll(myUser.getShoppingLists());
-      
         // From server
-        listAdapter = new ListAdapter(myList,this,this);
+        Log.d(TAG, "initRecyclerView: Getting info from server");
+        tasksList.addAll(myUser.getToDoLists());
+        tasksList.addAll(myUser.getShoppingLists());
+
+
+        listAdapter = new ListAdapter(tasksList, this, this);
         recyclerView.setAdapter(listAdapter);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

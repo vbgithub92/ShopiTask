@@ -2,6 +2,8 @@ package com.androiddev.shopitask.models;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -13,9 +15,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
-
 public class MyUser {
+
+    private static final String TAG = "MyUser";
     private String user_id;
     private String userName;
     private String email;
@@ -126,6 +128,7 @@ public class MyUser {
     //}
 
     private void initMyLists(@NonNull DataSnapshot dataSnapshot) {
+        Log.d(TAG, "initMyLists: Im here");
         for (DataSnapshot ds: dataSnapshot.getChildren()) {
             switch (ListType.valueOf(ds.child("listType").getValue(String.class))) {
                 case SHOPPING:
