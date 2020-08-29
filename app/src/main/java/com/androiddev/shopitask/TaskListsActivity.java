@@ -18,6 +18,7 @@ import com.androiddev.shopitask.models.ShoppingList;
 import com.androiddev.shopitask.models.ToDoItem;
 import com.androiddev.shopitask.models.ToDoList;
 import com.androiddev.shopitask.models.UOM;
+import com.androiddev.shopitask.models.MyUser;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -36,10 +37,12 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
     private String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private TextView textUserName;
 
-    ArrayList<List> tasksList = new ArrayList<>();
+    ArrayList<List> tasksListTest = new ArrayList<>();
 
     private TextView textTotalShoppingItems;
     private TextView textTotalTasks;
+  
+    private MyUser myUser = new MyUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +50,9 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
         setContentView(R.layout.activity_task_lists);
         createToolbar();
         findViewsById();
-
-        textUserName.setText(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName());
+        textUserName.setText(myUser.getUserName());
         vibe = (Vibrator) TaskListsActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
+        myUser.initLists();
     }
 
     @Override
@@ -67,10 +70,9 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
     }
 
     private void initRecyclerView() {
-        recyclerView.setHasFixedSize(true); // Not sure
-
-        // TODO Get data from server?
-        tasksList = new ArrayList<>();
+      
+        recyclerView.setHasFixedSize(true);
+        tasksListTest = new ArrayList<>();
         ArrayList<String> listContributors1 = new ArrayList<>(Arrays.asList(
                 "Vlad", "Moshe", "Alex"));
         ArrayList<String> listContributors2 = new ArrayList<>(Arrays.asList(
@@ -119,13 +121,20 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
         ShoppingList shoppingList1 = new ShoppingList("1", "ShoppingList1", listContributors3, false, shoppingItems1);
         ShoppingList shoppingList2 = new ShoppingList("1", "ShoppingList2", listContributors4, false, shoppingItems2);
 
-        tasksList.add(todoList1);
-        tasksList.add(todoList2);
-        tasksList.add(shoppingList1);
-        tasksList.add(shoppingList2);
+        tasksListTest.add(todoList1);
+        tasksListTest.add(todoList2);
+        tasksListTest.add(shoppingList1);
+        tasksListTest.add(shoppingList2);
 
+        // Test
+        //listAdapter = new ListAdapter(tasksListTest, this, this);
+        ArrayList<List> myList = new ArrayList<>();
 
-        listAdapter = new ListAdapter(tasksList, this, this);
+        myList.addAll(myUser.getToDoLists());
+        myList.addAll(myUser.getShoppingLists());
+      
+        // From server
+        listAdapter = new ListAdapter(myList,this,this);
         recyclerView.setAdapter(listAdapter);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

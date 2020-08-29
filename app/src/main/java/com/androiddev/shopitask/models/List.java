@@ -4,35 +4,43 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
 
+
 public class List implements Serializable {
-    private UUID listId;
+    private String listId;
     private String ownerId;
     private String listName;
     private ArrayList<String> contributors;
     private boolean isPrivate;
+    private ListType listType;
 
-    public List(String ownerId, String listName, ArrayList<String> contributors, boolean isPrivate) {
-        this.listId = UUID.randomUUID();
+    public List(){
+
+    }
+
+    public List(String ownerId, String listName, ArrayList<String> contributors, boolean isPrivate, ListType type) {
+        this.listId = UUID.randomUUID().toString();
         this.ownerId = ownerId;
         this.listName = listName;
         this.contributors = contributors;
         this.isPrivate = isPrivate;
+        this.listType = type;
     }
 
-    public List(UUID listId, String ownerId, String listName, ArrayList<String> contributors, boolean isPrivate) {
+    public List(String listId, String ownerId, String listName, ArrayList<String> contributors, boolean isPrivate, ListType type) {
         this.listId = listId;
         this.ownerId = ownerId;
         this.listName = listName;
         this.contributors = contributors;
         this.isPrivate = isPrivate;
         this.listName = listName;
+        this.listType = type;
     }
 
-    public UUID getListId() {
+    public String getListId() {
         return listId;
     }
 
-    public void setListId(UUID listId) {
+    public void setListId(String listId) {
         this.listId = listId;
     }
 
@@ -60,11 +68,19 @@ public class List implements Serializable {
         this.contributors = contributors;
     }
 
-    public boolean isPrivate() {
+    public ListType getListType() {
+        return listType;
+    }
+
+    public void setListType(ListType listType) {
+        this.listType = listType;
+    }
+
+    public boolean isIsPrivate() {
         return isPrivate;
     }
 
-    public void setPrivate(boolean aPrivate) {
+    public void setIsPrivate(boolean aPrivate) {
         isPrivate = aPrivate;
     }
 

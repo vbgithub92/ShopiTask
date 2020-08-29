@@ -7,21 +7,24 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class ShoppingItem implements Serializable {
-    private UUID id;
+
+    private String id;
     private String name;
     private double quantity;
     private UOM uom;
     private Image pic;
+
+    public ShoppingItem() {}
 
     public ShoppingItem(String name, double quantity, UOM uom, Image pic) {
         this.name = name;
         this.quantity = quantity;
         this.uom = uom;
         this.pic = pic;
-        this.id = UUID.randomUUID();
+        this.id = UUID.randomUUID().toString();
     }
 
-    public ShoppingItem(UUID id, String name, double quantity, UOM uom, Image pic) {
+    public ShoppingItem(String id, String name, double quantity, UOM uom, Image pic) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
@@ -29,8 +32,12 @@ public class ShoppingItem implements Serializable {
         this.pic = pic;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -8,26 +8,37 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class ToDoItem implements Serializable {
-    private UUID id;
+
+    private String id;
     private String activityName;
     private long date;
     private Location location;
     private Image pic;
+
+    public ToDoItem() {}
 
     public ToDoItem(String activityName, long date, Location location, Image pic) {
         this.activityName = activityName;
         this.date = date;
         this.location = location;
         this.pic = pic;
-        this.id = UUID.randomUUID();
+        this.id = UUID.randomUUID().toString();
     }
 
-    public ToDoItem(UUID id, String activityName, long date, Location location, Image pic) {
+    public ToDoItem(String id, String activityName, long date, Location location, Image pic) {
         this.id = id;
         this.activityName = activityName;
         this.date = date;
         this.location = location;
         this.pic = pic;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getActivityName() {
