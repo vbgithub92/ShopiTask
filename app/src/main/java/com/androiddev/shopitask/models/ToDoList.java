@@ -1,24 +1,27 @@
 package com.androiddev.shopitask.models;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class ToDoList extends List{
     private ArrayList<ToDoItem> toDoItems;
 
+    public ToDoList() {
+        super();
+    }
+
     public ToDoList(String ownerId, String listName, ArrayList<String> contributors, boolean isPrivate, ArrayList<ToDoItem> toDoItems) {
-        super(ownerId, listName, contributors, isPrivate);
+        super(ownerId, listName, contributors, isPrivate, ListType.TODO);
         this.toDoItems = toDoItems;
     }
 
     public ToDoList(String ownerId, String listName, ArrayList<String> contributors, boolean isPrivate, ToDoItem toDoItem) {
-        super(ownerId, listName, contributors, isPrivate);
+        super(ownerId, listName, contributors, isPrivate, ListType.TODO);
         this.toDoItems = new ArrayList<>();
         addToDoItem(toDoItem);
     }
 
-    public ToDoList(UUID listId, String ownerId, String listName, ArrayList<String> contributors, boolean isPrivate, ArrayList<ToDoItem> toDoItems) {
-        super(listId, ownerId, listName, contributors, isPrivate);
+    public ToDoList(String listId, String ownerId, String listName, ArrayList<String> contributors, boolean isPrivate, ArrayList<ToDoItem> toDoItems) {
+        super(listId, ownerId, listName, contributors, isPrivate, ListType.TODO);
         this.toDoItems = toDoItems;
     }
 
