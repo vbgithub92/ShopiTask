@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.androiddev.shopitask.models.List;
 import com.androiddev.shopitask.models.ShoppingList;
+import com.androiddev.shopitask.models.ToDoList;
 
 import java.util.Objects;
 
@@ -25,7 +26,7 @@ import static com.androiddev.shopitask.MainActivity.LIST_SIZE_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_TYPE_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_ID_KEY;
 
-public class ListDetailsActivity extends AppCompatActivity implements ShoppingListItemAdapter.OnListItemListener {
+public class ListDetailsActivity extends AppCompatActivity implements ShoppingListItemAdapter.OnListItemListener, ToDoListItemAdapter.OnListItemListener {
 
     private List theList;
 
@@ -121,6 +122,9 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
 
         if(theList instanceof ShoppingList) {
             listAdapter = new ShoppingListItemAdapter((ShoppingList)theList, this, this);
+        }
+        else if(theList instanceof ToDoList) {
+            listAdapter = new ToDoListItemAdapter((ToDoList) theList, this,this);
         }
 
         recyclerView.setAdapter(listAdapter);

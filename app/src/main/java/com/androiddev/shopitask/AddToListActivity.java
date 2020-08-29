@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -80,15 +81,19 @@ public class AddToListActivity extends AppCompatActivity {
         listOwnerId = b.getString(LIST_OWNER_ID_KEY);
         listSize = b.getInt(LIST_SIZE_KEY);
 
+        TextView addToListPrompt = findViewById(R.id.addToListPrompt);
+
         if (listId != null) {
             theList = (List) getIntent().getSerializableExtra(LIST_KEY);
         }
         // Check type of fragment
         switch (ListType.valueOf(listType)) {
             case SHOPPING:
+                addToListPrompt.setText(R.string.add_something);
                 addToListFragment = new AddToShoppingListFragment();
                 break;
             case TODO:
+                addToListPrompt.setText(R.string.do_something);
                 addToListFragment = new AddToTaskListFragment();
                 break;
             default:

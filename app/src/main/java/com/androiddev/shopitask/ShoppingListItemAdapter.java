@@ -20,7 +20,6 @@ class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListItemAdapt
     private static final String TAG = "ShoppingListItemAdapter";
 
     private ShoppingList shoppingItemsList;
-
     private Context context;
     private OnListItemListener onListItemListener;
 
@@ -80,7 +79,7 @@ class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListItemAdapt
         holder.itemName.setText(shoppingItem.getName());
 
         // Item amount and type
-        String amountAndType = String.valueOf(shoppingItem.getQuantity()) + " ";
+        String amountAndType = String.valueOf((int)shoppingItem.getQuantity()) + " ";
         String type = shoppingItem.getUom().toString();
         if(!type.equals(UOM.KG.toString()) && !type.equals(UOM.L.toString())){
             type = type.toLowerCase();
