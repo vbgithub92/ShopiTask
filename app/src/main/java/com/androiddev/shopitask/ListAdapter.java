@@ -96,7 +96,7 @@ class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
         holder.listItemsAmount.setText(String.valueOf(list.getListSize()));
 
         // List Members Icon
-        boolean isPrivate = list.isPrivate();
+        boolean isPrivate = list.isIsPrivate();
         int imageSrc = 0;
         if (isPrivate) {
             imageSrc = R.drawable.single_person;

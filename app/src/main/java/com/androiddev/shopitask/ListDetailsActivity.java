@@ -71,7 +71,7 @@ public class ListDetailsActivity extends AppCompatActivity {
 
         listTotalCount = theList.getListSize();
 
-        if(theList.isPrivate())
+        if(theList.isIsPrivate())
             membersIconSrc = R.drawable.single_person;
         else
             membersIconSrc = R.drawable.multiple_people;

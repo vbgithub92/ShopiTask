@@ -107,6 +107,7 @@ public class LoginFragment extends Fragment {
                 }
                 else {
                     Intent intent = new Intent(getActivity(), TaskListsActivity.class);
+
                     startActivity(intent);
                 }
             }
