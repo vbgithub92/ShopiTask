@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,11 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androiddev.shopitask.models.List;
+import com.androiddev.shopitask.models.MyUser;
 import com.androiddev.shopitask.models.ShoppingItem;
 import com.androiddev.shopitask.models.ShoppingList;
 import com.androiddev.shopitask.models.ToDoItem;
 import com.androiddev.shopitask.models.ToDoList;
 import com.androiddev.shopitask.models.UOM;
+import com.google.firebase.auth.FirebaseAuth;
 import com.androiddev.shopitask.models.MyUser;
 
 import java.util.ArrayList;
@@ -105,7 +106,11 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
                 new ShoppingItem("Milk", 3, UOM.L, null),
                 new ShoppingItem("Chips", 4, UOM.PACKS, null),
                 new ShoppingItem("Coffee Beans", 2, UOM.KG, null),
-                new ShoppingItem("Chocolate", 10, UOM.PACKS, null)
+                new ShoppingItem("Chocolate", 10, UOM.PACKS, null),
+                new ShoppingItem("Cat food", 2, UOM.KG, null),
+                new ShoppingItem("Sushi", 8, UOM.ITEMS, null),
+                new ShoppingItem("Ice Cream", 2, UOM.L, null),
+                new ShoppingItem("FatFat", 20, UOM.PACKS, null)
         ));
 
         ArrayList<ShoppingItem> shoppingItems2 = new ArrayList<>(Arrays.asList(
@@ -121,11 +126,11 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
         ShoppingList shoppingList1 = new ShoppingList("1", "ShoppingList1", listContributors3, false, shoppingItems1);
         ShoppingList shoppingList2 = new ShoppingList("1", "ShoppingList2", listContributors4, false, shoppingItems2);
 
-        //// Test
-        //tasksList.add(todoList1);
-        //tasksList.add(todoList2);
-        //tasksList.add(shoppingList1);
-        //tasksList.add(shoppingList2);
+        // Test
+        tasksList.add(todoList1);
+        tasksList.add(todoList2);
+        tasksList.add(shoppingList1);
+        tasksList.add(shoppingList2);
 
         //listAdapter = new ListAdapter(tasksListTest, this, this);
 
