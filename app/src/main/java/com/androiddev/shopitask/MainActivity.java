@@ -18,7 +18,6 @@ import com.androiddev.shopitask.fragments.MainFragment;
 import com.androiddev.shopitask.fragments.SignUpFragment;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     final static String IS_PRIVATE_LIST_KEY = "IS_PRIVATE_LIST_KEY";
     final static String SHOPPING_LIST_TYPE = "SHOPPING_LIST_TYPE";
     final static String TODO_LIST_TYPE = "TODO_LIST_TYPE";
+    final static String LIST_ID_KEY = "LIST_ID_KEY";
 
     private ImageView logo;
 

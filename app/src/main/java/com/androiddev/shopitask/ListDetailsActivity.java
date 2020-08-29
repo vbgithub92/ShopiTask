@@ -16,6 +16,12 @@ import com.androiddev.shopitask.models.ShoppingList;
 
 import java.util.Objects;
 
+import static com.androiddev.shopitask.MainActivity.BUNDLE_KEY;
+import static com.androiddev.shopitask.MainActivity.IS_PRIVATE_LIST_KEY;
+import static com.androiddev.shopitask.MainActivity.LIST_NAME_KEY;
+import static com.androiddev.shopitask.MainActivity.LIST_TYPE_KEY;
+import static com.androiddev.shopitask.MainActivity.LIST_ID_KEY;
+
 public class ListDetailsActivity extends AppCompatActivity implements ShoppingListItemAdapter.OnListItemListener {
 
     private List theList;
@@ -115,6 +121,12 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
 
     public void startAddToListActivity(View view) {
         Intent intent = new Intent(this, AddToListActivity.class);
+        Bundle b = new Bundle();
+        b.putString(LIST_NAME_KEY, theList.getListName());
+        b.putString(LIST_TYPE_KEY, theList.getListType().toString());
+        b.putString(LIST_ID_KEY ,theList.getListId());
+        b.putBoolean(IS_PRIVATE_LIST_KEY, theList.isIsPrivate());
+        intent.putExtra(BUNDLE_KEY, b);
         startActivity(intent);
     }
 
@@ -126,6 +138,6 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
 
     @Override
     public void onListItemClick(int position) {
-
+        // TODO
     }
 }
