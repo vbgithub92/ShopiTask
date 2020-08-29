@@ -3,10 +3,12 @@ package com.androiddev.shopitask.models;
 import android.location.Location;
 import android.media.Image;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-public class ToDoItem {
+public class ToDoItem implements Serializable {
+
     private String id;
     private String activityName;
     private long date;

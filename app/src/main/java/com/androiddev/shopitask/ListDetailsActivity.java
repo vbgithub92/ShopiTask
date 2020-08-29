@@ -9,10 +9,14 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.androiddev.shopitask.models.List;
+import com.androiddev.shopitask.models.ShoppingList;
+
+import java.util.Objects;
+
 public class ListDetailsActivity extends AppCompatActivity {
 
-    // TODO
-    // private List theList;
+    private List theList;
 
     private TextView textViewListName;
     private TextView textViewListTotalPrompt;
@@ -26,6 +30,9 @@ public class ListDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_details);
+
+        theList = (List)getIntent().getSerializableExtra(TaskListsActivity.LIST_KEY);
+
         createToolbar();
         initializeViews();
     }
@@ -39,56 +46,45 @@ public class ListDetailsActivity extends AppCompatActivity {
         imageViewListTotalIcon = findViewById(R.id.listTotalIcon);
         imageViewListMembersIcon = findViewById(R.id.listMembersIcon);
 
-        // TODO updateViews(ListType);
-        updateViews(1);
-
+        updateViews();
     }
 
-    // TODO add list type and update views according to the type
-    private void updateViews(int type) {
+    private void updateViews() {
 
-        // TODO Get listName from the list
-        String listName = "Amazing List";
+        String listName = theList.getListName();
 
         String listTypePrompt = getString(R.string.total) + " ";
 
-        int listTotalCount; // TODO get from list
-        int memberCount;
+        int listTotalCount;
         int totalIconSrc;
+        int memberCount;
         int membersIconSrc;
 
-
-        // TODO Change
-        if (type == 1) {
+        if (theList instanceof ShoppingList) {
             listTypePrompt += getString(R.string.items);
             totalIconSrc = R.drawable.shopping_cart;
-
-            // for testing
-            listTotalCount = 21;
-            membersIconSrc = R.drawable.multiple_people;
-            memberCount = 5;
 
         } else {
             listTypePrompt += getString(R.string.tasks);
             totalIconSrc = R.drawable.tasklist;
-
-            // for testing
-            listTotalCount = -1;
-            membersIconSrc = R.drawable.single_person;
-            memberCount = 1;
         }
 
-        // TODO get list members amount from list
-        // Just for test
-        //int membersCount = // get from list, check if 1 -> update icon.
+        listTotalCount = theList.getListSize();
+
+        if(theList.isPrivate())
+            membersIconSrc = R.drawable.single_person;
+        else
+            membersIconSrc = R.drawable.multiple_people;
+
+        memberCount = theList.getContributors().size();
 
 
         textViewListName.setText(listName);
         textViewListTotalPrompt.setText(listTypePrompt);
-        textViewListTotalCount.setText(String.valueOf(listTotalCount));
-        textViewListMembersCount.setText(String.valueOf(memberCount));
         imageViewListTotalIcon.setImageResource(totalIconSrc);
+        textViewListTotalCount.setText(String.valueOf(listTotalCount));
         imageViewListMembersIcon.setImageResource(membersIconSrc);
+        textViewListMembersCount.setText(String.valueOf(memberCount));
 
     }
 
@@ -98,9 +94,8 @@ public class ListDetailsActivity extends AppCompatActivity {
     }
 
     private void createToolbar() {
-        // Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
     }
 }

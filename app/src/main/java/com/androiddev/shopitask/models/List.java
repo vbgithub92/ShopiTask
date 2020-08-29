@@ -1,9 +1,11 @@
 package com.androiddev.shopitask.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class List {
+
+public class List implements Serializable {
     private String listId;
     private String ownerId;
     private String listName;
@@ -85,4 +87,5 @@ public class List {
     public int getListSize() {
         return 0;
     }
+
 }
