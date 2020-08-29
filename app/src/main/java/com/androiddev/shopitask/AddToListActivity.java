@@ -33,24 +33,25 @@ import java.util.Objects;
 
 import static com.androiddev.shopitask.MainActivity.IS_PRIVATE_LIST_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_ID_KEY;
+import static com.androiddev.shopitask.MainActivity.LIST_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_NAME_KEY;
+import static com.androiddev.shopitask.MainActivity.LIST_OWNER_ID_KEY;
+import static com.androiddev.shopitask.MainActivity.LIST_SIZE_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_TYPE_KEY;
-import static com.androiddev.shopitask.MainActivity.SHOPPING_LIST_TYPE;
-import static com.androiddev.shopitask.MainActivity.TODO_LIST_TYPE;
+
 import static com.androiddev.shopitask.MainActivity.getDateFromDatePicker;
 
 public class AddToListActivity extends AppCompatActivity {
 
-    //AddToShoppingListFragment addToShoppingListFragment;
-    //AddToTaskListFragment addToTaskListFragment;
-
     private static final String TAG = "AddToListActivity";
-
+    private List theList;
     Fragment addToListFragment;
     String listName;
     String listType;
     boolean isPrivate;
     String listId;
+    String listOwnerId;
+    int listSize;
 
     String itemName;
     double qty;
@@ -77,9 +78,14 @@ public class AddToListActivity extends AppCompatActivity {
         listType = b.getString(LIST_TYPE_KEY);
         isPrivate = b.getBoolean(IS_PRIVATE_LIST_KEY);
         listId = b.getString(LIST_ID_KEY);
+        listOwnerId = b.getString(LIST_OWNER_ID_KEY);
+        listSize = b.getInt(LIST_SIZE_KEY);
 
         TextView addToListPrompt = findViewById(R.id.addToListPrompt);
 
+        if (listId != null) {
+            theList = (List) getIntent().getSerializableExtra(LIST_KEY);
+        }
         // Check type of fragment
         switch (ListType.valueOf(listType)) {
             case SHOPPING:
@@ -124,8 +130,8 @@ public class AddToListActivity extends AppCompatActivity {
     }
 
     private void createNewList() {
-        switch (listType) {
-            case SHOPPING_LIST_TYPE:
+        switch (ListType.valueOf(listType)) {
+            case SHOPPING:
                 itemName = ((EditText)findViewById(R.id.newItemName)).getText().toString();
                 qty = ((NumberPicker)findViewById(R.id.newItemAmount)).getValue();
                 int selectedUOMid = ((RadioGroup)findViewById(R.id.unitTypeGroup)).getCheckedRadioButtonId();
@@ -136,7 +142,7 @@ public class AddToListActivity extends AppCompatActivity {
                 newList = new ShoppingList(myUser.getUser_id(), listName,null, isPrivate, shoppingItem);
                 myUser.getDbReference().child("MyLists").child(newList.getListId()).setValue(newList);
                 break;
-            case TODO_LIST_TYPE:
+            case TODO:
                 itemName = ((EditText)findViewById(R.id.newTaskName)).getText().toString();
                 location = null;
                 date = getDateFromDatePicker((DatePicker)findViewById(R.id.newTaskDate));
@@ -155,9 +161,39 @@ public class AddToListActivity extends AppCompatActivity {
     }
 
     private void addItemToList() {
+        switch (ListType.valueOf(listType)) {
+            case SHOPPING:
+                itemName = ((EditText)findViewById(R.id.newItemName)).getText().toString();
+                qty = ((NumberPicker)findViewById(R.id.newItemAmount)).getValue();
+                int selectedUOMid = ((RadioGroup)findViewById(R.id.unitTypeGroup)).getCheckedRadioButtonId();
+                uom = UOM.valueOf(((RadioButton)findViewById(selectedUOMid)).getText().toString().toUpperCase());
+                pic = null;
+                ShoppingItem shoppingItem = new ShoppingItem(itemName, qty, uom, pic);
+                if(myUser.getUser_id().equals(listOwnerId)) {
+                    myUser.getDbReference().child("MyLists").child(listId).child("shoppingItems").child(Integer.toString(listSize)).setValue(shoppingItem);
+                } else {
+                    myUser.getGeneralDbReference().child(listOwnerId).child("MyLists").child(listId).child("shoppingItems").child(Integer.toString(listSize)).setValue(shoppingItem);
+                }
+                break;
+            case TODO:
+                itemName = ((EditText)findViewById(R.id.newTaskName)).getText().toString();
+                location = null;
+                date = getDateFromDatePicker((DatePicker)findViewById(R.id.newTaskDate));
+                pic = null;
+                ToDoItem toDoItem = new ToDoItem(itemName, date, location, pic);
+                if(myUser.getUser_id().equals(listOwnerId)) {
+                    myUser.getDbReference().child("MyLists").child(listId).child("toDoItems").child(Integer.toString(listSize)).setValue(toDoItem);
+                } else {
+                    myUser.getGeneralDbReference().child(listOwnerId).child("MyLists").child(listId).child("toDoItems").child(Integer.toString(listSize)).setValue(toDoItem);
+                }
+                break;
+            default:
+                return;
+        }
 
-        Log.d(TAG, "addItemToList: wow");
-
+        Intent intent = new Intent(this, ListDetailsActivity.class);
+        intent.putExtra(LIST_KEY, theList);
+        startActivity(intent);
     }
 
 }

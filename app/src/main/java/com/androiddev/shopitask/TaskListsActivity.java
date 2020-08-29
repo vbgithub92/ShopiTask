@@ -24,11 +24,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
+import static com.androiddev.shopitask.MainActivity.LIST_KEY;
+
 public class TaskListsActivity extends AppCompatActivity implements ListAdapter.OnListListener {
 
     private static final String TAG = "TaskListsActivity";
 
-    public static final String LIST_KEY = "Selected List";
+
     private Vibrator vibe;
 
     private RecyclerView recyclerView;

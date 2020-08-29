@@ -19,7 +19,10 @@ import java.util.Objects;
 
 import static com.androiddev.shopitask.MainActivity.BUNDLE_KEY;
 import static com.androiddev.shopitask.MainActivity.IS_PRIVATE_LIST_KEY;
+import static com.androiddev.shopitask.MainActivity.LIST_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_NAME_KEY;
+import static com.androiddev.shopitask.MainActivity.LIST_OWNER_ID_KEY;
+import static com.androiddev.shopitask.MainActivity.LIST_SIZE_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_TYPE_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_ID_KEY;
 
@@ -45,10 +48,16 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_details);
 
-        theList = (List)getIntent().getSerializableExtra(TaskListsActivity.LIST_KEY);
+        theList = (List)getIntent().getSerializableExtra(LIST_KEY);
 
         createToolbar();
         initializeViews();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        listAdapter.notifyDataSetChanged();
     }
 
     private void initializeViews() {
@@ -129,7 +138,10 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
         b.putString(LIST_NAME_KEY, theList.getListName());
         b.putString(LIST_TYPE_KEY, theList.getListType().toString());
         b.putString(LIST_ID_KEY ,theList.getListId());
+        b.putString(LIST_OWNER_ID_KEY ,theList.getOwnerId());
+        b.putInt(LIST_SIZE_KEY ,theList.getListSize());
         b.putBoolean(IS_PRIVATE_LIST_KEY, theList.isIsPrivate());
+        intent.putExtra(LIST_KEY, theList);
         intent.putExtra(BUNDLE_KEY, b);
         startActivity(intent);
     }
@@ -143,5 +155,11 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
     @Override
     public void onListItemClick(int position) {
         // TODO
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, TaskListsActivity.class);
+        startActivity(intent);
     }
 }
