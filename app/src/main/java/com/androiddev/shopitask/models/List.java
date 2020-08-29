@@ -2,10 +2,11 @@ package com.androiddev.shopitask.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.UUID;
 
 
-public class List implements Serializable {
+public class List implements Serializable{
     private String listId;
     private String ownerId;
     private String listName;

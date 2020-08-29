@@ -20,7 +20,6 @@ import com.androiddev.shopitask.models.ToDoItem;
 import com.androiddev.shopitask.models.ToDoList;
 import com.androiddev.shopitask.models.UOM;
 import com.androiddev.shopitask.models.MyUser;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,10 +33,9 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
     private Vibrator vibe;
 
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter listAdapter;
+    private MyListAdapter listAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    private String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private TextView textUserName;
 
     ArrayList<List> tasksList = new ArrayList<>();
@@ -55,14 +53,13 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
         findViewsById();
         textUserName.setText(myUser.getUserName());
         vibe = (Vibrator) TaskListsActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
-        myUser.initLists();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
         initRecyclerView();
+        myUser.initListsAndUpdateAdapter(listAdapter);
         updateTotals();
     }
 
@@ -74,7 +71,6 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
     }
 
     private void initRecyclerView() {
-
         recyclerView.setHasFixedSize(true);
         tasksList = new ArrayList<>();
         ArrayList<String> listContributors1 = new ArrayList<>(Arrays.asList(
@@ -134,12 +130,10 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
         //listAdapter = new ListAdapter(tasksListTest, this, this);
 
         // From server
-        Log.d(TAG, "initRecyclerView: Getting info from server");
-        tasksList.addAll(myUser.getToDoLists());
-        tasksList.addAll(myUser.getShoppingLists());
+        tasksList.addAll(myUser.getTasksList());
 
+        listAdapter = new MyListAdapter(tasksList, this, this);
 
-        listAdapter = new ListAdapter(tasksList, this, this);
         recyclerView.setAdapter(listAdapter);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -171,12 +165,11 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
 
         textTotalShoppingItems.setText(String.valueOf(totalShoppingItems));
         textTotalTasks.setText(String.valueOf(totalTasks));
-
     }
 
     @Override
     public void onListClick(int position) {
-        List selectedList = tasksList.get(position);
+        List selectedList = listAdapter.getLists(position);// tasksList.get(position);
         Intent intent = new Intent(this, ListDetailsActivity.class);
         intent.putExtra(LIST_KEY, selectedList);
         startActivity(intent);

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.androiddev.shopitask.MyListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,8 +24,7 @@ public class MyUser {
     private String email;
     private DatabaseReference dbReference;
 
-    private ArrayList<ShoppingList> shoppingLists;
-    private ArrayList<ToDoList> toDoLists;
+    ArrayList<List> tasksList = new ArrayList<>();
 
     public MyUser() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -32,46 +32,34 @@ public class MyUser {
         this.userName = user.getDisplayName();
         this.email = user.getEmail();
         this.dbReference = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid());
-        shoppingLists = new ArrayList<>();
-        toDoLists = new ArrayList<>();
+        tasksList = new ArrayList<>();
     }
 
      public void initLists() {
         this.dbReference.child("MyLists").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                initMyLists(dataSnapshot);
+                initMyLists(dataSnapshot, null);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("DB ERROR", error.getMessage());
             }
         });
-
-        //this.dbReference.child("MyLists").child("ToDoLists").addValueEventListener(new ValueEventListener() {
-        //    @Override
-        //    public void onDataChange(DataSnapshot dataSnapshot) {
-        //        initToDoLists(dataSnapshot);
-        //    }
-        //    @Override
-        //    public void onCancelled(@NonNull DatabaseError error) {
-        //        Log.d("DB ERROR", error.getMessage());
-        //    }
-        //});
     }
 
-    //public void initToDoLists() {
-    //    this.dbReference.child("MyLists").child("ToDoLists").addValueEventListener(new ValueEventListener() {
-    //        @Override
-    //        public void onDataChange(DataSnapshot dataSnapshot) {
-    //            initToDoLists(dataSnapshot);
-    //        }
-    //        @Override
-    //        public void onCancelled(@NonNull DatabaseError error) {
-    //            Log.d("DB ERROR", error.getMessage());
-    //        }
-    //    });
-    //}
+    public void initListsAndUpdateAdapter(final MyListAdapter myListAdapter) {
+        this.dbReference.child("MyLists").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                initMyLists(dataSnapshot, myListAdapter);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("DB ERROR", error.getMessage());
+            }
+        });
+    }
 
     public String getUser_id() {
         return user_id;
@@ -105,39 +93,47 @@ public class MyUser {
         this.dbReference = dbReference;
     }
 
+    public ArrayList<List> getTasksList() {
+        return tasksList;
+    }
+
+    public void setTasksList(ArrayList<List> tasksList) {
+        this.tasksList = tasksList;
+    }
+
     public ArrayList<ShoppingList> getShoppingLists() {
+        ArrayList<ShoppingList> shoppingLists = new ArrayList<>();
+        for (List l: tasksList) {
+            if (l.getListType() == ListType.SHOPPING)
+                shoppingLists.add((ShoppingList)l);
+        }
         return shoppingLists;
     }
 
-    public void setShoppingLists(ArrayList<ShoppingList> shoppingLists) {
-        this.shoppingLists = shoppingLists;
-    }
-
     public ArrayList<ToDoList> getToDoLists() {
+        ArrayList<ToDoList> toDoLists = new ArrayList<>();
+        for (List l: tasksList) {
+            if (l.getListType() == ListType.TODO)
+                toDoLists.add((ToDoList)l);
+        }
         return toDoLists;
     }
 
-    public void setToDoLists(ArrayList<ToDoList> toDoLists) {
-        this.toDoLists = toDoLists;
-    }
-
-    //private void initToDoLists(@NonNull DataSnapshot dataSnapshot) {
-    //    for (DataSnapshot ds: dataSnapshot.getChildren()) {
-    //        toDoLists.add(ds.getValue(ToDoList.class));
-    //    }
-    //}
-
-    private void initMyLists(@NonNull DataSnapshot dataSnapshot) {
+    private void initMyLists(@NonNull DataSnapshot dataSnapshot, MyListAdapter myListAdapter) {
         Log.d(TAG, "initMyLists: Im here");
         for (DataSnapshot ds: dataSnapshot.getChildren()) {
             switch (ListType.valueOf(ds.child("listType").getValue(String.class))) {
                 case SHOPPING:
-                    shoppingLists.add(ds.getValue(ShoppingList.class));
+                    tasksList.add(ds.getValue(ShoppingList.class));
                     break;
                 case TODO:
-                    toDoLists.add(ds.getValue(ToDoList.class));
+                    tasksList.add(ds.getValue(ToDoList.class));
                     break;
             }
+        }
+        if (myListAdapter != null) {
+            myListAdapter.setItems(tasksList);
+            myListAdapter.notifyDataSetChanged();
         }
     }
 
