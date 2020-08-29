@@ -8,13 +8,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.androiddev.shopitask.models.List;
 import com.androiddev.shopitask.models.ShoppingList;
 
 import java.util.Objects;
 
-public class ListDetailsActivity extends AppCompatActivity {
+public class ListDetailsActivity extends AppCompatActivity implements ShoppingListItemAdapter.OnListItemListener {
 
     private List theList;
 
@@ -25,6 +27,11 @@ public class ListDetailsActivity extends AppCompatActivity {
 
     private ImageView imageViewListTotalIcon;
     private ImageView imageViewListMembersIcon;
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter listAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +53,9 @@ public class ListDetailsActivity extends AppCompatActivity {
         imageViewListTotalIcon = findViewById(R.id.listTotalIcon);
         imageViewListMembersIcon = findViewById(R.id.listMembersIcon);
 
+        recyclerView = findViewById(R.id.my_recycler_view);
+
+        initRecyclerView();
         updateViews();
     }
 
@@ -88,6 +98,19 @@ public class ListDetailsActivity extends AppCompatActivity {
 
     }
 
+    private void initRecyclerView() {
+
+        recyclerView.setHasFixedSize(true);
+
+        if(theList instanceof ShoppingList) {
+            listAdapter = new ShoppingListItemAdapter((ShoppingList)theList, this, this);
+        }
+
+        recyclerView.setAdapter(listAdapter);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+    }
+
     public void startAddToListActivity(View view) {
         Intent intent = new Intent(this, AddToListActivity.class);
         startActivity(intent);
@@ -97,5 +120,10 @@ public class ListDetailsActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+    }
+
+    @Override
+    public void onListItemClick(int position) {
+
     }
 }

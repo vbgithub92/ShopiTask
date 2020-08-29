@@ -146,16 +146,12 @@
             android:layout_weight="0.25"
             />
 
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:scrollbars="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="4"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:textStyle="bold|italic"
-            android:fontFamily="sans-serif-black"
-            android:textColor="#000000"
-            android:text="Hard part here"
             />
 
         <LinearLayout

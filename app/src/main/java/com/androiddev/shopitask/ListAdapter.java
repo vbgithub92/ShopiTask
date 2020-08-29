@@ -20,8 +20,8 @@ class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
     private static final String TAG = "ListAdapter";
 
     private ArrayList<List> lists = new ArrayList<>();
-    private Context context;
 
+    private Context context;
     private OnListListener onlistListener;
 
     public ListAdapter(ArrayList<List> lists, Context context , OnListListener onlistListener) {
