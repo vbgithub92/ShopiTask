@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -19,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.androiddev.shopitask.fragments.AddToShoppingListFragment;
 import com.androiddev.shopitask.fragments.AddToTaskListFragment;
 import com.androiddev.shopitask.models.List;
+import com.androiddev.shopitask.models.ListType;
 import com.androiddev.shopitask.models.MyUser;
 import com.androiddev.shopitask.models.ShoppingItem;
 import com.androiddev.shopitask.models.ShoppingList;
@@ -26,26 +28,28 @@ import com.androiddev.shopitask.models.ToDoItem;
 import com.androiddev.shopitask.models.ToDoList;
 import com.androiddev.shopitask.models.UOM;
 
-import static com.androiddev.shopitask.MainActivity.SHOPPING_LIST_TYPE;
-import static com.androiddev.shopitask.MainActivity.TODO_LIST_TYPE;
+import java.util.Objects;
+
 import static com.androiddev.shopitask.MainActivity.IS_PRIVATE_LIST_KEY;
+import static com.androiddev.shopitask.MainActivity.LIST_ID_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_NAME_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_TYPE_KEY;
+import static com.androiddev.shopitask.MainActivity.SHOPPING_LIST_TYPE;
+import static com.androiddev.shopitask.MainActivity.TODO_LIST_TYPE;
 import static com.androiddev.shopitask.MainActivity.getDateFromDatePicker;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
 
 public class AddToListActivity extends AppCompatActivity {
 
     //AddToShoppingListFragment addToShoppingListFragment;
     //AddToTaskListFragment addToTaskListFragment;
 
+    private static final String TAG = "AddToListActivity";
+
     Fragment addToListFragment;
     String listName;
     String listType;
     boolean isPrivate;
+    String listId;
 
     String itemName;
     double qty;
@@ -71,13 +75,14 @@ public class AddToListActivity extends AppCompatActivity {
         listName = b.getString(LIST_NAME_KEY);
         listType = b.getString(LIST_TYPE_KEY);
         isPrivate = b.getBoolean(IS_PRIVATE_LIST_KEY);
+        listId = b.getString(LIST_ID_KEY);
 
         // Check type of fragment
-        switch (listType) {
-            case SHOPPING_LIST_TYPE:
+        switch (ListType.valueOf(listType)) {
+            case SHOPPING:
                 addToListFragment = new AddToShoppingListFragment();
                 break;
-            case TODO_LIST_TYPE:
+            case TODO:
                 addToListFragment = new AddToTaskListFragment();
                 break;
             default:
@@ -104,7 +109,7 @@ public class AddToListActivity extends AppCompatActivity {
        addButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               if (true) {
+               if (listId == null) {
                    createNewList();
                } else {
                    addItemToList();
@@ -145,6 +150,8 @@ public class AddToListActivity extends AppCompatActivity {
     }
 
     private void addItemToList() {
+
+        Log.d(TAG, "addItemToList: wow");
 
     }
 

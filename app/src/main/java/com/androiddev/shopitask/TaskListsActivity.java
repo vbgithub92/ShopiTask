@@ -19,8 +19,6 @@ import com.androiddev.shopitask.models.ShoppingList;
 import com.androiddev.shopitask.models.ToDoItem;
 import com.androiddev.shopitask.models.ToDoList;
 import com.androiddev.shopitask.models.UOM;
-import com.google.firebase.auth.FirebaseAuth;
-import com.androiddev.shopitask.models.MyUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,13 +52,14 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
         findViewsById();
         textUserName.setText(myUser.getUserName());
         vibe = (Vibrator) TaskListsActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
+
+        initRecyclerView();
+        myUser.initListsAndUpdateAdapter(listAdapter);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        initRecyclerView();
-        myUser.initListsAndUpdateAdapter(listAdapter);
         updateTotals();
     }
 
@@ -135,7 +134,7 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
         //listAdapter = new ListAdapter(tasksListTest, this, this);
 
         // From server
-        tasksList.addAll(myUser.getTasksList());
+        //tasksList.addAll(myUser.getTasksList());
 
         listAdapter = new MyListAdapter(tasksList, this, this);
 
@@ -161,7 +160,8 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
         int totalShoppingItems = 0;
         int totalTasks = 0;
 
-        for (List list : tasksList) {
+        // TODO FIX
+        for (List list : myUser.getTasksList()) {
             if (list instanceof ShoppingList)
                 totalShoppingItems += ((ShoppingList) list).getListSize();
             else

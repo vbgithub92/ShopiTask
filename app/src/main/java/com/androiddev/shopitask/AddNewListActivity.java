@@ -16,6 +16,7 @@ import java.util.Objects;
 
 import static com.androiddev.shopitask.MainActivity.BUNDLE_KEY;
 import static com.androiddev.shopitask.MainActivity.IS_PRIVATE_LIST_KEY;
+import static com.androiddev.shopitask.MainActivity.LIST_ID_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_NAME_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_TYPE_KEY;
 import static com.androiddev.shopitask.MainActivity.SHOPPING_LIST_TYPE;
@@ -67,6 +68,7 @@ public class AddNewListActivity extends AppCompatActivity {
             b.putString(LIST_NAME_KEY, listName);
             b.putString(LIST_TYPE_KEY, listType);
             b.putBoolean(IS_PRIVATE_LIST_KEY, isPrivate);
+            b.putString(LIST_ID_KEY, null);
             intent.putExtra(BUNDLE_KEY, b);
             startActivity(intent);
         }
