@@ -76,8 +76,10 @@ public class ListDetailsActivity extends AppCompatActivity {
         else
             membersIconSrc = R.drawable.multiple_people;
 
-        memberCount = theList.getContributors().size();
-
+        if (theList.getContributors() != null)
+            memberCount = theList.getContributors().size() + 1;
+        else
+            memberCount = 1;
 
         textViewListName.setText(listName);
         textViewListTotalPrompt.setText(listTypePrompt);

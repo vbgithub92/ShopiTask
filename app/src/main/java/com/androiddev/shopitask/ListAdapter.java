@@ -34,6 +34,10 @@ class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
         void onListClick(int position);
     }
 
+    public void setItems(ArrayList<List> lists) {
+        this.lists = lists;
+    }
+
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView listTypeIcon;
         TextView listName;
@@ -114,6 +118,14 @@ class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
         else
             membersAmount = 1;
         holder.listMembersAmount.setText(String.valueOf(membersAmount));
+    }
+
+    public ArrayList<List> getLists() {
+        return lists;
+    }
+
+    public List getLists(int position) {
+        return lists.get(position);
     }
 
     @Override
