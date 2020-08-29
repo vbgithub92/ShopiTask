@@ -124,7 +124,7 @@ public class AddToListActivity extends AppCompatActivity {
 
                 ShoppingItem shoppingItem = new ShoppingItem(itemName, qty, uom, pic);
                 newList = new ShoppingList(myUser.getUser_id(), listName,null, isPrivate, shoppingItem);
-                myUser.getDbReference().child("MyLists").child("ShoppingLists").child(newList.getListId().toString()).setValue(newList);
+                myUser.getDbReference().child("MyLists").child(newList.getListId()).setValue(newList);
                 break;
             case TODO_LIST_TYPE:
                 itemName = ((EditText)findViewById(R.id.newTaskName)).getText().toString();
@@ -134,7 +134,7 @@ public class AddToListActivity extends AppCompatActivity {
 
                 ToDoItem toDoItem = new ToDoItem(itemName, date, location, pic);
                 newList = new ToDoList(myUser.getUser_id(), listName,null, isPrivate, toDoItem);
-                myUser.getDbReference().child("MyLists").child("ToDoLists").child(newList.getListId().toString()).setValue(newList);
+                myUser.getDbReference().child("MyLists").child(newList.getListId()).setValue(newList);
                 break;
             default:
                 return;

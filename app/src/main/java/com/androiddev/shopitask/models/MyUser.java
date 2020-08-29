@@ -30,39 +30,46 @@ public class MyUser {
         this.userName = user.getDisplayName();
         this.email = user.getEmail();
         this.dbReference = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid());
+        shoppingLists = new ArrayList<>();
+        toDoLists = new ArrayList<>();
     }
 
-    public ArrayList<ShoppingList> initShoppingLists() {
-        this.dbReference.child("ShoppingLists").addValueEventListener(new ValueEventListener() {
+     public void initLists() {
+        this.dbReference.child("MyLists").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds: dataSnapshot.getChildren()) {
-                    shoppingLists.add(ds.getValue(ShoppingList.class));
-                }
+                initMyLists(dataSnapshot);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("DB ERROR", error.getMessage());
             }
         });
-        return getShoppingLists();
+
+        //this.dbReference.child("MyLists").child("ToDoLists").addValueEventListener(new ValueEventListener() {
+        //    @Override
+        //    public void onDataChange(DataSnapshot dataSnapshot) {
+        //        initToDoLists(dataSnapshot);
+        //    }
+        //    @Override
+        //    public void onCancelled(@NonNull DatabaseError error) {
+        //        Log.d("DB ERROR", error.getMessage());
+        //    }
+        //});
     }
 
-    public ArrayList<ToDoList> initToDoLists() {
-        this.dbReference.child("ToDoLists").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds: dataSnapshot.getChildren()) {
-                    toDoLists.add(ds.getValue(ToDoList.class));
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("DB ERROR", error.getMessage());
-            }
-        });
-        return getToDoLists();
-    }
+    //public void initToDoLists() {
+    //    this.dbReference.child("MyLists").child("ToDoLists").addValueEventListener(new ValueEventListener() {
+    //        @Override
+    //        public void onDataChange(DataSnapshot dataSnapshot) {
+    //            initToDoLists(dataSnapshot);
+    //        }
+    //        @Override
+    //        public void onCancelled(@NonNull DatabaseError error) {
+    //            Log.d("DB ERROR", error.getMessage());
+    //        }
+    //    });
+    //}
 
     public String getUser_id() {
         return user_id;
@@ -110,6 +117,25 @@ public class MyUser {
 
     public void setToDoLists(ArrayList<ToDoList> toDoLists) {
         this.toDoLists = toDoLists;
+    }
+
+    //private void initToDoLists(@NonNull DataSnapshot dataSnapshot) {
+    //    for (DataSnapshot ds: dataSnapshot.getChildren()) {
+    //        toDoLists.add(ds.getValue(ToDoList.class));
+    //    }
+    //}
+
+    private void initMyLists(@NonNull DataSnapshot dataSnapshot) {
+        for (DataSnapshot ds: dataSnapshot.getChildren()) {
+            switch (ListType.valueOf(ds.child("listType").getValue(String.class))) {
+                case SHOPPING:
+                    shoppingLists.add(ds.getValue(ShoppingList.class));
+                    break;
+                case TODO:
+                    toDoLists.add(ds.getValue(ToDoList.class));
+                    break;
+            }
+        }
     }
 
     @Override

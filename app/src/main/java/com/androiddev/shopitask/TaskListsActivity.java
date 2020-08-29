@@ -14,9 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androiddev.shopitask.models.List;
-import com.androiddev.shopitask.models.ShoppingItem;
-import com.androiddev.shopitask.models.ShoppingList;
-import com.androiddev.shopitask.models.UOM;
+import com.androiddev.shopitask.models.MyUser;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -33,16 +31,16 @@ public class TaskListsActivity extends AppCompatActivity {
     private Vibrator vibe;
     private String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private TextView textUserName;
-
+    private MyUser myUser = new MyUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_lists);
         createToolbar();
         findViewsById();
-
-        textUserName.setText(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName());
+        textUserName.setText(myUser.getUserName());
         vibe = (Vibrator) TaskListsActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
+        myUser.initLists();
     }
 
     @Override
@@ -62,18 +60,21 @@ public class TaskListsActivity extends AppCompatActivity {
 
         ArrayList<List> myList = new ArrayList<>();
 
-        for(int i = 0 ; i < 4 ; i++) {
-            myList.add(new List("1","List " + i, null,true));
-        }
+        //for(int i = 0 ; i < 4 ; i++) {
+        //    myList.add(new List("1","List " + i, null,true));
+        //}
+//
+        //myList.add(new ShoppingList("1", "Shopping1", null, true,
+        //        new ShoppingItem("Vasya",10,UOM.L, null)));
+//
+        //ShoppingList s1 = new ShoppingList("1", "Shopping1", null, true,
+        //        new ShoppingItem("Vasya",10,UOM.L, null));
+        //s1.addShoppingItem(new ShoppingItem("Vasdasa",11,UOM.KG, null));
+//
+        //myList.add(s1);
 
-        myList.add(new ShoppingList("1", "Shopping1", null, true,
-                new ShoppingItem("Vasya",10,UOM.L, null)));
-
-        ShoppingList s1 = new ShoppingList("1", "Shopping1", null, true,
-                new ShoppingItem("Vasya",10,UOM.L, null));
-        s1.addShoppingItem(new ShoppingItem("Vasdasa",11,UOM.KG, null));
-
-        myList.add(s1);
+        myList.addAll(myUser.getToDoLists());
+        myList.addAll(myUser.getShoppingLists());
 
         listAdapter = new ListAdapter(myList,this);
         recyclerView.setAdapter(listAdapter);
