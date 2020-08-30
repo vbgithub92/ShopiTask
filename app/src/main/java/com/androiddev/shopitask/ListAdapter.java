@@ -163,6 +163,12 @@ class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
             }
         });
 
+
+        snackbar.setActionTextColor(context.getResources().getColor(R.color.colorAccent));
+        //View v = snackbar.getView();
+        //TextView tv = (TextView) v.findViewById(com.google.android.material.R.id.snackbar_text);
+        //tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
         snackbar.show();
 
     }

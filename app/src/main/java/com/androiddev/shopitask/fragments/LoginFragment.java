@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import com.androiddev.shopitask.R;
 import com.androiddev.shopitask.TaskListsActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -26,6 +28,7 @@ public class LoginFragment extends Fragment {
 
     private EditText editTextUserEmail;
     private EditText editTextUserPassword;
+    private Button initiateLoginButton;
 
     private MainActivity mainActivity;
 
@@ -50,42 +53,32 @@ public class LoginFragment extends Fragment {
         editTextUserEmail = mainActivity.findViewById(R.id.existingUserEmail);
         editTextUserPassword = mainActivity.findViewById(R.id.existingUserPassword);
 
-        Button initiateLoginButton = mainActivity.findViewById(R.id.initiateLoginButton);
+        initiateLoginButton = mainActivity.findViewById(R.id.initiateLoginButton);
         initiateLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String userEmail = editTextUserEmail.getText().toString();
                 String userPassword = editTextUserPassword.getText().toString();
                 if (checkValidInput(userEmail, userPassword)) {
-                    // TODO Valid input - try to connect next
                     login(userEmail, userPassword);
                 }
                 else {
-                    // TODO Invalid input - error
-                    test("FAILED", "LOGIN");
+                    showUndoSnackbar(getString(R.string.login_no_input));
                 }
-
             }
         });
     }
 
     private boolean checkValidInput(String email, String password) {
-        // TODO if(checkEmail(email) && checkPassword(password))
-
-        // Just to check if there is an input
-        if (email != null && !email.isEmpty() && password != null && !password.isEmpty())
-            return true;
-        return false;
+        return checkEmail(email) && checkPassword(password);
     }
 
     private boolean checkEmail(String userEmail) {
-        // TODO Add
-        return true;
+        return !userEmail.isEmpty() && userEmail.contains("@") && userEmail.contains(".");
     }
 
     private boolean checkPassword(String userPassword) {
-        // TODO Add
-        return true;
+        return !userPassword.isEmpty();
     }
 
     private void test(String email, String password) {
@@ -104,7 +97,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (!task.isSuccessful()) {
-                    Toast.makeText(mainActivity.getApplicationContext(), getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
+                    showUndoSnackbar(getString(R.string.login_fail));
                     mainActivity.getLoadingDialog().dismissLoadingDialog();
                 }
                 else {
@@ -115,5 +108,14 @@ public class LoginFragment extends Fragment {
             }
         });
 
+    }
+
+    private void showUndoSnackbar(String message) {
+        Snackbar snackbar = Snackbar.make(initiateLoginButton, message , Snackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(mainActivity.getResources().getColor(R.color.colorAccent));
+        View v = snackbar.getView();
+        TextView tv = (TextView) v.findViewById(com.google.android.material.R.id.snackbar_text);
+        tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        snackbar.show();
     }
 }

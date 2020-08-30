@@ -1,6 +1,5 @@
 package com.androiddev.shopitask.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +18,7 @@ import com.androiddev.shopitask.R;
 import com.androiddev.shopitask.TaskListsActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,6 +30,7 @@ public class SignUpFragment extends Fragment {
     private EditText editTextUserName;
     private EditText editTextUserEmail;
     private EditText editTextUserPassword;
+    private Button initiateSignUpButton;
 
     private MainActivity mainActivity;
 
@@ -55,7 +56,7 @@ public class SignUpFragment extends Fragment {
         editTextUserEmail = mainActivity.findViewById(R.id.newUserEmail);
         editTextUserPassword = mainActivity.findViewById(R.id.newUserPassword);
 
-        Button initiateSignUpButton = mainActivity.findViewById(R.id.initiateSignUpButton);
+        initiateSignUpButton = mainActivity.findViewById(R.id.initiateSignUpButton);
         initiateSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,49 +68,37 @@ public class SignUpFragment extends Fragment {
                   SignUp(userName, userEmail,userPassword);
                 }
                 else {
-                    // TODO FAIL
+                    showUndoSnackbar(getString(R.string.sign_up_no_input));
                 }
 
             }
         });
     }
 
-    // TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     private boolean checkValidInput(String name, String email, String password) {
-        if (checkName(name) && checkEmail(email) && checkPassword(password))
-            return true;
-        return false;
+        return checkName(name) && checkEmail(email) && checkPassword(password);
     }
 
     private boolean checkName(String userName) {
-        // TODO Add
-        return true;
+        return !userName.isEmpty();
     }
 
     private boolean checkEmail(String userEmail) {
-        // TODO Add
-        return true;
+        return !userEmail.isEmpty() && userEmail.contains("@") && userEmail.contains(".");
     }
 
     private boolean checkPassword(String userPassword) {
-        // TODO Add
-        return true;
+        return !userPassword.isEmpty();
     }
 
     private void SignUp(final String name, final String email, final String password){
-        Context context = mainActivity.getApplicationContext();
-        CharSequence text = "Input: " + name + " | " + email + " | " + password;
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-
         mAut = FirebaseAuth.getInstance();
         mainActivity.getLoadingDialog().startLoadingDialog(getString(R.string.signing_up));
         mAut.createUserWithEmailAndPassword(email, password).addOnCompleteListener(mainActivity, new OnCompleteListener<AuthResult>() {
            @Override
            public void onComplete(@NonNull Task<AuthResult> task) {
                if (!task.isSuccessful()) {
-                   Toast.makeText(mainActivity.getApplicationContext(), "fail", Toast.LENGTH_SHORT).show();
+                   showUndoSnackbar(getString(R.string.sign_up_fail));
                    mainActivity.getLoadingDialog().dismissLoadingDialog();
                } else {
                    FirebaseUser user = mAut.getCurrentUser();
@@ -121,7 +110,7 @@ public class SignUpFragment extends Fragment {
                        @Override
                        public void onComplete(@NonNull Task<AuthResult> task) {
                            if (!task.isSuccessful()) {
-                               Toast.makeText(mainActivity.getApplicationContext(), "fail", Toast.LENGTH_SHORT).show();
+                               showUndoSnackbar(getString(R.string.login_fail));
                            }
                            else {
                                mainActivity.getLoadingDialog().dismissLoadingDialog();
@@ -133,6 +122,15 @@ public class SignUpFragment extends Fragment {
                }
            }
        });
+    }
+
+    private void showUndoSnackbar(String message) {
+        Snackbar snackbar = Snackbar.make(initiateSignUpButton, message , Snackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(mainActivity.getResources().getColor(R.color.colorAccent));
+        View v = snackbar.getView();
+        TextView tv = (TextView) v.findViewById(com.google.android.material.R.id.snackbar_text);
+        tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        snackbar.show();
     }
 }
 

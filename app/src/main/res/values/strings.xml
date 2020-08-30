@@ -52,6 +52,10 @@
     <string name="user_password_prompt">Choose a password</string>
     <string name="user_password">Password</string>
     <string name="login_fail">Unable to log in. Try again?</string>
+    <string name="login_no_input">Please enter an email and a password</string>
+    <string name="sign_up_no_input">Please enter a name an email and a password</string>
+    <string name="sign_up_fail">Unable to sign up. Try again?</string>
+
 
     <!-- Add to shopping list-->
     <string name="add_to_shopping_prompt">What are we adding?</string>
@@ -93,7 +97,7 @@
 
     <!-- *************************************************************************************** -->
     <!--SnackBars-->
-    <string name="undo_delete_prompt">List deleted</string>
+    <string name="undo_delete_prompt">The list was deleted</string>
     <string name="undo">Undo</string>
 
 </resources>

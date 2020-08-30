@@ -1,20 +1,16 @@
 package com.androiddev.shopitask.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.androiddev.shopitask.R;
-
-import java.util.Objects;
 
 
 public class AddToShoppingListFragment extends Fragment {
@@ -55,22 +51,5 @@ public class AddToShoppingListFragment extends Fragment {
                 }
             });
         }
-    }
-
-    /* ********************* DEV ********************* */
-    public void testIfWorks(String newTaskName, String newTaskLocation) {
-        Context context = Objects.requireNonNull(getActivity()).getApplicationContext();
-        CharSequence text = newTaskName + " | " + newTaskLocation;
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-    }
-
-    public void testIfWorks(int val) {
-        Context context = Objects.requireNonNull(getActivity()).getApplicationContext();
-        CharSequence text = String.valueOf(val);
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
     }
 }

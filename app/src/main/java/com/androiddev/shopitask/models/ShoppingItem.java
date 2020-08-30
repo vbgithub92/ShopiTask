@@ -1,6 +1,6 @@
 package com.androiddev.shopitask.models;
 
-import android.media.Image;
+import android.graphics.Bitmap;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,11 +12,11 @@ public class ShoppingItem implements Serializable {
     private String name;
     private double quantity;
     private UOM uom;
-    private Image pic;
+    private Bitmap pic;
 
     public ShoppingItem() {}
 
-    public ShoppingItem(String name, double quantity, UOM uom, Image pic) {
+    public ShoppingItem(String name, double quantity, UOM uom, Bitmap pic) {
         this.name = name;
         this.quantity = quantity;
         this.uom = uom;
@@ -24,7 +24,7 @@ public class ShoppingItem implements Serializable {
         this.id = UUID.randomUUID().toString();
     }
 
-    public ShoppingItem(String id, String name, double quantity, UOM uom, Image pic) {
+    public ShoppingItem(String id, String name, double quantity, UOM uom, Bitmap pic) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
@@ -64,11 +64,11 @@ public class ShoppingItem implements Serializable {
         this.uom = uom;
     }
 
-    public Image getPic() {
+    public Bitmap getPic() {
         return pic;
     }
 
-    public void setPic(Image pic) {
+    public void setPic(Bitmap pic) {
         this.pic = pic;
     }
 
