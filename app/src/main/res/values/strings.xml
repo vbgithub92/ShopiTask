@@ -88,4 +88,8 @@
     <string name="signing_up">Signing Up…</string>
     <string name="getting_ready">Getting ready to be productive…</string>
 
+    <!-- Shopping Item Dialog -->
+    <string name="back">Back</string>
+    <string name="got_it">Got it!</string>
+
 </resources>

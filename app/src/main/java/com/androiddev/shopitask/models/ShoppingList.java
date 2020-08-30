@@ -52,4 +52,8 @@ public class ShoppingList extends List {
     public void removeItem(ShoppingItem item) {
         this.shoppingItems.remove(item);
     }
+
+    public ShoppingItem get(int position) {
+        return shoppingItems.get(position);
+    }
 }

@@ -36,6 +36,8 @@ import static com.androiddev.shopitask.MainActivity.LIST_TYPE_KEY;
 
 public class ListDetailsActivity extends AppCompatActivity implements ShoppingListItemAdapter.OnListItemListener, ToDoListItemAdapter.OnListItemListener {
 
+    private static final String TAG = "ListDetailsActivity";
+
     private List theList;
     private MyUser myUser = new MyUser();
 
@@ -65,7 +67,7 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_details);
 
-        theList = (List)getIntent().getSerializableExtra(LIST_KEY);
+        theList = (List) getIntent().getSerializableExtra(LIST_KEY);
 
         createToolbar();
         initializeViews();
@@ -116,7 +118,7 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
 
         listTotalCount = theList.getListSize();
 
-        if(theList.isIsPrivate())
+        if (theList.isIsPrivate())
             membersIconSrc = R.drawable.single_person;
         else
             membersIconSrc = R.drawable.multiple_people;
@@ -139,11 +141,10 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
 
         recyclerView.setHasFixedSize(true);
 
-        if(theList instanceof ShoppingList) {
-            listAdapter = new ShoppingListItemAdapter((ShoppingList)theList, this, this);
-        }
-        else if(theList instanceof ToDoList) {
-            listAdapter = new ToDoListItemAdapter((ToDoList) theList, this,this);
+        if (theList instanceof ShoppingList) {
+            listAdapter = new ShoppingListItemAdapter((ShoppingList) theList, this, this);
+        } else if (theList instanceof ToDoList) {
+            listAdapter = new ToDoListItemAdapter((ToDoList) theList, this, this);
         }
 
         recyclerView.setAdapter(listAdapter);
@@ -156,9 +157,9 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
         Bundle b = new Bundle();
         b.putString(LIST_NAME_KEY, theList.getListName());
         b.putString(LIST_TYPE_KEY, theList.getListType().toString());
-        b.putString(LIST_ID_KEY ,theList.getListId());
-        b.putString(LIST_OWNER_ID_KEY ,theList.getOwnerId());
-        b.putInt(LIST_SIZE_KEY ,theList.getListSize());
+        b.putString(LIST_ID_KEY, theList.getListId());
+        b.putString(LIST_OWNER_ID_KEY, theList.getOwnerId());
+        b.putInt(LIST_SIZE_KEY, theList.getListSize());
         b.putBoolean(IS_PRIVATE_LIST_KEY, theList.isIsPrivate());
         intent.putExtra(LIST_KEY, theList);
         intent.putExtra(BUNDLE_KEY, b);
@@ -174,6 +175,10 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
     @Override
     public void onListItemClick(int position) {
         // TODO
+        if (theList instanceof ShoppingList) {
+            ShoppingItemDialog dialog = new ShoppingItemDialog(this, ((ShoppingList)theList).get(position));
+            dialog.startShoppingItemDialog();
+        }
     }
 
     @Override
@@ -185,15 +190,14 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
     private void initShareButton() {
         buttonShareList = findViewById(R.id.shareListButton);
 
-        if(theList.getOwnerId().equals(myUser.getUser_id())) {
+        if (theList.getOwnerId().equals(myUser.getUser_id())) {
             buttonShareList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     shareList(view);
                 }
             });
-        }
-        else {
+        } else {
             buttonShareList.setVisibility(View.INVISIBLE);
         }
 
@@ -205,17 +209,16 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
 
         editTextTargetEmail = shareDialog.findViewById(R.id.shareTargetEmail);
         shareButton = shareDialog.findViewById(R.id.shareButton);
-        closeButton=  shareDialog.findViewById(R.id.closeButton);
+        closeButton = shareDialog.findViewById(R.id.closeButton);
 
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String targetEmail = editTextTargetEmail.getText().toString();
-                if(!targetEmail.isEmpty()) {
+                if (!targetEmail.isEmpty()) {
                     // TODO Magic
                     shareDialog.dismiss();
-                }
-                else {
+                } else {
                     Context context = getApplicationContext();
                     CharSequence text = getString(R.string.share_error);
                     int duration = Toast.LENGTH_SHORT;

@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import com.androiddev.shopitask.fragments.LoginFragment;
 import com.androiddev.shopitask.fragments.MainFragment;
 import com.androiddev.shopitask.fragments.SignUpFragment;
-import com.androiddev.shopitask.models.LoadingDialog;
 
 import java.util.Calendar;
 
