@@ -25,6 +25,10 @@ public class ToDoList extends List {
         this.toDoItems = toDoItems;
     }
 
+    public int getItemIndex(ToDoItem toDoItem) {
+        return this.toDoItems.indexOf(toDoItem);
+    }
+
     public ArrayList<ToDoItem> getToDoItems() {
         return toDoItems;
     }

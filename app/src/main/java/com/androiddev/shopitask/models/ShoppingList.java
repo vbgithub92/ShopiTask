@@ -25,6 +25,10 @@ public class ShoppingList extends List {
         this.shoppingItems = shoppingItems;
     }
 
+    public int getItemIndex(ShoppingItem shoppingItem) {
+        return this.shoppingItems.indexOf(shoppingItem);
+    }
+
     public ArrayList<ShoppingItem> getShoppingItems() {
         return shoppingItems;
     }
