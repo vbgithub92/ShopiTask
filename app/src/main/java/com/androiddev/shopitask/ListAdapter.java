@@ -159,7 +159,7 @@ class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
             public void onDismissed(Snackbar transientBottomBar, int event) {
                 super.onDismissed(transientBottomBar, event);
                 // TODO Magic Very Big
-                //myUser.getTasksList().remove(deletedList);
+                myUser.deleteList(deletedList);
             }
         });
 

@@ -95,6 +95,9 @@ class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListItemAdapt
 
     @Override
     public int getItemCount() {
-        return shoppingItemsList.getShoppingItems().size();
+        if (shoppingItemsList.getShoppingItems() != null)
+            return shoppingItemsList.getShoppingItems().size();
+        else
+            return 0;
     }
 }

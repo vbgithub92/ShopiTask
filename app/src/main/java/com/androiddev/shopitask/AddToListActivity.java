@@ -171,6 +171,7 @@ public class AddToListActivity extends AppCompatActivity {
                 } else {
                     myUser.getGeneralDbReference().child(listOwnerId).child("MyLists").child(listId).child("shoppingItems").child(Integer.toString(listSize)).setValue(shoppingItem);
                 }
+                ((ShoppingList)theList).addShoppingItem(shoppingItem);
                 break;
             case TODO:
                 itemName = ((EditText)findViewById(R.id.newTaskName)).getText().toString();
@@ -183,6 +184,7 @@ public class AddToListActivity extends AppCompatActivity {
                 } else {
                     myUser.getGeneralDbReference().child(listOwnerId).child("MyLists").child(listId).child("toDoItems").child(Integer.toString(listSize)).setValue(toDoItem);
                 }
+                ((ToDoList)theList).addToDoItem(toDoItem);
                 break;
             default:
                 return;

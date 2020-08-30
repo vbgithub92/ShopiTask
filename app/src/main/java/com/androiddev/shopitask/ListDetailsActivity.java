@@ -171,11 +171,11 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
     public void onListItemClick(int position) {
         // TODO
         if (theList instanceof ShoppingList) {
-            ShoppingItemDialog dialog = new ShoppingItemDialog(this, ((ShoppingList)theList).get(position));
+            ShoppingItemDialog dialog = new ShoppingItemDialog(this, myUser, (ShoppingList)theList, ((ShoppingList)theList).get(position), position, listAdapter);
             dialog.startShoppingItemDialog();
         }
         else {
-            ToDoItemDialog dialog = new ToDoItemDialog(this,((ToDoList)theList).get(position));
+            ToDoItemDialog dialog = new ToDoItemDialog(this, myUser, (ToDoList)theList, ((ToDoList)theList).get(position), position, listAdapter);
             dialog.startToDoItemDialog();
         }
     }

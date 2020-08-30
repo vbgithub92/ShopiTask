@@ -10,21 +10,33 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.androiddev.shopitask.models.MyUser;
 import com.androiddev.shopitask.models.ShoppingItem;
+import com.androiddev.shopitask.models.ShoppingList;
 import com.androiddev.shopitask.models.UOM;
 
 import java.util.Objects;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 class ShoppingItemDialog {
 
     private Activity activity;
     private AlertDialog dialog;
+    private MyUser myUser;
+    private ShoppingList shoppingList;
+    private RecyclerView.Adapter listAdapter;
+    private int position;
 
     ShoppingItem theItem;
 
-    public ShoppingItemDialog(Activity myActivity, ShoppingItem shoppingItem) {
+    public ShoppingItemDialog(Activity myActivity, MyUser myUser, ShoppingList shoppingList, ShoppingItem shoppingItem, int position, RecyclerView.Adapter listAdapter) {
         activity = myActivity;
         this.theItem = shoppingItem;
+        this.myUser = myUser;
+        this.shoppingList = shoppingList;
+        this.listAdapter = listAdapter;
+        this.position = position;
     }
 
     public void startShoppingItemDialog() {
@@ -65,7 +77,9 @@ class ShoppingItemDialog {
         gotItButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO Delete from list
+                myUser.deleteItem(shoppingList ,theItem);
+                shoppingList.removeItem(theItem);
+                listAdapter.notifyItemRemoved(position);
                 dialog.dismiss();
             }
         });
