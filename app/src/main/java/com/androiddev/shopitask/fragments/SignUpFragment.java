@@ -23,6 +23,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpFragment extends Fragment {
 
@@ -114,6 +115,7 @@ public class SignUpFragment extends Fragment {
                    FirebaseUser user = mAut.getCurrentUser();
                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
                    user.updateProfile(profileUpdates);
+                   FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid()).child("email").setValue(email);
 
                    mAut.signInWithEmailAndPassword(email, password).addOnCompleteListener(mainActivity, new OnCompleteListener<AuthResult>() {
                        @Override

@@ -213,6 +213,7 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
                 String targetEmail = editTextTargetEmail.getText().toString();
                 if(!targetEmail.isEmpty()) {
                     // TODO Magic
+                    myUser.addUserToList(targetEmail, theList.getListId(), theList.getOwnerId());
                     shareDialog.dismiss();
                 }
                 else {

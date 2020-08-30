@@ -62,6 +62,17 @@ public class MyUser {
                 Log.d("DB ERROR", error.getMessage());
             }
         });
+
+        this.dbReference.child("Contributions").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                initContributionsLists(dataSnapshot, myListAdapter, activity);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("DB ERROR", error.getMessage());
+            }
+        });
     }
 
     public String getUser_id() {
@@ -150,6 +161,77 @@ public class MyUser {
         activity.getLoadingDialog().dismissLoadingDialog();
         activity.updateTotals();
 
+    }
+
+    private void initContributionsLists(@NonNull DataSnapshot dataSnapshot, final MyListAdapter myListAdapter , final TaskListsActivity activity) {
+
+        Log.d(TAG, "initContributionsLists: Im here");
+
+        for (DataSnapshot ds: dataSnapshot.getChildren()) {
+            String listId = ds.getKey();
+            String userId = ds.getValue(String.class);
+            FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("MyLists").child(listId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot ds2) {
+                    switch (ListType.valueOf(ds2.child("listType").getValue(String.class))) {
+                        case SHOPPING:
+                            tasksList.add(ds2.getValue(ShoppingList.class));
+                            break;
+                        case TODO:
+                            tasksList.add(ds2.getValue(ToDoList.class));
+                            break;
+                    }
+                    if (myListAdapter != null) {
+                        myListAdapter.setItems(tasksList);
+                        myListAdapter.notifyDataSetChanged();
+                    }
+                    activity.updateTotals();
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
+
+
+
+    }
+
+    public void addUserToList(final String email, final String listId, final String ownerId) {
+        this.generalDbReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds: dataSnapshot.getChildren()) {
+                    if (ds.child("email").getValue(String.class).equals(email)) {
+                        FirebaseDatabase.getInstance().getReference().child("Users").child(ds.getKey()).child("Contributions").child(listId).setValue(ownerId);
+                        updateListContributors(listId, ownerId, ds.getKey());
+                        break;
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("DB ERROR", error.getMessage());
+            }
+        });
+    }
+
+    private void updateListContributors(final String listId, final String userId, final String contributorId) {
+        this.getDbReference().child("MyLists").child(listId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                long contributorsCount = dataSnapshot.child("contributors").getChildrenCount();
+                FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("MyLists").child(listId).child("contributors").child(Long.toString(contributorsCount)).setValue(contributorId);
+                //for (DataSnapshot ds: dataSnapshot.child("contributors").getChildren()) {
+                //    contributorsCount++;
+                //}
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("DB ERROR", error.getMessage());
+            }
+        });
     }
 
     @Override
