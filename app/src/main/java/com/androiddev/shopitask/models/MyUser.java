@@ -2,6 +2,9 @@ package com.androiddev.shopitask.models;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.androiddev.shopitask.ListDetailsActivity;
 import com.androiddev.shopitask.MyListAdapter;
 import com.androiddev.shopitask.TaskListsActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -14,8 +17,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Objects;
-
-import androidx.annotation.NonNull;
 
 public class MyUser {
 
@@ -145,15 +146,18 @@ public class MyUser {
     }
 
     private void initMyLists(@NonNull DataSnapshot dataSnapshot, MyListAdapter myListAdapter, TaskListsActivity activity) {
-
         Log.d(TAG, "initMyLists: Im here");
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
             switch (ListType.valueOf(ds.child("listType").getValue(String.class))) {
                 case SHOPPING:
-                    tasksList.add(ds.getValue(ShoppingList.class));
+                    ShoppingList l = ds.getValue(ShoppingList.class);
+                    if (!tasksList.contains(l))
+                        tasksList.add(l);
                     break;
                 case TODO:
-                    tasksList.add(ds.getValue(ToDoList.class));
+                    ToDoList l2 = ds.getValue(ToDoList.class);
+                    if (!tasksList.contains(l2))
+                        tasksList.add(l2);
                     break;
             }
         }
@@ -163,7 +167,6 @@ public class MyUser {
         }
         activity.getLoadingDialog().dismissLoadingDialog();
         activity.updateTotals();
-
     }
 
     private void initContributionsLists(@NonNull DataSnapshot dataSnapshot, final MyListAdapter myListAdapter, final TaskListsActivity activity) {
@@ -190,8 +193,7 @@ public class MyUser {
                             myListAdapter.notifyDataSetChanged();
                         }
                         activity.updateTotals();
-                    }
-                    else {
+                    } else {
                         dsRef.removeValue();
                     }
                 }
@@ -205,7 +207,10 @@ public class MyUser {
     }
 
 
-    public void addUserToList(final String email, final String listId, final String ownerId) {
+    public void addUserToList(final String email, final List theList, final ListDetailsActivity activity) {
+        final String listId = theList.getListId();
+        final String ownerId = theList.getOwnerId();
+
         this.generalDbReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -213,6 +218,9 @@ public class MyUser {
                     if (ds.child("email").getValue(String.class).equals(email)) {
                         FirebaseDatabase.getInstance().getReference().child("Users").child(ds.getKey()).child("Contributions").child(listId).setValue(ownerId);
                         updateListContributors(listId, ownerId, ds.getKey());
+                        theList.getContributors().add(ds.getKey());
+                        if (activity != null)
+                            activity.updateViews();
                         break;
                     }
                 }
@@ -230,7 +238,8 @@ public class MyUser {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 long contributorsCount = dataSnapshot.child("contributors").getChildrenCount();
-                FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("MyLists").child(listId).child("contributors").child(Long.toString(contributorsCount)).setValue(contributorId);
+                FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("MyLists").child(listId)
+                        .child("contributors").child(Long.toString(contributorsCount)).setValue(contributorId);
             }
 
             @Override

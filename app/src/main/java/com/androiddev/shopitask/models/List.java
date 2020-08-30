@@ -2,7 +2,7 @@ package com.androiddev.shopitask.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Observable;
+import java.util.Objects;
 import java.util.UUID;
 
 
@@ -89,4 +89,16 @@ public class List implements Serializable{
         return 0;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        List list = (List) o;
+        return Objects.equals(listId, list.listId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(listId);
+    }
 }

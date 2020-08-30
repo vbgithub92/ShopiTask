@@ -28,6 +28,7 @@ class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
 
     private List deletedList;
     private int deletedListPosition;
+    private boolean undo = false;
 
     private MyUser myUser = new MyUser();
 
@@ -159,21 +160,20 @@ class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
             public void onDismissed(Snackbar transientBottomBar, int event) {
                 super.onDismissed(transientBottomBar, event);
                 // TODO Magic Very Big
-                myUser.deleteList(deletedList);
+                if (!undo)
+                    myUser.deleteList(deletedList);
+                undo = false;
             }
         });
 
 
         snackbar.setActionTextColor(context.getResources().getColor(R.color.colorAccent));
-        //View v = snackbar.getView();
-        //TextView tv = (TextView) v.findViewById(com.google.android.material.R.id.snackbar_text);
-        //tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-
         snackbar.show();
 
     }
 
     private void undoDelete() {
+        undo = true;
         lists.add(deletedListPosition,
                 deletedList);
         notifyItemInserted(deletedListPosition);

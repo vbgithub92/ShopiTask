@@ -50,8 +50,9 @@ class ShareListDialog {
             public void onClick(View view) {
                 String targetEmail = editTextTargetEmail.getText().toString();
                 if (!targetEmail.isEmpty()) {
-                    myUser.addUserToList(targetEmail, theList.getListId(), theList.getOwnerId());
+                    myUser.addUserToList(targetEmail, theList,(ListDetailsActivity)activity);
                     dialog.dismiss();
+                    ((ListDetailsActivity)activity).updateViews();
                 } else {
                     Context context = activity.getApplicationContext();
                     CharSequence text = activity.getString(R.string.share_error);

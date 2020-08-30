@@ -2,13 +2,18 @@ package com.androiddev.shopitask;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.androiddev.shopitask.models.MyUser;
 import com.androiddev.shopitask.models.ShoppingItem;
@@ -16,8 +21,6 @@ import com.androiddev.shopitask.models.ShoppingList;
 import com.androiddev.shopitask.models.UOM;
 
 import java.util.Objects;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 class ShoppingItemDialog {
 
@@ -65,7 +68,8 @@ class ShoppingItemDialog {
         amountAndTypeFormatted += type;
         amountAndType.setText(amountAndTypeFormatted);
 
-        // TODO Pic
+        // TODO Improve
+        itemPicture.setImageBitmap(StringToBitMap(theItem.getPic()));
 
         // Buttons
         closeButton.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +84,7 @@ class ShoppingItemDialog {
                 myUser.deleteItem(shoppingList ,theItem);
                 shoppingList.removeItem(theItem);
                 listAdapter.notifyItemRemoved(position);
+                ((ListDetailsActivity)activity).updateViews();
                 dialog.dismiss();
             }
         });
@@ -87,5 +92,16 @@ class ShoppingItemDialog {
         dialog = builder.create();
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
+    }
+
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 }

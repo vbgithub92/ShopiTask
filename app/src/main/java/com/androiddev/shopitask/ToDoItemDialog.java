@@ -4,14 +4,19 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.androiddev.shopitask.models.MyUser;
 import com.androiddev.shopitask.models.ToDoItem;
@@ -22,8 +27,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 class ToDoItemDialog {
 
@@ -92,6 +95,7 @@ class ToDoItemDialog {
             taskDate.setVisibility(View.GONE);
 
         // TODO Pic
+        taskPicture.setImageBitmap(StringToBitMap(theItem.getPic()));
 
         // Buttons
         closeButton.setOnClickListener(new View.OnClickListener() {
@@ -113,5 +117,16 @@ class ToDoItemDialog {
         dialog = builder.create();
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
+    }
+
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 }
