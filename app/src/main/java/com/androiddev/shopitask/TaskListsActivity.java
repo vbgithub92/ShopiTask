@@ -191,4 +191,10 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
     public LoadingDialog getLoadingDialog() {
         return loadingDialog;
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 }

@@ -109,12 +109,10 @@ class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
         else
             imageSrc = R.drawable.multiple_people;
         holder.listMembersIcon.setImageResource(imageSrc);
-
-        // Members Amount
-        // TODO Change
+        
         int membersAmount = 0;
         if (list.getContributors() != null)
-            membersAmount = list.getContributors().size();
+            membersAmount = list.getContributors().size() + 1;
         else
             membersAmount = 1;
         holder.listMembersAmount.setText(String.valueOf(membersAmount));
