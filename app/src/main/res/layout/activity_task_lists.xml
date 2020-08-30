@@ -195,17 +195,18 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.5" />
 
-            <Button
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/addListButton"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="2"
-                android:background="@drawable/circle_button"
-                android:gravity="center"
+                android:layout_marginStart="60dp"
+                android:src="@drawable/ic_baseline_add_24"
+                app:fabSize="normal"
                 android:onClick="addListButtonClicked"
-                android:text="+"
-                android:textColor="#FFFFFF"
-                android:textSize="36sp" />
+                app:elevation="6dp"
+                />
 
         </LinearLayout>
 

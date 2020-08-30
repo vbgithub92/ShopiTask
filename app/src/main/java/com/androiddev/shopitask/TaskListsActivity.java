@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androiddev.shopitask.models.List;
-import com.androiddev.shopitask.models.LoadingDialog;
 import com.androiddev.shopitask.models.MyUser;
 import com.androiddev.shopitask.models.ShoppingItem;
 import com.androiddev.shopitask.models.ShoppingList;

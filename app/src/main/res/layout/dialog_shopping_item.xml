@@ -6,7 +6,6 @@
     android:paddingVertical="100dp"
     >
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,17 +13,99 @@
         android:orientation="vertical"
         android:padding="10dp">
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </Space>
+
         <TextView
+            android:id="@+id/itemName"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:background="@color/colorPrimary"
             android:fontFamily="sans-serif-black"
             android:gravity="center"
-            android:text="@string/share_prompt"
-            android:textColor="#FFFFFF"
-            android:textSize="28sp"
+            android:text="itemNameHere"
+            android:textColor="#000000"
+            android:textSize="26sp"
             android:textStyle="bold|italic" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </Space>
+
+        <TextView
+            android:id="@+id/itemAmountAndType"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="#+Type"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold|italic" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </Space>
+
+        <ImageView
+            android:id="@+id/itemPicture"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:src="@mipmap/ic_launcher" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </Space>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/closeButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/blue_button"
+                android:fontFamily="sans-serif-black"
+                android:text="@string/back"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/gotItButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/blue_button"
+                android:fontFamily="sans-serif-black"
+                android:text="@string/got_it"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
@@ -32,68 +113,6 @@
             android:layout_weight="0.25">
 
         </Space>
-
-        <EditText
-            android:id="@+id/shareTargetEmail"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.75"
-            android:cursorVisible="false"
-            android:fontFamily="casual"
-            android:hint="@string/share_hint"
-            android:imeOptions="actionDone|flagNavigateNext"
-            android:importantForAutofill="no"
-            android:inputType="textEmailAddress"
-            android:maxLength="24"
-            android:maxLines="1"
-            android:textAlignment="center"
-            android:textSize="20sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.5">
-
-        </Space>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.25"
-            android:paddingVertical="30dp">
-            <Button
-                android:id="@+id/closeButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:layout_marginHorizontal="20dp"
-                android:background="@drawable/blue_button"
-                android:fontFamily="sans-serif-black"
-                android:text="@string/close"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/shareButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:layout_marginHorizontal="20dp"
-                android:background="@drawable/blue_button"
-                android:fontFamily="sans-serif-black"
-                android:text="@string/share"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-
-
     </LinearLayout>
 
 </RelativeLayout>
-
-
