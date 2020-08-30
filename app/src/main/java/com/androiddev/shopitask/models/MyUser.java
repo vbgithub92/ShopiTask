@@ -5,7 +5,10 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.androiddev.shopitask.MyListAdapter;
+import com.androiddev.shopitask.R;
 import com.androiddev.shopitask.TaskListsActivity;
+import com.androiddev.shopitask.fragments.AddToShoppingListFragment;
+import com.androiddev.shopitask.fragments.AddToTaskListFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -164,9 +167,7 @@ public class MyUser {
     }
 
     private void initContributionsLists(@NonNull DataSnapshot dataSnapshot, final MyListAdapter myListAdapter , final TaskListsActivity activity) {
-
         Log.d(TAG, "initContributionsLists: Im here");
-
         for (DataSnapshot ds: dataSnapshot.getChildren()) {
             String listId = ds.getKey();
             String userId = ds.getValue(String.class);
@@ -192,9 +193,6 @@ public class MyUser {
                 }
             });
         }
-
-
-
     }
 
     public void addUserToList(final String email, final String listId, final String ownerId) {
@@ -222,10 +220,6 @@ public class MyUser {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 long contributorsCount = dataSnapshot.child("contributors").getChildrenCount();
                 FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("MyLists").child(listId).child("contributors").child(Long.toString(contributorsCount)).setValue(contributorId);
-                //for (DataSnapshot ds: dataSnapshot.child("contributors").getChildren()) {
-                //    contributorsCount++;
-                //}
-
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -233,6 +227,66 @@ public class MyUser {
             }
         });
     }
+
+    private void deleteItem(List theList, Object item) {
+        String listItemTypes;
+        int itemIndex;
+
+        switch (theList.getListType()) {
+            case SHOPPING:
+                listItemTypes = "shoppingItems";
+                itemIndex = ((ShoppingList)theList).getItemIndex((ShoppingItem)item);
+                break;
+            case TODO:
+                listItemTypes = "toDoItems";
+                itemIndex = ((ToDoList)theList).getItemIndex((ToDoItem) item);
+                break;
+            default:
+                return;
+        }
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(theList.getOwnerId()).child("MyLists").child(theList.getListId()).child("listItemTypes").child(Integer.toString(itemIndex)).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                dataSnapshot.getRef().removeValue();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled", databaseError.toException());
+            }
+        });
+    }
+
+    //private void deleteList(List theList) {
+    //    String listItemTypes;
+    //    int itemIndex;
+//
+    //    switch (theList.getListType()) {
+    //        case SHOPPING:
+    //            listItemTypes = "shoppingItems";
+    //            itemIndex = ((ShoppingList)theList).getItemIndex((ShoppingItem)item);
+    //            break;
+    //        case TODO:
+    //            listItemTypes = "toDoItems";
+    //            itemIndex = ((ToDoList)theList).getItemIndex((ToDoItem) item);
+    //            break;
+    //        default:
+    //            return;
+    //    }
+//
+    //    FirebaseDatabase.getInstance().getReference().child("Users").child(theList.getOwnerId()).child("MyLists").child(theList.getListId()).child("listItemTypes").child(Integer.toString(itemIndex)).addListenerForSingleValueEvent(new ValueEventListener() {
+    //        @Override
+    //        public void onDataChange(DataSnapshot dataSnapshot) {
+    //            dataSnapshot.getRef().removeValue();
+    //        }
+//
+    //        @Override
+    //        public void onCancelled(DatabaseError databaseError) {
+    //            Log.e(TAG, "onCancelled", databaseError.toException());
+    //        }
+    //    });
+    //}
 
     @Override
     public boolean equals(Object o) {
