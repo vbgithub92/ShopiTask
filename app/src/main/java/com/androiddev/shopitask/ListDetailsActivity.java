@@ -169,7 +169,6 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
 
     @Override
     public void onListItemClick(int position) {
-        // TODO
         if (theList instanceof ShoppingList) {
             ShoppingItemDialog dialog = new ShoppingItemDialog(this, ((ShoppingList)theList).get(position));
             dialog.startShoppingItemDialog();

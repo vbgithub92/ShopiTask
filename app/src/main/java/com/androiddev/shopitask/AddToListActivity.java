@@ -1,19 +1,27 @@
 package com.androiddev.shopitask;
 
+import android.Manifest;
 import android.content.Intent;
-import android.media.Image;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.androiddev.shopitask.fragments.AddToShoppingListFragment;
@@ -41,6 +49,7 @@ import static com.androiddev.shopitask.MainActivity.getDateFromDatePicker;
 public class AddToListActivity extends AppCompatActivity {
 
     private static final String TAG = "AddToListActivity";
+    private static final int REQUEST_CODE = 100;
     private List theList;
     Fragment addToListFragment;
     String listName;
@@ -53,7 +62,7 @@ public class AddToListActivity extends AppCompatActivity {
     String itemName;
     double qty;
     UOM uom;
-    Image pic;
+    Bitmap pic = null;
     String location;
     long date;
 
@@ -100,6 +109,38 @@ public class AddToListActivity extends AppCompatActivity {
 
     }
 
+    private void initCameraButton() {
+        // Initialize Camera Button - Permission
+        ImageView cameraButton = (ImageView)findViewById(R.id.cameraButton);
+
+        if(ContextCompat.checkSelfPermission(AddToListActivity.this,
+                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(AddToListActivity.this, new String[] {
+                    Manifest.permission.CAMERA
+            },REQUEST_CODE);
+
+        }
+
+        cameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Open Camera
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, REQUEST_CODE);
+
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            // Get Captured Image
+            pic = (Bitmap) data.getExtras().get("data");
+        }
+    }
+
     private void createToolbar() {
         // Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -109,6 +150,14 @@ public class AddToListActivity extends AppCompatActivity {
 
     private void setFragment(Fragment fragmentToSet) {
         getSupportFragmentManager().beginTransaction().replace(R.id.addToListFrame, fragmentToSet).commit();
+        // TODO Change
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initCameraButton();
+            }
+        }, 1000);
     }
 
     private void initAddButton() {
@@ -133,7 +182,7 @@ public class AddToListActivity extends AppCompatActivity {
                 qty = ((NumberPicker)findViewById(R.id.newItemAmount)).getValue();
                 int selectedUOMid = ((RadioGroup)findViewById(R.id.unitTypeGroup)).getCheckedRadioButtonId();
                 uom = UOM.valueOf(((RadioButton)findViewById(selectedUOMid)).getText().toString().toUpperCase());
-                pic = null;
+                //pic = null;
 
                 ShoppingItem shoppingItem = new ShoppingItem(itemName, qty, uom, pic);
                 newList = new ShoppingList(myUser.getUser_id(), listName,null, isPrivate, shoppingItem);
@@ -143,7 +192,7 @@ public class AddToListActivity extends AppCompatActivity {
                 itemName = ((EditText)findViewById(R.id.newTaskName)).getText().toString();
                 location = ((EditText)findViewById(R.id.newTaskLocation)).getText().toString();
                 date = getDateFromDatePicker((DatePicker)findViewById(R.id.newTaskDate));
-                pic = null;
+                //pic = null;
 
                 ToDoItem toDoItem = new ToDoItem(itemName, date, location, pic);
                 newList = new ToDoList(myUser.getUser_id(), listName,null, isPrivate, toDoItem);
@@ -164,7 +213,7 @@ public class AddToListActivity extends AppCompatActivity {
                 qty = ((NumberPicker)findViewById(R.id.newItemAmount)).getValue();
                 int selectedUOMid = ((RadioGroup)findViewById(R.id.unitTypeGroup)).getCheckedRadioButtonId();
                 uom = UOM.valueOf(((RadioButton)findViewById(selectedUOMid)).getText().toString().toUpperCase());
-                pic = null;
+                //pic = null;
                 ShoppingItem shoppingItem = new ShoppingItem(itemName, qty, uom, pic);
                 if(myUser.getUser_id().equals(listOwnerId)) {
                     myUser.getDbReference().child("MyLists").child(listId).child("shoppingItems").child(Integer.toString(listSize)).setValue(shoppingItem);
@@ -176,7 +225,7 @@ public class AddToListActivity extends AppCompatActivity {
                 itemName = ((EditText)findViewById(R.id.newTaskName)).getText().toString();
                 location = ((EditText)findViewById(R.id.newTaskLocation)).getText().toString();
                 date = getDateFromDatePicker((DatePicker)findViewById(R.id.newTaskDate));
-                pic = null;
+                //pic = null;
                 ToDoItem toDoItem = new ToDoItem(itemName, date, location, pic);
                 if(myUser.getUser_id().equals(listOwnerId)) {
                     myUser.getDbReference().child("MyLists").child(listId).child("toDoItems").child(Integer.toString(listSize)).setValue(toDoItem);

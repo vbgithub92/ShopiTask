@@ -79,13 +79,11 @@ class ToDoListItemAdapter extends RecyclerView.Adapter<ToDoListItemAdapter.MyVie
             navIconSrc = R.drawable.navigation;
         holder.navigationIcon.setImageResource(navIconSrc);
 
-        // TODO: 29-Aug-20 Pic
     }
 
     @Override
     public int getItemCount() {
         return toDoList.getToDoItems().size();
     }
-
 
 }
