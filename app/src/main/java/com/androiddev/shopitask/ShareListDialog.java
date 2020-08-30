@@ -50,7 +50,6 @@ class ShareListDialog {
             public void onClick(View view) {
                 String targetEmail = editTextTargetEmail.getText().toString();
                 if (!targetEmail.isEmpty()) {
-                    // TODO Magic
                     myUser.addUserToList(targetEmail, theList.getListId(), theList.getOwnerId());
                     dialog.dismiss();
                 } else {

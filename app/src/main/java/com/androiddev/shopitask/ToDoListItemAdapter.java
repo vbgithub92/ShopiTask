@@ -84,7 +84,10 @@ class ToDoListItemAdapter extends RecyclerView.Adapter<ToDoListItemAdapter.MyVie
 
     @Override
     public int getItemCount() {
-        return toDoList.getToDoItems().size();
+        if (toDoList.getToDoItems() != null)
+            return toDoList.getToDoItems().size();
+        else
+            return 0;
     }
 
 

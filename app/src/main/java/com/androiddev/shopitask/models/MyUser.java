@@ -2,13 +2,8 @@ package com.androiddev.shopitask.models;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
 import com.androiddev.shopitask.MyListAdapter;
-import com.androiddev.shopitask.R;
 import com.androiddev.shopitask.TaskListsActivity;
-import com.androiddev.shopitask.fragments.AddToShoppingListFragment;
-import com.androiddev.shopitask.fragments.AddToTaskListFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -19,6 +14,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Objects;
+
+import androidx.annotation.NonNull;
 
 public class MyUser {
 
@@ -40,12 +37,13 @@ public class MyUser {
         tasksList = new ArrayList<>();
     }
 
-     public void initLists() {
+    public void initLists() {
         this.dbReference.child("MyLists").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                initMyLists(dataSnapshot, null,null);
+                initMyLists(dataSnapshot, null, null);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("DB ERROR", error.getMessage());
@@ -60,6 +58,7 @@ public class MyUser {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 initMyLists(dataSnapshot, myListAdapter, activity);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("DB ERROR", error.getMessage());
@@ -71,6 +70,7 @@ public class MyUser {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 initContributionsLists(dataSnapshot, myListAdapter, activity);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("DB ERROR", error.getMessage());
@@ -128,26 +128,26 @@ public class MyUser {
 
     public ArrayList<ShoppingList> getShoppingLists() {
         ArrayList<ShoppingList> shoppingLists = new ArrayList<>();
-        for (List l: tasksList) {
+        for (List l : tasksList) {
             if (l.getListType() == ListType.SHOPPING)
-                shoppingLists.add((ShoppingList)l);
+                shoppingLists.add((ShoppingList) l);
         }
         return shoppingLists;
     }
 
     public ArrayList<ToDoList> getToDoLists() {
         ArrayList<ToDoList> toDoLists = new ArrayList<>();
-        for (List l: tasksList) {
+        for (List l : tasksList) {
             if (l.getListType() == ListType.TODO)
-                toDoLists.add((ToDoList)l);
+                toDoLists.add((ToDoList) l);
         }
         return toDoLists;
     }
 
-    private void initMyLists(@NonNull DataSnapshot dataSnapshot, MyListAdapter myListAdapter , TaskListsActivity activity) {
+    private void initMyLists(@NonNull DataSnapshot dataSnapshot, MyListAdapter myListAdapter, TaskListsActivity activity) {
 
         Log.d(TAG, "initMyLists: Im here");
-        for (DataSnapshot ds: dataSnapshot.getChildren()) {
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
             switch (ListType.valueOf(ds.child("listType").getValue(String.class))) {
                 case SHOPPING:
                     tasksList.add(ds.getValue(ShoppingList.class));
@@ -166,40 +166,50 @@ public class MyUser {
 
     }
 
-    private void initContributionsLists(@NonNull DataSnapshot dataSnapshot, final MyListAdapter myListAdapter , final TaskListsActivity activity) {
+    private void initContributionsLists(@NonNull DataSnapshot dataSnapshot, final MyListAdapter myListAdapter, final TaskListsActivity activity) {
         Log.d(TAG, "initContributionsLists: Im here");
-        for (DataSnapshot ds: dataSnapshot.getChildren()) {
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
             String listId = ds.getKey();
             String userId = ds.getValue(String.class);
-            FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("MyLists").child(listId).addListenerForSingleValueEvent(new ValueEventListener() {
+            final DatabaseReference dsRef = ds.getRef();
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("MyLists").child(listId);
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot ds2) {
-                    switch (ListType.valueOf(ds2.child("listType").getValue(String.class))) {
-                        case SHOPPING:
-                            tasksList.add(ds2.getValue(ShoppingList.class));
-                            break;
-                        case TODO:
-                            tasksList.add(ds2.getValue(ToDoList.class));
-                            break;
+                    if (ds2.hasChild("listId")) {
+                        switch (ListType.valueOf(ds2.child("listType").getValue(String.class))) {
+                            case SHOPPING:
+                                tasksList.add(ds2.getValue(ShoppingList.class));
+                                break;
+                            case TODO:
+                                tasksList.add(ds2.getValue(ToDoList.class));
+                                break;
+                        }
+                        if (myListAdapter != null) {
+                            myListAdapter.setItems(tasksList);
+                            myListAdapter.notifyDataSetChanged();
+                        }
+                        activity.updateTotals();
                     }
-                    if (myListAdapter != null) {
-                        myListAdapter.setItems(tasksList);
-                        myListAdapter.notifyDataSetChanged();
+                    else {
+                        dsRef.removeValue();
                     }
-                    activity.updateTotals();
                 }
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                 }
+
             });
         }
     }
+
 
     public void addUserToList(final String email, final String listId, final String ownerId) {
         this.generalDbReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds: dataSnapshot.getChildren()) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     if (ds.child("email").getValue(String.class).equals(email)) {
                         FirebaseDatabase.getInstance().getReference().child("Users").child(ds.getKey()).child("Contributions").child(listId).setValue(ownerId);
                         updateListContributors(listId, ownerId, ds.getKey());
@@ -207,6 +217,7 @@ public class MyUser {
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("DB ERROR", error.getMessage());
@@ -221,6 +232,7 @@ public class MyUser {
                 long contributorsCount = dataSnapshot.child("contributors").getChildrenCount();
                 FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("MyLists").child(listId).child("contributors").child(Long.toString(contributorsCount)).setValue(contributorId);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("DB ERROR", error.getMessage());
@@ -228,27 +240,47 @@ public class MyUser {
         });
     }
 
-    private void deleteItem(List theList, Object item) {
-        String listItemTypes;
-        int itemIndex;
+    public void deleteItem(final List theList, Object item) {
+        final String listItemTypes;
+        final int itemIndex;
 
         switch (theList.getListType()) {
             case SHOPPING:
                 listItemTypes = "shoppingItems";
-                itemIndex = ((ShoppingList)theList).getItemIndex((ShoppingItem)item);
+                itemIndex = ((ShoppingList) theList).getItemIndex((ShoppingItem) item);
+                ((ShoppingList) theList).removeItem((ShoppingItem) item);
                 break;
             case TODO:
                 listItemTypes = "toDoItems";
-                itemIndex = ((ToDoList)theList).getItemIndex((ToDoItem) item);
+                itemIndex = ((ToDoList) theList).getItemIndex((ToDoItem) item);
+                ((ToDoList) theList).removeItem((ToDoItem) item);
                 break;
             default:
                 return;
         }
 
-        FirebaseDatabase.getInstance().getReference().child("Users").child(theList.getOwnerId()).child("MyLists").child(theList.getListId()).child("listItemTypes").child(Integer.toString(itemIndex)).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Users").child(theList.getOwnerId()).child("MyLists").child(theList.getListId()).child(listItemTypes).child(Integer.toString(itemIndex)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 dataSnapshot.getRef().removeValue();
+                FirebaseDatabase.getInstance().getReference().child("Users").child(theList.getOwnerId()).child("MyLists").child(theList.getListId()).child(listItemTypes).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            int currIndex = Integer.parseInt(ds.getKey());
+                            if (currIndex > itemIndex) {
+                                String newIndex = String.valueOf(currIndex - 1);
+                                dataSnapshot.getRef().child(newIndex).setValue(ds.getValue());
+                                ds.getRef().removeValue();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e(TAG, "onCancelled", databaseError.toException());
+                    }
+                });
             }
 
             @Override
@@ -256,37 +288,16 @@ public class MyUser {
                 Log.e(TAG, "onCancelled", databaseError.toException());
             }
         });
+
     }
 
-    //private void deleteList(List theList) {
-    //    String listItemTypes;
-    //    int itemIndex;
-//
-    //    switch (theList.getListType()) {
-    //        case SHOPPING:
-    //            listItemTypes = "shoppingItems";
-    //            itemIndex = ((ShoppingList)theList).getItemIndex((ShoppingItem)item);
-    //            break;
-    //        case TODO:
-    //            listItemTypes = "toDoItems";
-    //            itemIndex = ((ToDoList)theList).getItemIndex((ToDoItem) item);
-    //            break;
-    //        default:
-    //            return;
-    //    }
-//
-    //    FirebaseDatabase.getInstance().getReference().child("Users").child(theList.getOwnerId()).child("MyLists").child(theList.getListId()).child("listItemTypes").child(Integer.toString(itemIndex)).addListenerForSingleValueEvent(new ValueEventListener() {
-    //        @Override
-    //        public void onDataChange(DataSnapshot dataSnapshot) {
-    //            dataSnapshot.getRef().removeValue();
-    //        }
-//
-    //        @Override
-    //        public void onCancelled(DatabaseError databaseError) {
-    //            Log.e(TAG, "onCancelled", databaseError.toException());
-    //        }
-    //    });
-    //}
+    public void deleteList(List theList) {
+        if (theList.getOwnerId().equals(this.user_id)) {
+            this.getDbReference().child("MyLists").child(theList.getListId()).removeValue();
+        } else {
+            this.getDbReference().child("Contributions").child(theList.getListId()).removeValue();
+        }
+    }
 
     @Override
     public boolean equals(Object o) {

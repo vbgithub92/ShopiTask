@@ -46,7 +46,10 @@ public class ShoppingList extends List {
     }
 
     public int getListSize() {
-        return this.shoppingItems.size();
+        if (this.shoppingItems != null)
+            return this.shoppingItems.size();
+        else
+            return 0;
     }
 
     public void removeItemAt(int index) {

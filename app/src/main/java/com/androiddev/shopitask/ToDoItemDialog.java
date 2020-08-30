@@ -13,7 +13,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.androiddev.shopitask.models.MyUser;
 import com.androiddev.shopitask.models.ToDoItem;
+import com.androiddev.shopitask.models.ToDoList;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
@@ -21,16 +23,26 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 class ToDoItemDialog {
 
     private Activity activity;
     private AlertDialog dialog;
+    private MyUser myUser;
+    private ToDoList toDoList;
+    private RecyclerView.Adapter listAdapter;
+    private int position;
 
     ToDoItem theItem;
 
-    public ToDoItemDialog(Activity activity, ToDoItem toDoItem) {
+    public ToDoItemDialog(Activity activity, MyUser myUser, ToDoList toDoList, ToDoItem toDoItem, int position, RecyclerView.Adapter listAdapter) {
         this.activity = activity;
         this.theItem = toDoItem;
+        this.myUser = myUser;
+        this.toDoList = toDoList;
+        this.listAdapter = listAdapter;
+        this.position = position;
     }
 
     public void startToDoItemDialog() {
@@ -91,7 +103,9 @@ class ToDoItemDialog {
         itsDoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO Delete from list
+                myUser.deleteItem(toDoList ,theItem);
+                toDoList.removeItem(theItem);
+                listAdapter.notifyItemRemoved(position);
                 dialog.dismiss();
             }
         });

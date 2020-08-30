@@ -46,7 +46,10 @@ public class ToDoList extends List {
     }
 
     public int getListSize() {
-        return this.toDoItems.size();
+        if (this.toDoItems != null)
+            return this.toDoItems.size();
+        else
+            return 0;
     }
 
     public void removeItemAt(int index) {
