@@ -22,9 +22,9 @@ class ShoppingItemDialog {
 
     ShoppingItem theItem;
 
-    public ShoppingItemDialog(Activity myActivity, ShoppingItem theItem) {
+    public ShoppingItemDialog(Activity myActivity, ShoppingItem shoppingItem) {
         activity = myActivity;
-        this.theItem = theItem;
+        this.theItem = shoppingItem;
     }
 
     public void startShoppingItemDialog() {

@@ -1,7 +1,6 @@
 package com.androiddev.shopitask;
 
 import android.content.Intent;
-import android.location.Location;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
@@ -55,7 +54,7 @@ public class AddToListActivity extends AppCompatActivity {
     double qty;
     UOM uom;
     Image pic;
-    Location location;
+    String location;
     long date;
 
     List newList;
@@ -142,7 +141,7 @@ public class AddToListActivity extends AppCompatActivity {
                 break;
             case TODO:
                 itemName = ((EditText)findViewById(R.id.newTaskName)).getText().toString();
-                location = null;
+                location = ((EditText)findViewById(R.id.newTaskLocation)).getText().toString();
                 date = getDateFromDatePicker((DatePicker)findViewById(R.id.newTaskDate));
                 pic = null;
 
@@ -175,7 +174,7 @@ public class AddToListActivity extends AppCompatActivity {
                 break;
             case TODO:
                 itemName = ((EditText)findViewById(R.id.newTaskName)).getText().toString();
-                location = null;
+                location = ((EditText)findViewById(R.id.newTaskLocation)).getText().toString();
                 date = getDateFromDatePicker((DatePicker)findViewById(R.id.newTaskDate));
                 pic = null;
                 ToDoItem toDoItem = new ToDoItem(itemName, date, location, pic);

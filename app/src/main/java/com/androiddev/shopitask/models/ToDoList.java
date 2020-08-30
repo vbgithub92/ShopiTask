@@ -52,4 +52,6 @@ public class ToDoList extends List {
     public void removeItem(ToDoItem item) {
         this.toDoItems.remove(item);
     }
+
+    public ToDoItem get(int position){ return toDoItems.get(position);}
 }

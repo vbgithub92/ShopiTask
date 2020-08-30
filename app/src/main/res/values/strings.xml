@@ -57,10 +57,6 @@
     <string name="add_to_shopping_prompt">What are we adding?</string>
     <string name="add_to_shopping_prompt_hint">Enter the item name here</string>
     <string name="how_much">How much?</string>
-    <!--******************************** -->
-    <!--Not sure if this or items-->
-    <string name="units">Units</string>
-    <!--******************************** -->
     <string name="kg">KG</string>
     <string name="liters">L</string>
     <string name="packs">Packs</string>
@@ -91,5 +87,13 @@
     <!-- Shopping Item Dialog -->
     <string name="back">Back</string>
     <string name="got_it">Got it!</string>
+
+    <!-- To Do Item Dialog -->
+    <string name="its_done">It\'s Done!</string>
+
+    <!-- *************************************************************************************** -->
+    <!--SnackBars-->
+    <string name="undo_delete_prompt">List deleted</string>
+    <string name="undo">Undo</string>
 
 </resources>

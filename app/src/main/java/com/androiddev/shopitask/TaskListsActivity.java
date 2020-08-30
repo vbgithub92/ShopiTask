@@ -9,19 +9,16 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androiddev.shopitask.models.List;
 import com.androiddev.shopitask.models.MyUser;
-import com.androiddev.shopitask.models.ShoppingItem;
 import com.androiddev.shopitask.models.ShoppingList;
-import com.androiddev.shopitask.models.ToDoItem;
 import com.androiddev.shopitask.models.ToDoList;
-import com.androiddev.shopitask.models.UOM;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 import static com.androiddev.shopitask.MainActivity.LIST_KEY;
@@ -52,7 +49,9 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
         setContentView(R.layout.activity_task_lists);
         createToolbar();
         findViewsById();
-        String userName = myUser.getUserName() + "!";
+        String userName = myUser.getUserName();
+        userName = userName.toLowerCase();
+        userName = userName.substring(0, 1).toUpperCase() + userName.substring(1) + "!";
         textUserName.setText(userName);
         vibe = (Vibrator) TaskListsActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -81,73 +80,16 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
     private void initRecyclerView() {
         recyclerView.setHasFixedSize(true);
         tasksList = new ArrayList<>();
-        ArrayList<String> listContributors1 = new ArrayList<>(Arrays.asList(
-                "Vlad", "Moshe", "Alex"));
-        ArrayList<String> listContributors2 = new ArrayList<>(Arrays.asList(
-                "Liza"));
-        ArrayList<String> listContributors3 = new ArrayList<>(Arrays.asList(
-                "Jimmy"));
-        ArrayList<String> listContributors4 = new ArrayList<>(Arrays.asList(
-                "Chris", "Alon", "Doggo", "Fanta"));
-
-
-        ArrayList<ToDoItem> itemsList1 = new ArrayList<>(Arrays.asList(
-                new ToDoItem("Pick up package", 0, null, null),
-                new ToDoItem("Do something", 0, null, null),
-                new ToDoItem("Sleep", 0, null, null)
-        ));
-
-        ArrayList<ToDoItem> itemsList2 = new ArrayList<>(Arrays.asList(
-                new ToDoItem("Pick up package", 0, null, null),
-                new ToDoItem("Do something", 0, null, null),
-                new ToDoItem("Sleep", 0, null, null),
-                new ToDoItem("AAA", 0, null, null),
-                new ToDoItem("BBB", 0, null, null),
-                new ToDoItem("Sleep", 0, null, null),
-                new ToDoItem("Pick up package", 0, null, null),
-                new ToDoItem("Do something", 0, null, null),
-                new ToDoItem("Sleep", 0, null, null)
-        ));
-
-        ArrayList<ShoppingItem> shoppingItems1 = new ArrayList<>(Arrays.asList(
-                new ShoppingItem("Milk", 3, UOM.L, null),
-                new ShoppingItem("Chips", 4, UOM.PACKS, null),
-                new ShoppingItem("Coffee Beans", 2, UOM.KG, null),
-                new ShoppingItem("Chocolate", 10, UOM.PACKS, null),
-                new ShoppingItem("Cat food", 2, UOM.KG, null),
-                new ShoppingItem("Sushi", 8, UOM.ITEMS, null),
-                new ShoppingItem("Ice Cream", 2, UOM.L, null),
-                new ShoppingItem("FatFat", 20, UOM.PACKS, null)
-        ));
-
-        ArrayList<ShoppingItem> shoppingItems2 = new ArrayList<>(Arrays.asList(
-                new ShoppingItem("Boxes", 3, UOM.ITEMS, null),
-                new ShoppingItem("Pizza", 15, UOM.ITEMS, null),
-                new ShoppingItem("Coke", 2, UOM.L, null),
-                new ShoppingItem("Popcorn", 4, UOM.PACKS, null)
-        ));
-
-        ToDoList todoList1 = new ToDoList("1", "FirstTDList", listContributors1, false, itemsList1);
-        ToDoList todoList2 = new ToDoList("2", "SecondTDList", listContributors2, true, itemsList2);
-
-        ShoppingList shoppingList1 = new ShoppingList("1", "ShoppingList1", listContributors3, false, shoppingItems1);
-        ShoppingList shoppingList2 = new ShoppingList("1", "ShoppingList2", listContributors4, false, shoppingItems2);
-
-        // Test
-        tasksList.add(todoList1);
-        tasksList.add(todoList2);
-        tasksList.add(shoppingList1);
-        tasksList.add(shoppingList2);
-
-        //listAdapter = new ListAdapter(tasksListTest, this, this);
-
-        // From server
-        //tasksList.addAll(myUser.getTasksList());
 
         listAdapter = new MyListAdapter(tasksList, this, this);
 
         recyclerView.setAdapter(listAdapter);
         layoutManager = new LinearLayoutManager(this);
+
+        ItemTouchHelper itemTouchHelper = new
+                ItemTouchHelper(new SwipeToDeleteCallback(listAdapter));
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
         recyclerView.setLayoutManager(layoutManager);
     }
 
