@@ -11,7 +11,9 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androiddev.shopitask.models.List;
+import com.androiddev.shopitask.models.MyUser;
 import com.androiddev.shopitask.models.ShoppingList;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -24,7 +26,12 @@ class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
     private Context context;
     private OnListListener onlistListener;
 
-    public ListAdapter(ArrayList<List> lists, Context context , OnListListener onlistListener) {
+    private List deletedList;
+    private int deletedListPosition;
+
+    private MyUser myUser = new MyUser();
+
+    public ListAdapter(ArrayList<List> lists, Context context, OnListListener onlistListener) {
         this.lists = lists;
         this.context = context;
         this.onlistListener = onlistListener;
@@ -75,7 +82,7 @@ class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list,
                 parent, false);
 
-        MyViewHolder vh = new MyViewHolder(view , onlistListener);
+        MyViewHolder vh = new MyViewHolder(view, onlistListener);
         return vh;
     }
 
@@ -89,7 +96,7 @@ class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
             listTypeIconSrc = R.drawable.shopping_cart_transparent;
         else {
             listTypeIconSrc = R.drawable.tasklist_tranparent;
-            holder.listTypeIcon.setPadding(16,16,16,16);
+            holder.listTypeIcon.setPadding(16, 16, 16, 16);
         }
         holder.listTypeIcon.setImageResource(listTypeIconSrc);
 
@@ -104,12 +111,11 @@ class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
         int imageSrc = 0;
         if (isPrivate) {
             imageSrc = R.drawable.single_person;
-            holder.listMembersIcon.setPadding(16,16,16,16);
-        }
-        else
+            holder.listMembersIcon.setPadding(16, 16, 16, 16);
+        } else
             imageSrc = R.drawable.multiple_people;
         holder.listMembersIcon.setImageResource(imageSrc);
-        
+
         int membersAmount = 0;
         if (list.getContributors() != null)
             membersAmount = list.getContributors().size() + 1;
@@ -129,5 +135,45 @@ class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
     @Override
     public int getItemCount() {
         return lists.size();
+    }
+
+    public void deleteItem(int position) {
+        deletedList = lists.get(position);
+        deletedListPosition = position;
+        lists.remove(position);
+        notifyItemRemoved(position);
+        showUndoSnackbar();
+    }
+
+    private void showUndoSnackbar() {
+        Snackbar snackbar = Snackbar.make(((TaskListsActivity) context).findViewById(R.id.my_recycler_view), R.string.undo_delete_prompt, Snackbar.LENGTH_LONG);
+        snackbar.setAction(R.string.undo, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                undoDelete();
+            }
+        });
+
+        snackbar.addCallback(new Snackbar.Callback() {
+            @Override
+            public void onDismissed(Snackbar transientBottomBar, int event) {
+                super.onDismissed(transientBottomBar, event);
+                // TODO Magic Very Big
+                //myUser.getTasksList().remove(deletedList);
+            }
+        });
+
+        snackbar.show();
+
+    }
+
+    private void undoDelete() {
+        lists.add(deletedListPosition,
+                deletedList);
+        notifyItemInserted(deletedListPosition);
+    }
+
+    public Context getContext() {
+        return context;
     }
 }

@@ -246,4 +246,5 @@ public class MyUser {
     public int hashCode() {
         return Objects.hash(user_id);
     }
+
 }

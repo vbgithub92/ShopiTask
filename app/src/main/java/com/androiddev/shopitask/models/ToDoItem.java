@@ -1,6 +1,5 @@
 package com.androiddev.shopitask.models;
 
-import android.location.Location;
 import android.media.Image;
 
 import java.io.Serializable;
@@ -12,12 +11,12 @@ public class ToDoItem implements Serializable {
     private String id;
     private String activityName;
     private long date;
-    private Location location;
+    private String location;
     private Image pic;
 
     public ToDoItem() {}
 
-    public ToDoItem(String activityName, long date, Location location, Image pic) {
+    public ToDoItem(String activityName, long date, String location, Image pic) {
         this.activityName = activityName;
         this.date = date;
         this.location = location;
@@ -25,7 +24,7 @@ public class ToDoItem implements Serializable {
         this.id = UUID.randomUUID().toString();
     }
 
-    public ToDoItem(String id, String activityName, long date, Location location, Image pic) {
+    public ToDoItem(String id, String activityName, long date, String location, Image pic) {
         this.id = id;
         this.activityName = activityName;
         this.date = date;
@@ -57,11 +56,11 @@ public class ToDoItem implements Serializable {
         this.date = date;
     }
 
-    public Location getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 

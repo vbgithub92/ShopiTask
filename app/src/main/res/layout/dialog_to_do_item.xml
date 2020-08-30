@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingHorizontal="20dp"
-    android:paddingVertical="100dp"
-    >
+    android:paddingVertical="100dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,13 +15,13 @@
 
 
         <TextView
-            android:id="@+id/itemName"
+            android:id="@+id/taskName"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
             android:fontFamily="sans-serif-black"
             android:gravity="center"
-            android:text="itemNameHere"
+            android:text="TaskNameHere"
             android:textColor="#000000"
             android:textSize="26sp"
             android:textStyle="bold|italic" />
@@ -33,13 +33,44 @@
 
         </Space>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/taskLocation"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:gravity="start|center"
+                android:paddingHorizontal="10dp"
+                android:text="LocationHere"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold|italic" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/navigateToTaskButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/ic_baseline_navigation_24"
+                app:fabSize="normal"
+                app:elevation="6dp"
+                />
+
+        </LinearLayout>
+
         <TextView
-            android:id="@+id/itemAmountAndType"
+            android:id="@+id/taskDate"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="#+Type"
+            android:paddingHorizontal="10dp"
+            android:text="TaskDateFormatted"
             android:textColor="#000000"
             android:textSize="18sp"
             android:textStyle="bold|italic" />
@@ -52,7 +83,7 @@
         </Space>
 
         <ImageView
-            android:id="@+id/itemPicture"
+            android:id="@+id/taskPicture"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3"
@@ -86,7 +117,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/gotItButton"
+                android:id="@+id/itsDoneButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -94,7 +125,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/blue_button"
                 android:fontFamily="sans-serif-black"
-                android:text="@string/got_it"
+                android:text="@string/its_done"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:textStyle="bold" />

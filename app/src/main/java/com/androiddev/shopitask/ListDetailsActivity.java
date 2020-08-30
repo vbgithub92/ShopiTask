@@ -1,17 +1,12 @@
 package com.androiddev.shopitask;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -179,6 +174,10 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
             ShoppingItemDialog dialog = new ShoppingItemDialog(this, ((ShoppingList)theList).get(position));
             dialog.startShoppingItemDialog();
         }
+        else {
+            ToDoItemDialog dialog = new ToDoItemDialog(this,((ToDoList)theList).get(position));
+            dialog.startToDoItemDialog();
+        }
     }
 
     @Override
@@ -190,56 +189,17 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
     private void initShareButton() {
         buttonShareList = findViewById(R.id.shareListButton);
 
-        if (theList.getOwnerId().equals(myUser.getUser_id())) {
+        if (theList.getOwnerId().equals(myUser.getUser_id()) && !theList.isIsPrivate()) {
             buttonShareList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    shareList(view);
+                    ShareListDialog dialog = new ShareListDialog(ListDetailsActivity.this ,theList);
+                    dialog.startShareListDialog();
                 }
             });
         } else {
             buttonShareList.setVisibility(View.INVISIBLE);
         }
-
-    }
-
-    public void shareList(View view) {
-        final Dialog shareDialog = new Dialog(this);
-        shareDialog.setContentView(R.layout.dialog_share_list);
-
-        editTextTargetEmail = shareDialog.findViewById(R.id.shareTargetEmail);
-        shareButton = shareDialog.findViewById(R.id.shareButton);
-        closeButton = shareDialog.findViewById(R.id.closeButton);
-
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String targetEmail = editTextTargetEmail.getText().toString();
-                if (!targetEmail.isEmpty()) {
-                    // TODO Magic
-                    myUser.addUserToList(targetEmail, theList.getListId(), theList.getOwnerId());
-                    shareDialog.dismiss();
-                } else {
-                    Context context = getApplicationContext();
-                    CharSequence text = getString(R.string.share_error);
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                }
-            }
-        });
-
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                shareDialog.dismiss();
-            }
-        });
-
-        Objects.requireNonNull(shareDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        shareDialog.show();
-
 
     }
 }
