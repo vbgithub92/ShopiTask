@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androiddev.shopitask.models.List;
+import com.androiddev.shopitask.models.LoadingDialog;
 import com.androiddev.shopitask.models.MyUser;
 import com.androiddev.shopitask.models.ShoppingItem;
 import com.androiddev.shopitask.models.ShoppingList;
@@ -30,7 +31,6 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
 
     private static final String TAG = "TaskListsActivity";
 
-
     private Vibrator vibe;
 
     private RecyclerView recyclerView;
@@ -38,11 +38,12 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
     private RecyclerView.LayoutManager layoutManager;
 
     private TextView textUserName;
+    private TextView textTotalShoppingItems;
+    private TextView textTotalTasks;
 
     ArrayList<List> tasksList = new ArrayList<>();
 
-    private TextView textTotalShoppingItems;
-    private TextView textTotalTasks;
+    private LoadingDialog loadingDialog;
 
     private MyUser myUser = new MyUser();
 
@@ -52,11 +53,17 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
         setContentView(R.layout.activity_task_lists);
         createToolbar();
         findViewsById();
-        textUserName.setText(myUser.getUserName());
+        String userName = myUser.getUserName() + "!";
+        textUserName.setText(userName);
         vibe = (Vibrator) TaskListsActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
 
+        loadingDialog = new LoadingDialog(this);
+
         initRecyclerView();
-        myUser.initListsAndUpdateAdapter(listAdapter);
+
+        loadingDialog.startLoadingDialog(getString(R.string.do_something));
+        myUser.initListsAndUpdateAdapter(listAdapter, this);
+
     }
 
     @Override
@@ -158,11 +165,10 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
     }
 
-    private void updateTotals() {
+    public void updateTotals() {
         int totalShoppingItems = 0;
         int totalTasks = 0;
 
-        // TODO FIX
         for (List list : myUser.getTasksList()) {
             if (list instanceof ShoppingList)
                 totalShoppingItems += ((ShoppingList) list).getListSize();
@@ -180,5 +186,9 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
         Intent intent = new Intent(this, ListDetailsActivity.class);
         intent.putExtra(LIST_KEY, selectedList);
         startActivity(intent);
+    }
+
+    public LoadingDialog getLoadingDialog() {
+        return loadingDialog;
     }
 }
