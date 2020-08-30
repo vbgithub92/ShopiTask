@@ -1,10 +1,17 @@
 package com.androiddev.shopitask;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androiddev.shopitask.models.List;
+import com.androiddev.shopitask.models.MyUser;
 import com.androiddev.shopitask.models.ShoppingList;
 import com.androiddev.shopitask.models.ToDoList;
 
@@ -19,16 +27,17 @@ import java.util.Objects;
 
 import static com.androiddev.shopitask.MainActivity.BUNDLE_KEY;
 import static com.androiddev.shopitask.MainActivity.IS_PRIVATE_LIST_KEY;
+import static com.androiddev.shopitask.MainActivity.LIST_ID_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_NAME_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_OWNER_ID_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_SIZE_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_TYPE_KEY;
-import static com.androiddev.shopitask.MainActivity.LIST_ID_KEY;
 
 public class ListDetailsActivity extends AppCompatActivity implements ShoppingListItemAdapter.OnListItemListener, ToDoListItemAdapter.OnListItemListener {
 
     private List theList;
+    private MyUser myUser = new MyUser();
 
     private TextView textViewListName;
     private TextView textViewListTotalPrompt;
@@ -37,6 +46,14 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
 
     private ImageView imageViewListTotalIcon;
     private ImageView imageViewListMembersIcon;
+
+    private Button buttonShareList;
+
+
+    // Dialog
+    private EditText editTextTargetEmail;
+    private Button shareButton;
+    private Button closeButton;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter listAdapter;
@@ -68,6 +85,8 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
 
         imageViewListTotalIcon = findViewById(R.id.listTotalIcon);
         imageViewListMembersIcon = findViewById(R.id.listMembersIcon);
+
+        initShareButton();
 
         recyclerView = findViewById(R.id.my_recycler_view);
 
@@ -161,5 +180,62 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
     public void onBackPressed() {
         Intent intent = new Intent(this, TaskListsActivity.class);
         startActivity(intent);
+    }
+
+    private void initShareButton() {
+        buttonShareList = findViewById(R.id.shareListButton);
+
+        if(theList.getOwnerId().equals(myUser.getUser_id())) {
+            buttonShareList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    shareList(view);
+                }
+            });
+        }
+        else {
+            buttonShareList.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
+    public void shareList(View view) {
+        final Dialog shareDialog = new Dialog(this);
+        shareDialog.setContentView(R.layout.dialog_share_list);
+
+        editTextTargetEmail = shareDialog.findViewById(R.id.shareTargetEmail);
+        shareButton = shareDialog.findViewById(R.id.shareButton);
+        closeButton=  shareDialog.findViewById(R.id.closeButton);
+
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String targetEmail = editTextTargetEmail.getText().toString();
+                if(!targetEmail.isEmpty()) {
+                    // TODO Magic
+                    shareDialog.dismiss();
+                }
+                else {
+                    Context context = getApplicationContext();
+                    CharSequence text = getString(R.string.share_error);
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+            }
+        });
+
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareDialog.dismiss();
+            }
+        });
+
+        Objects.requireNonNull(shareDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        shareDialog.show();
+
+
     }
 }

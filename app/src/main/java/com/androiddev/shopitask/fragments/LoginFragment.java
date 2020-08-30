@@ -99,15 +99,17 @@ public class LoginFragment extends Fragment {
 
     private void login(String email, String password) {
         mAut = FirebaseAuth.getInstance();
+        mainActivity.getLoadingDialog().startLoadingDialog(getString(R.string.logging_in));
         mAut.signInWithEmailAndPassword(email, password).addOnCompleteListener(mainActivity, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (!task.isSuccessful()) {
-                    Toast.makeText(mainActivity.getApplicationContext(), "fail", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mainActivity.getApplicationContext(), getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
+                    mainActivity.getLoadingDialog().dismissLoadingDialog();
                 }
                 else {
+                    mainActivity.getLoadingDialog().dismissLoadingDialog();
                     Intent intent = new Intent(getActivity(), TaskListsActivity.class);
-
                     startActivity(intent);
                 }
             }

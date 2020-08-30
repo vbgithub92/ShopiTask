@@ -12,7 +12,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:testOnly="false">
         <activity android:name=".AddToListActivity" />
         <activity android:name=".ListDetailsActivity" />
         <activity android:name=".AddNewListActivity" />

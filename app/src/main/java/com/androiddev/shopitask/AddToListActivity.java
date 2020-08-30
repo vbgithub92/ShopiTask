@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.media.Image;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -38,7 +37,6 @@ import static com.androiddev.shopitask.MainActivity.LIST_NAME_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_OWNER_ID_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_SIZE_KEY;
 import static com.androiddev.shopitask.MainActivity.LIST_TYPE_KEY;
-
 import static com.androiddev.shopitask.MainActivity.getDateFromDatePicker;
 
 public class AddToListActivity extends AppCompatActivity {

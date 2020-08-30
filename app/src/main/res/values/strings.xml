@@ -34,6 +34,7 @@
     <string name="items">Items</string>
     <string name="tasks">Tasks</string>
     <string name="members">Members</string>
+    <string name="share_list">Share List</string>
 
     <!-- Add To List Activity-->
     <string name="do_something">Let\'s do something!</string>
@@ -50,6 +51,7 @@
     <string name="user_email">Email</string>
     <string name="user_password_prompt">Choose a password</string>
     <string name="user_password">Password</string>
+    <string name="login_fail">Unable to log in. Try again?</string>
 
     <!-- Add to shopping list-->
     <string name="add_to_shopping_prompt">What are we adding?</string>
@@ -73,5 +75,17 @@
 
 
     <string name="add_picture">Add a picture?</string>
+
+    <!-- Share Dialog -->
+    <string name="share_prompt">Who do you want to share the list with?</string>
+    <string name="share_hint">Enter email here</string>
+    <string name="share">Share</string>
+    <string name="share_error">Email can\'t be empty</string>
+    <string name="close">Close</string>
+
+    <!-- Loading Dialog -->
+    <string name="logging_in">Logging In…</string>
+    <string name="signing_up">Signing Up…</string>
+    <string name="getting_ready">Getting ready to be productive…</string>
 
 </resources>

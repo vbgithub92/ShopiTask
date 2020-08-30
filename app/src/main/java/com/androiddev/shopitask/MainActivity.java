@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.androiddev.shopitask.fragments.LoginFragment;
 import com.androiddev.shopitask.fragments.MainFragment;
 import com.androiddev.shopitask.fragments.SignUpFragment;
+import com.androiddev.shopitask.models.LoadingDialog;
 
 import java.util.Calendar;
 
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private MainFragment mainFragment;
     private SignUpFragment signUpFragment;
     private LoginFragment loginFragment;
+    private LoadingDialog loadingDialog;
 
     private boolean isAnimating;
 
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         createToolbar();
+        loadingDialog = new LoadingDialog(this);
 
         vibe = (Vibrator) MainActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -149,5 +152,9 @@ public class MainActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
         return calendar.getTimeInMillis();
+    }
+
+    public LoadingDialog getLoadingDialog() {
+        return loadingDialog;
     }
 }

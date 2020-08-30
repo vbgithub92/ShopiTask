@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.androiddev.shopitask.MyListAdapter;
+import com.androiddev.shopitask.TaskListsActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -40,7 +41,7 @@ public class MyUser {
         this.dbReference.child("MyLists").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                initMyLists(dataSnapshot, null);
+                initMyLists(dataSnapshot, null,null);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -49,11 +50,12 @@ public class MyUser {
         });
     }
 
-    public void initListsAndUpdateAdapter(final MyListAdapter myListAdapter) {
+    public void initListsAndUpdateAdapter(final MyListAdapter myListAdapter, final TaskListsActivity activity) {
+        // START
         this.dbReference.child("MyLists").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                initMyLists(dataSnapshot, myListAdapter);
+                initMyLists(dataSnapshot, myListAdapter, activity);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -128,7 +130,8 @@ public class MyUser {
         return toDoLists;
     }
 
-    private void initMyLists(@NonNull DataSnapshot dataSnapshot, MyListAdapter myListAdapter) {
+    private void initMyLists(@NonNull DataSnapshot dataSnapshot, MyListAdapter myListAdapter , TaskListsActivity activity) {
+
         Log.d(TAG, "initMyLists: Im here");
         for (DataSnapshot ds: dataSnapshot.getChildren()) {
             switch (ListType.valueOf(ds.child("listType").getValue(String.class))) {
@@ -144,6 +147,9 @@ public class MyUser {
             myListAdapter.setItems(tasksList);
             myListAdapter.notifyDataSetChanged();
         }
+        activity.getLoadingDialog().dismissLoadingDialog();
+        activity.updateTotals();
+
     }
 
     @Override

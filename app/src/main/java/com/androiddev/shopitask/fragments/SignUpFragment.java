@@ -23,8 +23,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpFragment extends Fragment {
 
@@ -105,11 +103,13 @@ public class SignUpFragment extends Fragment {
         toast.show();
 
         mAut = FirebaseAuth.getInstance();
+        mainActivity.getLoadingDialog().startLoadingDialog(getString(R.string.signing_up));
         mAut.createUserWithEmailAndPassword(email, password).addOnCompleteListener(mainActivity, new OnCompleteListener<AuthResult>() {
            @Override
            public void onComplete(@NonNull Task<AuthResult> task) {
                if (!task.isSuccessful()) {
                    Toast.makeText(mainActivity.getApplicationContext(), "fail", Toast.LENGTH_SHORT).show();
+                   mainActivity.getLoadingDialog().dismissLoadingDialog();
                } else {
                    FirebaseUser user = mAut.getCurrentUser();
                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
@@ -122,6 +122,7 @@ public class SignUpFragment extends Fragment {
                                Toast.makeText(mainActivity.getApplicationContext(), "fail", Toast.LENGTH_SHORT).show();
                            }
                            else {
+                               mainActivity.getLoadingDialog().dismissLoadingDialog();
                                Intent intent = new Intent(getActivity(), TaskListsActivity.class);
                                startActivity(intent);
                            }
