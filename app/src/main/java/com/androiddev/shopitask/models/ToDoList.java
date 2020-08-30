@@ -38,10 +38,14 @@ public class ToDoList extends List {
     }
 
     public void addToDoItem(ToDoItem toDoItem) {
+        if(toDoItems == null)
+            toDoItems = new ArrayList<ToDoItem>();
         this.toDoItems.add(toDoItem);
     }
 
     public void addToDoItems(ArrayList<ToDoItem> toDoItems) {
+        if(toDoItems == null)
+            toDoItems = new ArrayList<ToDoItem>();
         this.toDoItems.addAll(toDoItems);
     }
 

@@ -91,7 +91,7 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
         updateViews();
     }
 
-    private void updateViews() {
+    public void updateViews() {
 
         String listName = theList.getListName();
 

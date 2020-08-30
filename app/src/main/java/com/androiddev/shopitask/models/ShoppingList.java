@@ -38,10 +38,15 @@ public class ShoppingList extends List {
     }
 
     public void addShoppingItem(ShoppingItem shoppingItem) {
+        if(shoppingItems == null) {
+            shoppingItems = new ArrayList<ShoppingItem>();
+        }
         this.shoppingItems.add(shoppingItem);
     }
 
     public void addShoppingItems(ArrayList<ShoppingItem> shoppingItems) {
+        if(shoppingItems == null)
+            shoppingItems = new ArrayList<ShoppingItem>();
         this.shoppingItems.addAll(shoppingItems);
     }
 

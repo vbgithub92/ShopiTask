@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -35,6 +36,7 @@ import com.androiddev.shopitask.models.ToDoItem;
 import com.androiddev.shopitask.models.ToDoList;
 import com.androiddev.shopitask.models.UOM;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 
 import static com.androiddev.shopitask.MainActivity.IS_PRIVATE_LIST_KEY;
@@ -62,7 +64,7 @@ public class AddToListActivity extends AppCompatActivity {
     String itemName;
     double qty;
     UOM uom;
-    Bitmap pic = null;
+    String pic = "";
     String location;
     long date;
 
@@ -137,8 +139,16 @@ public class AddToListActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE) {
             // Get Captured Image
-            pic = (Bitmap) data.getExtras().get("data");
+            pic = BitMapToString((Bitmap) data.getExtras().get("data"));
         }
+    }
+
+    public String BitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos =new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp= Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
     }
 
     private void createToolbar() {

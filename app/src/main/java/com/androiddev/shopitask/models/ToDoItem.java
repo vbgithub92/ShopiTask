@@ -1,7 +1,5 @@
 package com.androiddev.shopitask.models;
 
-import android.graphics.Bitmap;
-
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
@@ -12,11 +10,12 @@ public class ToDoItem implements Serializable {
     private String activityName;
     private long date;
     private String location;
-    private Bitmap pic;
+    private String pic;
+
 
     public ToDoItem() {}
 
-    public ToDoItem(String activityName, long date, String location, Bitmap pic) {
+    public ToDoItem(String activityName, long date, String location, String pic) {
         this.activityName = activityName;
         this.date = date;
         this.location = location;
@@ -24,7 +23,7 @@ public class ToDoItem implements Serializable {
         this.id = UUID.randomUUID().toString();
     }
 
-    public ToDoItem(String id, String activityName, long date, String location, Bitmap pic) {
+    public ToDoItem(String id, String activityName, long date, String location, String pic) {
         this.id = id;
         this.activityName = activityName;
         this.date = date;
@@ -64,11 +63,11 @@ public class ToDoItem implements Serializable {
         this.location = location;
     }
 
-    public Bitmap getPic() {
+    public String getPic() {
         return pic;
     }
 
-    public void setPic(Bitmap pic) {
+    public void setPic(String pic) {
         this.pic = pic;
     }
 
