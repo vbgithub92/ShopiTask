@@ -1,11 +1,13 @@
 package com.androiddev.shopitask;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
@@ -17,7 +19,6 @@ import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -87,12 +88,16 @@ public class AddToListActivity extends AppCompatActivity {
     private boolean nextScreen = false;
     private boolean addToGoogleCalendar = false;
 
+    private Vibrator vibe;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_to_list);
         createToolbar();
+
+        vibe = (Vibrator) AddToListActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
 
         initAddButton();
         myUser = new MyUser();
@@ -144,6 +149,7 @@ public class AddToListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Open Camera
+                vibe.vibrate(80);
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, REQUEST_CODE);
 
@@ -192,6 +198,7 @@ public class AddToListActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                vibe.vibrate(80);
                 if (listId == null) {
                     createNewList();
                 } else {
