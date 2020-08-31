@@ -17,6 +17,7 @@ import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +37,10 @@ import com.androiddev.shopitask.models.ToDoItem;
 import com.androiddev.shopitask.models.ToDoList;
 import com.androiddev.shopitask.models.UOM;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Objects;
@@ -81,6 +86,7 @@ public class AddToListActivity extends AppCompatActivity {
 
     private boolean nextScreen = false;
     private boolean addToGoogleCalendar = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -263,11 +269,27 @@ public class AddToListActivity extends AppCompatActivity {
                     int selectedUOMid = ((RadioGroup) findViewById(R.id.unitTypeGroup)).getCheckedRadioButtonId();
                     uom = UOM.valueOf(((RadioButton) findViewById(selectedUOMid)).getText().toString().toUpperCase());
 
-                    ShoppingItem shoppingItem = new ShoppingItem(itemName, qty, uom, pic);
+                    final ShoppingItem shoppingItem = new ShoppingItem(itemName, qty, uom, pic);
                     if (myUser.getUser_id().equals(listOwnerId)) {
                         myUser.getDbReference().child("MyLists").child(listId).child("shoppingItems").child(Integer.toString(listSize)).setValue(shoppingItem);
                     } else {
-                        myUser.getGeneralDbReference().child(listOwnerId).child("MyLists").child(listId).child("shoppingItems").child(Integer.toString(listSize)).setValue(shoppingItem);
+                        final DatabaseReference ref = myUser.getGeneralDbReference().child(listOwnerId).child("MyLists").child(listId);
+                        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot ds) {
+                                if (ds.hasChild("shoppingItems")) {
+                                    ref.child("shoppingItems").child(Integer.toString(listSize)).setValue(shoppingItem);
+                                }
+                                else {
+                                    //Toast.makeText(, "TEST!!!!!1", Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+
+                        });
                     }
                     ((ShoppingList) theList).addShoppingItem(shoppingItem);
                 } else
