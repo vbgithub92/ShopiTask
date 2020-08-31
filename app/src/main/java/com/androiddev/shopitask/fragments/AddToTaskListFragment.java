@@ -70,7 +70,6 @@ public class AddToTaskListFragment extends Fragment {
         imageViewCameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO Open camera to add photo
                 vibe.vibrate(80);
             }
         });
@@ -95,11 +94,6 @@ public class AddToTaskListFragment extends Fragment {
         newTaskLocation = editTextNewTaskLocation.getText().toString();
         if (checkValidInput(newTaskLocation))
             return newTaskLocation;
-        return null;
-    }
-
-    public Date getNewTaskDate() {
-        // TODO
         return null;
     }
 

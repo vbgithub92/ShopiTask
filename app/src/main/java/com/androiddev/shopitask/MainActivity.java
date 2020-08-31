@@ -1,7 +1,6 @@
 package com.androiddev.shopitask;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
@@ -57,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     public void signUpButtonClicked(View view) {
         vibe.vibrate(80);
         signUpFragment = new SignUpFragment();
@@ -74,11 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void changeFragment(Fragment currentFragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.mainActivityBottomFrame, currentFragment).commit();
-    }
-
-    public void cheatMode(View view) {
-        Intent intent = new Intent(this, TaskListsActivity.class);
-        startActivity(intent);
     }
 
     @Override
@@ -99,10 +92,10 @@ public class MainActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
     }
 
-    public static long getDateFromDatePicker(DatePicker datePicker){
+    public static long getDateFromDatePicker(DatePicker datePicker) {
         int day = datePicker.getDayOfMonth();
         int month = datePicker.getMonth();
-        int year =  datePicker.getYear();
+        int year = datePicker.getYear();
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
         return calendar.getTimeInMillis();
@@ -111,4 +104,11 @@ public class MainActivity extends AppCompatActivity {
     public LoadingDialog getLoadingDialog() {
         return loadingDialog;
     }
+
+
+    public void cheatMode(View view) {
+        //Intent intent = new Intent(this, TaskListsActivity.class);
+        //startActivity(intent);
+    }
+
 }
