@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -100,12 +99,6 @@ public class MainActivity extends AppCompatActivity {
 
     public LoadingDialog getLoadingDialog() {
         return loadingDialog;
-    }
-
-
-    public void cheatMode(View view) {
-        //Intent intent = new Intent(this, TaskListsActivity.class);
-        //startActivity(intent);
     }
 
 }
