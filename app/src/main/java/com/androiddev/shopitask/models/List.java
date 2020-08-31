@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 
-public class List implements Serializable{
+public class List implements Serializable {
     private String listId;
     private String ownerId;
     private String listName;
@@ -14,7 +14,7 @@ public class List implements Serializable{
     private boolean isPrivate;
     private ListType listType;
 
-    public List(){
+    public List() {
 
     }
 
@@ -62,6 +62,8 @@ public class List implements Serializable{
     }
 
     public ArrayList<String> getContributors() {
+        if (contributors == null)
+            contributors = new ArrayList<>();
         return contributors;
     }
 
