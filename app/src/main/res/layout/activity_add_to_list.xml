@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".AddToListActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"/>
+
+        <TextView
+            android:id="@+id/addToListPrompt"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="[Prompt]"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:textStyle="bold|italic" />
+
+        <FrameLayout
+            android:id="@+id/addToListFrame"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5.25" />
+
+        <Button
+            android:id="@+id/listAddNewItem"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="80dp"
+            android:layout_weight="0.75"
+            android:background="@color/colorAccent"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="@string/add"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</RelativeLayout>

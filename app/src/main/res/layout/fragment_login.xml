@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.LoginFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="@string/user_email"
+            android:textColor="@color/colorPrimary"
+            android:textSize="30sp"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/existingUserEmail"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:fontFamily="casual"
+            android:hint="@string/user_email"
+            android:maxLength="24"
+            android:maxLines="1"
+            android:inputType="textEmailAddress"
+            android:imeOptions="actionDone|flagNavigateNext"
+            android:cursorVisible="false" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="@string/user_password"
+            android:textColor="@color/colorPrimary"
+            android:textSize="30sp"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/existingUserPassword"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:fontFamily="casual"
+            android:hint="@string/user_password"
+            android:maxLength="24"
+            android:maxLines="1"
+            android:inputType="textPassword"
+            android:imeOptions="actionDone|flagNavigateNext"
+            android:cursorVisible="false" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5">
+
+            </Space>
+
+            <Button
+                android:id="@+id/initiateLoginButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorAccent"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center"
+                android:text="@string/login_button"
+                android:textColor="#FFFFFF"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5">
+
+            </Space>
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</FrameLayout>

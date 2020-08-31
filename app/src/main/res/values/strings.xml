@@ -1,3 +1,106 @@
 <resources>
     <string name="app_name">ShopiTask</string>
+
+    <!-- Main Activity -->
+
+    <string name="slogan">Let\'s be productive!</string>
+    <string name="login_button">Log In</string>
+    <string name="sign_up_button">Sign Up</string>
+
+    <!-- Task Lists Activity -->
+    <string name="welcome_back">Welcome Back</string>
+    <string name="total_items_to_buy">Total items to buy:</string>
+    <string name="total_tasks">Total tasks:</string>
+    <string name="type">Type</string>
+    <string name="list_name">List Name</string>
+
+    <!-- Add New List Activity -->
+    <string name="add_new_list_headline">Let\'s create a new list!</string>
+    <string name="add_new_list_list_name">How should the list be called?</string>
+    <string name="add_new_list_list_name_hint">Enter the list name here</string>
+    <string name="add_new_list_type">What kind of list is it?</string>
+    <string name="add_new_list_privacy">Do you want to share the list with someone?</string>
+    <string name="shopping">Shopping</string>
+    <string name="todo_list">To-Do List</string>
+    <string name="shared">Shared</string>
+    <string name="personal">Personal</string>
+    <string name="done">Done</string>
+    <string name="next">Next</string>
+
+    <string name="bad_list_name">Invalid List Name. Maybe try another name?</string>
+
+    <!-- List Details Activity-->
+    <string name="total">Total</string>
+    <string name="items">Items</string>
+    <string name="tasks">Tasks</string>
+    <string name="members">Members</string>
+    <string name="share_list">Share List</string>
+
+    <!-- Add To List Activity-->
+    <string name="do_something">Let\'s do something!</string>
+    <string name="add_something">Let\'s add a new item</string>
+    <string name="add">Add</string>
+
+    <!-- *************************************************************************************** -->
+    <!--Fragments-->
+
+    <!-- SignUp/Login-->
+    <string name="user_name_prompt">What\'s your name?</string>
+    <string name="user_name">User Name</string>
+    <string name="user_email_prompt">What\'s your email?</string>
+    <string name="user_email">Email</string>
+    <string name="user_password_prompt">Choose a password</string>
+    <string name="user_password">Password</string>
+    <string name="login_fail">Unable to log in. Try again?</string>
+    <string name="login_no_input">Please enter an email and a password</string>
+    <string name="sign_up_no_input">Please enter a name an email and a password</string>
+    <string name="sign_up_fail">Unable to sign up. Try again?</string>
+
+    <!-- Add to shopping list-->
+    <string name="add_to_shopping_prompt">What are we adding?</string>
+    <string name="add_to_shopping_prompt_hint">Enter the item name here</string>
+    <string name="how_much">How much?</string>
+    <string name="kg">KG</string>
+    <string name="liters">L</string>
+    <string name="packs">Packs</string>
+
+    <!--Add to task list-->
+    <string name="add_to_task_list_prompt">What do we need to do?</string>
+    <string name="add_to_task_list_prompt_hint">Enter the task here</string>
+    <string name="where">Where?</string>
+    <string name="where_hint">Enter a location here</string>
+    <string name="when">When?</string>
+    <string name="add_to_calendar_prompt">Add to Google Calendar?</string>
+
+    <string name="add_picture">Add a picture?</string>
+
+    <!-- Share Dialog -->
+    <string name="share_prompt">Who do you want to share the list with?</string>
+    <string name="share_hint">Enter email here</string>
+    <string name="share">Share</string>
+    <string name="share_error">Email can\'t be empty</string>
+    <string name="close">Close</string>
+
+    <!-- Loading Dialog -->
+    <string name="logging_in">Logging In…</string>
+    <string name="signing_up">Signing Up…</string>
+    <string name="getting_ready">Getting ready to be productive…</string>
+
+    <!-- Shopping Item Dialog -->
+    <string name="back">Back</string>
+    <string name="got_it">Got it!</string>
+
+    <!-- To Do Item Dialog -->
+    <string name="its_done">It\'s Done!</string>
+
+    <!-- *************************************************************************************** -->
+    <!--SnackBars-->
+    <string name="undo_delete_prompt">The list was deleted</string>
+    <string name="undo">Undo</string>
+    <string name="item_name_error">Item name can not be empty</string>
+    <string name="task_name_error">Task name can not be empty</string>
+    <string name="share_success">Shared list with: </string>
+    <string name="password_short">Password length should be at least 6</string>
+    <string name="username_empty">You must choose a username!</string>
+
 </resources>
