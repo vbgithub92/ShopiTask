@@ -162,7 +162,9 @@ public class AddToListActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE) {
             // Get Captured Image
-            pic = BitMapToString((Bitmap) data.getExtras().get("data"));
+            if(data != null) {
+                pic = BitMapToString((Bitmap) data.getExtras().get("data"));
+            }
         }
     }
 

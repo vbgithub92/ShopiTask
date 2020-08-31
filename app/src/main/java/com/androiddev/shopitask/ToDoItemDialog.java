@@ -120,12 +120,14 @@ class ToDoItemDialog {
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((ListDetailsActivity)activity).getVibrator().vibrate(80);
                 dialog.dismiss();
             }
         });
         itsDoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((ListDetailsActivity)activity).getVibrator().vibrate(80);
                 myUser.deleteItem(toDoList, theItem);
                 toDoList.removeItem(theItem);
                 listAdapter.notifyItemRemoved(position);

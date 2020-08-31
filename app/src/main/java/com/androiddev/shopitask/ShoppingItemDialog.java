@@ -90,12 +90,14 @@ class ShoppingItemDialog {
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((ListDetailsActivity)activity).getVibrator().vibrate(80);
                 dialog.dismiss();
             }
         });
         gotItButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((ListDetailsActivity)activity).getVibrator().vibrate(80);
                 myUser.deleteItem(shoppingList ,theItem);
                 shoppingList.removeItem(theItem);
                 listAdapter.notifyItemRemoved(position);

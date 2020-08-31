@@ -28,7 +28,7 @@ class ShareListDialog {
     private Button shareButton;
     private Button closeButton;
 
-    public ShareListDialog(Activity activity, List theList){
+    public ShareListDialog(Activity activity, List theList) {
         this.activity = activity;
         this.theList = theList;
 
@@ -38,7 +38,7 @@ class ShareListDialog {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         LayoutInflater inflater = activity.getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_share_list , null);
+        View view = inflater.inflate(R.layout.dialog_share_list, null);
         builder.setView(view);
 
         editTextTargetEmail = view.findViewById(R.id.shareTargetEmail);
@@ -48,11 +48,12 @@ class ShareListDialog {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((ListDetailsActivity) activity).getVibrator().vibrate(80);
                 String targetEmail = editTextTargetEmail.getText().toString();
                 if (!targetEmail.isEmpty()) {
-                    myUser.addUserToList(targetEmail, theList,(ListDetailsActivity)activity);
+                    myUser.addUserToList(targetEmail, theList, (ListDetailsActivity) activity);
                     dialog.dismiss();
-                    ((ListDetailsActivity)activity).updateViews();
+                    ((ListDetailsActivity) activity).updateViews();
                     showSnackbar(activity.getString(R.string.share_success) + targetEmail);
                 } else {
                     showSnackbar(activity.getString(R.string.share_error));
@@ -63,6 +64,7 @@ class ShareListDialog {
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((ListDetailsActivity) activity).getVibrator().vibrate(80);
                 dialog.dismiss();
             }
         });
@@ -74,7 +76,7 @@ class ShareListDialog {
     }
 
     private void showSnackbar(String message) {
-        Snackbar snackbar = Snackbar.make(shareButton, message , Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(shareButton, message, Snackbar.LENGTH_LONG);
         snackbar.setActionTextColor(activity.getResources().getColor(R.color.colorAccent));
         View v = snackbar.getView();
         TextView tv = (TextView) v.findViewById(com.google.android.material.R.id.snackbar_text);
