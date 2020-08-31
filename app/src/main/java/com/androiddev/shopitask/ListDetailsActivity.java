@@ -1,7 +1,9 @@
 package com.androiddev.shopitask;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.provider.CalendarContract;
 import android.view.View;
 import android.widget.Button;
@@ -35,6 +37,8 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
 
     private static final String TAG = "ListDetailsActivity";
 
+    private Vibrator vibe;
+
     private List theList;
     private MyUser myUser = new MyUser();
 
@@ -63,6 +67,8 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_details);
+
+        vibe = (Vibrator) ListDetailsActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
 
         theList = (List) getIntent().getSerializableExtra(LIST_KEY);
 
@@ -163,6 +169,7 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
     }
 
     public void startAddToListActivity(View view) {
+        vibe.vibrate(80);
         Intent intent = new Intent(this, AddToListActivity.class);
         Bundle b = new Bundle();
         b.putString(LIST_NAME_KEY, theList.getListName());
@@ -184,6 +191,7 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
 
     @Override
     public void onListItemClick(int position) {
+        vibe.vibrate(80);
         if (theList instanceof ShoppingList) {
             ShoppingItemDialog dialog = new ShoppingItemDialog(this, myUser, (ShoppingList)theList, ((ShoppingList)theList).get(position), position, listAdapter);
             dialog.startShoppingItemDialog();
@@ -207,6 +215,7 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
             buttonShareList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    vibe.vibrate(80);
                     ShareListDialog dialog = new ShareListDialog(ListDetailsActivity.this ,theList);
                     dialog.startShareListDialog();
                 }
@@ -227,5 +236,9 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
                 .putExtra(CalendarContract.Events.ACCESS_LEVEL, CalendarContract.Events.ACCESS_PRIVATE)
                 .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_FREE);
         startActivity(insertCalendarIntent);
+    }
+
+    public Vibrator getVibrator() {
+        return vibe;
     }
 }
