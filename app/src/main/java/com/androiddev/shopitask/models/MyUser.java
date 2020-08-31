@@ -307,7 +307,7 @@ public class MyUser {
             this.getDbReference().child("MyLists").child(theList.getListId()).removeValue();
         } else {
             this.getDbReference().child("Contributions").child(theList.getListId()).removeValue();
-            this.getGeneralDbReference().child(theList.getOwnerId()).child("MyLists").child("contributors").addListenerForSingleValueEvent(new ValueEventListener() {
+            this.getGeneralDbReference().child(theList.getOwnerId()).child("MyLists").child(theList.getListId()).child("contributors").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     String id = "";
