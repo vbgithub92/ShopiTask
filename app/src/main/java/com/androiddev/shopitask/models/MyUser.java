@@ -145,15 +145,18 @@ public class MyUser {
     }
 
     private void initMyLists(@NonNull DataSnapshot dataSnapshot, MyListAdapter myListAdapter, TaskListsActivity activity) {
-
         Log.d(TAG, "initMyLists: Im here");
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
             switch (ListType.valueOf(ds.child("listType").getValue(String.class))) {
                 case SHOPPING:
-                    tasksList.add(ds.getValue(ShoppingList.class));
+                    ShoppingList l = ds.getValue(ShoppingList.class);
+                    if (!tasksList.contains(l))
+                        tasksList.add(l);
                     break;
                 case TODO:
-                    tasksList.add(ds.getValue(ToDoList.class));
+                    ToDoList l2 = ds.getValue(ToDoList.class);
+                    if (!tasksList.contains(l2))
+                        tasksList.add(l2);
                     break;
             }
         }
@@ -163,7 +166,6 @@ public class MyUser {
         }
         activity.getLoadingDialog().dismissLoadingDialog();
         activity.updateTotals();
-
     }
 
     private void initContributionsLists(@NonNull DataSnapshot dataSnapshot, final MyListAdapter myListAdapter, final TaskListsActivity activity) {
