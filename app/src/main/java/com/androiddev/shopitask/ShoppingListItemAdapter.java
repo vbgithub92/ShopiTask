@@ -88,8 +88,9 @@ class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListItemAdapt
         amountAndType += type;
         holder.itemAmountAndType.setText(amountAndType);
 
-        // TODO Pic
-
+        String itemPic = shoppingItem.getPic();
+        if(itemPic == null || itemPic.isEmpty())
+            holder.itemPhoto.setVisibility(View.INVISIBLE);
 
     }
 

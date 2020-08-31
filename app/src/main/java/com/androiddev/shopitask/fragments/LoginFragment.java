@@ -1,6 +1,5 @@
 package com.androiddev.shopitask.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +31,8 @@ public class LoginFragment extends Fragment {
     private MainActivity mainActivity;
 
     private FirebaseAuth mAut;
+
+    String errorMessage = "";
 
     public LoginFragment() {
         // Required empty public constructor
@@ -59,11 +59,14 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
                 String userEmail = editTextUserEmail.getText().toString();
                 String userPassword = editTextUserPassword.getText().toString();
+
+                errorMessage = getString(R.string.login_no_input);
+
                 if (checkValidInput(userEmail, userPassword)) {
                     login(userEmail, userPassword);
                 }
                 else {
-                    showUndoSnackbar(getString(R.string.login_no_input));
+                    showSnackbar(errorMessage);
                 }
             }
         });
@@ -78,16 +81,13 @@ public class LoginFragment extends Fragment {
     }
 
     private boolean checkPassword(String userPassword) {
-        return !userPassword.isEmpty();
-    }
-
-    private void test(String email, String password) {
-        Context context = mainActivity.getApplicationContext();
-        CharSequence text = "Login details: " + email + " | " + password;
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-
+        if(userPassword.isEmpty())
+            return false;
+        if(userPassword.length() < 6) {
+            errorMessage = getString(R.string.password_short);
+            return false;
+        }
+        return true;
     }
 
     private void login(String email, String password) {
@@ -97,7 +97,8 @@ public class LoginFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (!task.isSuccessful()) {
-                    showUndoSnackbar(getString(R.string.login_fail));
+                    errorMessage = getString(R.string.login_fail);
+                    showSnackbar(errorMessage);
                     mainActivity.getLoadingDialog().dismissLoadingDialog();
                 }
                 else {
@@ -110,7 +111,7 @@ public class LoginFragment extends Fragment {
 
     }
 
-    private void showUndoSnackbar(String message) {
+    private void showSnackbar(String message) {
         Snackbar snackbar = Snackbar.make(initiateLoginButton, message , Snackbar.LENGTH_LONG);
         snackbar.setActionTextColor(mainActivity.getResources().getColor(R.color.colorAccent));
         View v = snackbar.getView();

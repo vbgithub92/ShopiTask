@@ -68,8 +68,23 @@ class ShoppingItemDialog {
         amountAndTypeFormatted += type;
         amountAndType.setText(amountAndTypeFormatted);
 
-        // TODO Improve
-        itemPicture.setImageBitmap(StringToBitMap(theItem.getPic()));
+        // Picture
+        final String picString = theItem.getPic();
+        if (picString == null || picString.isEmpty()) {
+            itemPicture.setVisibility(View.GONE);
+        }
+
+        else {
+            itemPicture.setImageBitmap(StringToBitMap(picString));
+            itemPicture.setRotation(90);
+            itemPicture.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PictureDialog picDialog = new PictureDialog(activity,picString);
+                    picDialog.startPictureDialog();
+                }
+            });
+        }
 
         // Buttons
         closeButton.setOnClickListener(new View.OnClickListener() {

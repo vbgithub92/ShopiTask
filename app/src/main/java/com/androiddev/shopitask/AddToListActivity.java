@@ -35,6 +35,7 @@ import com.androiddev.shopitask.models.ShoppingList;
 import com.androiddev.shopitask.models.ToDoItem;
 import com.androiddev.shopitask.models.ToDoList;
 import com.androiddev.shopitask.models.UOM;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Objects;
@@ -51,9 +52,16 @@ import static com.androiddev.shopitask.MainActivity.getDateFromDatePicker;
 public class AddToListActivity extends AppCompatActivity {
 
     private static final String TAG = "AddToListActivity";
+    public static final String BUNDLE_KEY = "BUNDLE";
+    public static final String ADD_TO_GOOGLE = "ADD TO GOOGLE";
+    public static final String ITEM_KEY = "ITEM";
+
     private static final int REQUEST_CODE = 100;
     private List theList;
+
     Fragment addToListFragment;
+    Button addButton;
+
     String listName;
     String listType;
     boolean isPrivate;
@@ -70,6 +78,9 @@ public class AddToListActivity extends AppCompatActivity {
 
     List newList;
     MyUser myUser;
+
+    private boolean nextScreen = false;
+    private boolean addToGoogleCalendar = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,13 +124,13 @@ public class AddToListActivity extends AppCompatActivity {
 
     private void initCameraButton() {
         // Initialize Camera Button - Permission
-        ImageView cameraButton = (ImageView)findViewById(R.id.cameraButton);
+        ImageView cameraButton = (ImageView) findViewById(R.id.cameraButton);
 
-        if(ContextCompat.checkSelfPermission(AddToListActivity.this,
+        if (ContextCompat.checkSelfPermission(AddToListActivity.this,
                 Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(AddToListActivity.this, new String[] {
+            ActivityCompat.requestPermissions(AddToListActivity.this, new String[]{
                     Manifest.permission.CAMERA
-            },REQUEST_CODE);
+            }, REQUEST_CODE);
 
         }
 
@@ -143,11 +154,11 @@ public class AddToListActivity extends AppCompatActivity {
         }
     }
 
-    public String BitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos =new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b=baos.toByteArray();
-        String temp= Base64.encodeToString(b, Base64.DEFAULT);
+    public String BitMapToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String temp = Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
     }
 
@@ -171,87 +182,149 @@ public class AddToListActivity extends AppCompatActivity {
     }
 
     private void initAddButton() {
-        Button addButton = findViewById(R.id.listAddNewItem);
-
-       addButton.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               if (listId == null) {
-                   createNewList();
-               } else {
-                   addItemToList();
-               }
-           }
-       });
+        addButton = findViewById(R.id.listAddNewItem);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listId == null) {
+                    createNewList();
+                } else {
+                    addItemToList();
+                }
+            }
+        });
     }
 
     private void createNewList() {
+
+        ToDoItem toDoItem = null;
+
         switch (ListType.valueOf(listType)) {
             case SHOPPING:
-                itemName = ((EditText)findViewById(R.id.newItemName)).getText().toString();
-                qty = ((NumberPicker)findViewById(R.id.newItemAmount)).getValue();
-                int selectedUOMid = ((RadioGroup)findViewById(R.id.unitTypeGroup)).getCheckedRadioButtonId();
-                uom = UOM.valueOf(((RadioButton)findViewById(selectedUOMid)).getText().toString().toUpperCase());
-                //pic = null;
+                itemName = ((EditText) findViewById(R.id.newItemName)).getText().toString();
+                if (checkInput(itemName)) {
+                    nextScreen = true;
+                    qty = ((NumberPicker) findViewById(R.id.newItemAmount)).getValue();
+                    int selectedUOMid = ((RadioGroup) findViewById(R.id.unitTypeGroup)).getCheckedRadioButtonId();
+                    uom = UOM.valueOf(((RadioButton) findViewById(selectedUOMid)).getText().toString().toUpperCase());
 
-                ShoppingItem shoppingItem = new ShoppingItem(itemName, qty, uom, pic);
-                newList = new ShoppingList(myUser.getUser_id(), listName,null, isPrivate, shoppingItem);
-                myUser.getDbReference().child("MyLists").child(newList.getListId()).setValue(newList);
+                    ShoppingItem shoppingItem = new ShoppingItem(itemName, qty, uom, pic);
+                    newList = new ShoppingList(myUser.getUser_id(), listName, null, isPrivate, shoppingItem);
+                    myUser.getDbReference().child("MyLists").child(newList.getListId()).setValue(newList);
+                } else
+                    showSnackbar(getString(R.string.item_name_error));
+
                 break;
             case TODO:
-                itemName = ((EditText)findViewById(R.id.newTaskName)).getText().toString();
-                location = ((EditText)findViewById(R.id.newTaskLocation)).getText().toString();
-                date = getDateFromDatePicker((DatePicker)findViewById(R.id.newTaskDate));
-                //pic = null;
+                itemName = ((EditText) findViewById(R.id.newTaskName)).getText().toString();
+                if (checkInput(itemName)) {
+                    nextScreen = true;
+                    location = ((EditText) findViewById(R.id.newTaskLocation)).getText().toString();
+                    date = getDateFromDatePicker((DatePicker) findViewById(R.id.newTaskDate));
 
-                ToDoItem toDoItem = new ToDoItem(itemName, date, location, pic);
-                newList = new ToDoList(myUser.getUser_id(), listName,null, isPrivate, toDoItem);
-                myUser.getDbReference().child("MyLists").child(newList.getListId()).setValue(newList);
+                    // Calendar
+                    if (((AddToTaskListFragment) addToListFragment).getAddToGoogleCalendar()) {
+                        addToGoogleCalendar = true;
+                    }
+
+                    toDoItem = new ToDoItem(itemName, date, location, pic);
+                    newList = new ToDoList(myUser.getUser_id(), listName, null, isPrivate, toDoItem);
+                    myUser.getDbReference().child("MyLists").child(newList.getListId()).setValue(newList);
+                } else
+                    showSnackbar(getString(R.string.task_name_error));
+
                 break;
             default:
                 return;
         }
 
-        Intent intent = new Intent(this, TaskListsActivity.class);
-        startActivity(intent);
+        if (nextScreen) {
+            Intent intent = new Intent(this, ListDetailsActivity.class);
+            Bundle b = new Bundle();
+            b.putBoolean(ADD_TO_GOOGLE,addToGoogleCalendar);
+            intent.putExtra(BUNDLE_KEY,b);
+            if(addToGoogleCalendar)
+                intent.putExtra(ITEM_KEY,toDoItem);
+            intent.putExtra(LIST_KEY, newList);
+            startActivity(intent);
+        }
     }
 
     private void addItemToList() {
+
+        ToDoItem toDoItem = null; // For Calendar
+
         switch (ListType.valueOf(listType)) {
             case SHOPPING:
-                itemName = ((EditText)findViewById(R.id.newItemName)).getText().toString();
-                qty = ((NumberPicker)findViewById(R.id.newItemAmount)).getValue();
-                int selectedUOMid = ((RadioGroup)findViewById(R.id.unitTypeGroup)).getCheckedRadioButtonId();
-                uom = UOM.valueOf(((RadioButton)findViewById(selectedUOMid)).getText().toString().toUpperCase());
-                //pic = null;
-                ShoppingItem shoppingItem = new ShoppingItem(itemName, qty, uom, pic);
-                if(myUser.getUser_id().equals(listOwnerId)) {
-                    myUser.getDbReference().child("MyLists").child(listId).child("shoppingItems").child(Integer.toString(listSize)).setValue(shoppingItem);
-                } else {
-                    myUser.getGeneralDbReference().child(listOwnerId).child("MyLists").child(listId).child("shoppingItems").child(Integer.toString(listSize)).setValue(shoppingItem);
-                }
-                ((ShoppingList)theList).addShoppingItem(shoppingItem);
+                itemName = ((EditText) findViewById(R.id.newItemName)).getText().toString();
+                if (checkInput(itemName)) {
+                    nextScreen = true;
+                    qty = ((NumberPicker) findViewById(R.id.newItemAmount)).getValue();
+                    int selectedUOMid = ((RadioGroup) findViewById(R.id.unitTypeGroup)).getCheckedRadioButtonId();
+                    uom = UOM.valueOf(((RadioButton) findViewById(selectedUOMid)).getText().toString().toUpperCase());
+
+                    ShoppingItem shoppingItem = new ShoppingItem(itemName, qty, uom, pic);
+                    if (myUser.getUser_id().equals(listOwnerId)) {
+                        myUser.getDbReference().child("MyLists").child(listId).child("shoppingItems").child(Integer.toString(listSize)).setValue(shoppingItem);
+                    } else {
+                        myUser.getGeneralDbReference().child(listOwnerId).child("MyLists").child(listId).child("shoppingItems").child(Integer.toString(listSize)).setValue(shoppingItem);
+                    }
+                    ((ShoppingList) theList).addShoppingItem(shoppingItem);
+                } else
+                    showSnackbar(getString(R.string.item_name_error));
+
+
                 break;
             case TODO:
-                itemName = ((EditText)findViewById(R.id.newTaskName)).getText().toString();
-                location = ((EditText)findViewById(R.id.newTaskLocation)).getText().toString();
-                date = getDateFromDatePicker((DatePicker)findViewById(R.id.newTaskDate));
-                //pic = null;
-                ToDoItem toDoItem = new ToDoItem(itemName, date, location, pic);
-                if(myUser.getUser_id().equals(listOwnerId)) {
-                    myUser.getDbReference().child("MyLists").child(listId).child("toDoItems").child(Integer.toString(listSize)).setValue(toDoItem);
-                } else {
-                    myUser.getGeneralDbReference().child(listOwnerId).child("MyLists").child(listId).child("toDoItems").child(Integer.toString(listSize)).setValue(toDoItem);
-                }
-                ((ToDoList)theList).addToDoItem(toDoItem);
+                itemName = ((EditText) findViewById(R.id.newTaskName)).getText().toString();
+                if (checkInput(itemName)) {
+                    nextScreen = true;
+                    location = ((EditText) findViewById(R.id.newTaskLocation)).getText().toString();
+                    date = getDateFromDatePicker((DatePicker) findViewById(R.id.newTaskDate));
+
+                    // Calendar
+                    if (((AddToTaskListFragment) addToListFragment).getAddToGoogleCalendar()) {
+                        addToGoogleCalendar = true;
+                    }
+
+                    toDoItem = new ToDoItem(itemName, date, location, pic);
+                    if (myUser.getUser_id().equals(listOwnerId)) {
+                        myUser.getDbReference().child("MyLists").child(listId).child("toDoItems").child(Integer.toString(listSize)).setValue(toDoItem);
+                    } else {
+                        myUser.getGeneralDbReference().child(listOwnerId).child("MyLists").child(listId).child("toDoItems").child(Integer.toString(listSize)).setValue(toDoItem);
+                    }
+                    ((ToDoList) theList).addToDoItem(toDoItem);
+
+                } else
+                    showSnackbar(getString(R.string.task_name_error));
                 break;
             default:
                 return;
         }
 
-        Intent intent = new Intent(this, ListDetailsActivity.class);
-        intent.putExtra(LIST_KEY, theList);
-        startActivity(intent);
+        if (nextScreen) {
+            Intent intent = new Intent(this, ListDetailsActivity.class);
+            Bundle b = new Bundle();
+            b.putBoolean(ADD_TO_GOOGLE,addToGoogleCalendar);
+            intent.putExtra(BUNDLE_KEY,b);
+            if(addToGoogleCalendar)
+                intent.putExtra(ITEM_KEY,toDoItem);
+            intent.putExtra(LIST_KEY, theList);
+            startActivity(intent);
+        }
+    }
+
+    private boolean checkInput(String input) {
+        return input != null && !input.isEmpty();
+    }
+
+    private void showSnackbar(String message) {
+        Snackbar snackbar = Snackbar.make(addButton, message, Snackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(this.getResources().getColor(R.color.colorAccent));
+        View v = snackbar.getView();
+        TextView tv = (TextView) v.findViewById(com.google.android.material.R.id.snackbar_text);
+        tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        snackbar.show();
     }
 
 }

@@ -56,7 +56,6 @@
     <string name="sign_up_no_input">Please enter a name an email and a password</string>
     <string name="sign_up_fail">Unable to sign up. Try again?</string>
 
-
     <!-- Add to shopping list-->
     <string name="add_to_shopping_prompt">What are we adding?</string>
     <string name="add_to_shopping_prompt_hint">Enter the item name here</string>
@@ -72,7 +71,6 @@
     <string name="where_hint">Enter a location here</string>
     <string name="when">When?</string>
     <string name="add_to_calendar_prompt">Add to Google Calendar?</string>
-
 
     <string name="add_picture">Add a picture?</string>
 
@@ -99,5 +97,10 @@
     <!--SnackBars-->
     <string name="undo_delete_prompt">The list was deleted</string>
     <string name="undo">Undo</string>
+    <string name="item_name_error">Item name can not be empty</string>
+    <string name="task_name_error">Task name can not be empty</string>
+    <string name="share_success">Shared list with: </string>
+    <string name="password_short">Password length should be at least 6</string>
+    <string name="username_empty">You must choose a username!</string>
 
 </resources>

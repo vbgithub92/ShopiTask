@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -81,8 +82,9 @@ class ToDoItemDialog {
                 }
             });
         } else {
-            taskLocation.setVisibility(View.GONE);
-            navigationButton.setVisibility(View.GONE);
+            LinearLayout navigationBar =view.findViewById(R.id.navigationBar);
+            navigationBar.setVisibility(View.GONE);
+            view.findViewById(R.id.space1).setVisibility(View.GONE);
         }
 
         // Task Date
@@ -94,8 +96,25 @@ class ToDoItemDialog {
         } else
             taskDate.setVisibility(View.GONE);
 
-        // TODO Pic
-        taskPicture.setImageBitmap(StringToBitMap(theItem.getPic()));
+        // Picture
+        final String picString = theItem.getPic();
+        if (picString == null || picString.isEmpty()) {
+            taskPicture.setVisibility(View.GONE);
+            view.findViewById(R.id.space2).setVisibility(View.GONE);
+        }
+
+        else {
+            taskPicture.setImageBitmap(StringToBitMap(picString));
+            taskPicture.setRotation(90);
+            taskPicture.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PictureDialog picDialog = new PictureDialog(activity,picString);
+                    picDialog.startPictureDialog();
+                }
+            });
+        }
+
 
         // Buttons
         closeButton.setOnClickListener(new View.OnClickListener() {
@@ -107,10 +126,11 @@ class ToDoItemDialog {
         itsDoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myUser.deleteItem(toDoList ,theItem);
+                myUser.deleteItem(toDoList, theItem);
                 toDoList.removeItem(theItem);
                 listAdapter.notifyItemRemoved(position);
                 dialog.dismiss();
+                ((ListDetailsActivity)activity).updateViews();
             }
         });
 
@@ -119,12 +139,12 @@ class ToDoItemDialog {
         dialog.show();
     }
 
-    public Bitmap StringToBitMap(String encodedString){
+    public Bitmap StringToBitMap(String encodedString) {
         try {
-            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
             return bitmap;
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.getMessage();
             return null;
         }
