@@ -52,12 +52,6 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
 
     private Button buttonShareList;
 
-
-    // Dialog
-    private EditText editTextTargetEmail;
-    private Button shareButton;
-    private Button closeButton;
-
     private RecyclerView recyclerView;
     private RecyclerView.Adapter listAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -109,7 +103,6 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
 
         initRecyclerView();
         updateViews();
-
     }
 
     public void updateViews() {
@@ -223,7 +216,6 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
         } else {
             buttonShareList.setVisibility(View.INVISIBLE);
         }
-
     }
 
     public void addToGoogleCalendar(ToDoItem task) {
