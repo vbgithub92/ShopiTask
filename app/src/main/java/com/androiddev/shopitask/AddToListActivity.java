@@ -185,7 +185,6 @@ public class AddToListActivity extends AppCompatActivity {
 
     private void setFragment(Fragment fragmentToSet) {
         getSupportFragmentManager().beginTransaction().replace(R.id.addToListFrame, fragmentToSet).commit();
-        // TODO Change
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

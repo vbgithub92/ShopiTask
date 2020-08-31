@@ -52,9 +52,7 @@ public class MyUser {
         });
     }
 
-
     public void initListsAndUpdateAdapter(final MyListAdapter myListAdapter, final TaskListsActivity activity) {
-        // START
         this.dbReference.child("MyLists").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -147,7 +145,6 @@ public class MyUser {
     }
 
     private void initMyLists(@NonNull DataSnapshot dataSnapshot, MyListAdapter myListAdapter, TaskListsActivity activity) {
-        Log.d(TAG, "initMyLists: Im here");
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
             switch (ListType.valueOf(ds.child("listType").getValue(String.class))) {
                 case SHOPPING:
@@ -171,7 +168,6 @@ public class MyUser {
     }
 
     private void initContributionsLists(@NonNull DataSnapshot dataSnapshot, final MyListAdapter myListAdapter, final TaskListsActivity activity) {
-        Log.d(TAG, "initContributionsLists: Im here");
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
             String listId = ds.getKey();
             String userId = ds.getValue(String.class);
@@ -207,11 +203,9 @@ public class MyUser {
         }
     }
 
-
     public void addUserToList(final String email, final List theList, final ListDetailsActivity activity) {
         final String listId = theList.getListId();
         final String ownerId = theList.getOwnerId();
-
         this.generalDbReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

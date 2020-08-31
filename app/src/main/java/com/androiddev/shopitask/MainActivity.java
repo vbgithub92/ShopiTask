@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
     final static String LIST_SIZE_KEY = "LIST_SIZE_KEY";
     final static String LIST_KEY = "Selected List";
 
-    private ImageView logo;
-
     private Fragment currentFragment;
     private MainFragment mainFragment;
     private SignUpFragment signUpFragment;
@@ -54,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         mainFragment = new MainFragment();
         currentFragment = mainFragment;
         changeFragment(currentFragment);
-
     }
 
 
