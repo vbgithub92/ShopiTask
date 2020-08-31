@@ -147,7 +147,7 @@ class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
     }
 
     private void showUndoSnackbar() {
-        Snackbar snackbar = Snackbar.make(((TaskListsActivity) context).findViewById(R.id.my_recycler_view), R.string.undo_delete_prompt, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(((TaskListsActivity) context).findViewById(R.id.my_recycler_view), R.string.undo_delete_prompt, Snackbar.LENGTH_SHORT);
         snackbar.setAction(R.string.undo, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,13 +159,11 @@ class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
             @Override
             public void onDismissed(Snackbar transientBottomBar, int event) {
                 super.onDismissed(transientBottomBar, event);
-                // TODO Magic Very Big
                 if (!undo)
                     myUser.deleteList(deletedList);
                 undo = false;
             }
         });
-
 
         snackbar.setActionTextColor(context.getResources().getColor(R.color.colorAccent));
         snackbar.show();

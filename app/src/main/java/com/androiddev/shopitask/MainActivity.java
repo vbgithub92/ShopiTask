@@ -7,7 +7,6 @@ import android.os.Vibrator;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,6 +17,7 @@ import com.androiddev.shopitask.fragments.MainFragment;
 import com.androiddev.shopitask.fragments.SignUpFragment;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private LoginFragment loginFragment;
     private LoadingDialog loadingDialog;
 
-    private boolean isAnimating;
-
     private Vibrator vibe;
 
     @Override
@@ -51,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
         loadingDialog = new LoadingDialog(this);
 
         vibe = (Vibrator) MainActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
-
-        isAnimating = false;
 
         // Fragments
         mainFragment = new MainFragment();
@@ -76,52 +72,11 @@ public class MainActivity extends AppCompatActivity {
         changeFragment(currentFragment);
     }
 
-
-    public void nextScreen(View view) {
-
-        Intent intent = new Intent(this, TaskListsActivity.class);
-        Bundle b = new Bundle();
-        intent.putExtra(BUNDLE_KEY, b);
-
-        startActivity(intent);
-    }
-
-
     public void changeFragment(Fragment currentFragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.mainActivityBottomFrame, currentFragment).commit();
     }
 
-    private void testIfWorks() {
-        Context context = getApplicationContext();
-        CharSequence text = "THIS WORKS!!!!!!!";
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-    }
-
-    public void animateLogo(View view) {
-
-    /*    if (!isAnimating) {
-            isAnimating = true;
-            logo = findViewById(R.id.logo);
-            final Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),
-                    R.anim.animation_logo);
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-
-                @Override
-                public void run() {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            logo.startAnimation(animation);
-                        }
-                    });
-                }
-            }, 0, 2000); // Run animation every 2 sec
-        }*/
-
-        //Intent intent = new Intent(this, ListDetailsActivity.class);
+    public void cheatMode(View view) {
         Intent intent = new Intent(this, TaskListsActivity.class);
         startActivity(intent);
     }
@@ -141,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         // Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
     }
 
     public static long getDateFromDatePicker(DatePicker datePicker){

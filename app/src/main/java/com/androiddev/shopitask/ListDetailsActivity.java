@@ -2,6 +2,7 @@ package com.androiddev.shopitask;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.androiddev.shopitask.models.List;
 import com.androiddev.shopitask.models.MyUser;
 import com.androiddev.shopitask.models.ShoppingList;
+import com.androiddev.shopitask.models.ToDoItem;
 import com.androiddev.shopitask.models.ToDoList;
 
 import java.util.Objects;
@@ -66,6 +68,18 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
 
         createToolbar();
         initializeViews();
+
+        Intent intent = getIntent();
+        Bundle b = ((Intent)intent).getBundleExtra(AddToListActivity.BUNDLE_KEY);
+
+        // Calendar
+        if(b != null) {
+            boolean addToGoogle = b.getBoolean(AddToListActivity.ADD_TO_GOOGLE);
+            if(addToGoogle) {
+                ToDoItem toDoItem = (ToDoItem) intent.getSerializableExtra(AddToListActivity.ITEM_KEY);
+                addToGoogleCalendar(toDoItem);
+            }
+        }
     }
 
     @Override
@@ -89,6 +103,7 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
 
         initRecyclerView();
         updateViews();
+
     }
 
     public void updateViews() {
@@ -200,5 +215,17 @@ public class ListDetailsActivity extends AppCompatActivity implements ShoppingLi
             buttonShareList.setVisibility(View.INVISIBLE);
         }
 
+    }
+
+    public void addToGoogleCalendar(ToDoItem task) {
+        Intent insertCalendarIntent = new Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.Events.TITLE, task.getActivityName())
+                .putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, task.getDate())
+                .putExtra(CalendarContract.Events.EVENT_LOCATION, task.getLocation())
+                .putExtra(CalendarContract.Events.ACCESS_LEVEL, CalendarContract.Events.ACCESS_PRIVATE)
+                .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_FREE);
+        startActivity(insertCalendarIntent);
     }
 }

@@ -11,7 +11,6 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,8 +33,7 @@ public class AddToTaskListFragment extends Fragment {
 
     private String newTaskName;
     private String newTaskLocation;
-    private Date newTaskDate; // Not sure
-    // private Picture or something
+    private Date newTaskDate;
     private boolean addToGoogleCalendar = false;
 
     private Vibrator vibe;
@@ -109,13 +107,9 @@ public class AddToTaskListFragment extends Fragment {
         return textToCheck != null && !textToCheck.isEmpty();
     }
 
-    /* ********************* DEV ********************* */
-    public void testIfWorks(String newTaskName, String newTaskLocation) {
-        Context context = Objects.requireNonNull(getActivity()).getApplicationContext();
-        CharSequence text = newTaskName + " | " + newTaskLocation;
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+    public boolean getAddToGoogleCalendar() {
+        return addToGoogleCalendar;
     }
+
 
 }

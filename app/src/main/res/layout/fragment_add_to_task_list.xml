@@ -110,7 +110,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.75"
                 android:layout_gravity="end"
-                android:src="@drawable/camera" />
+                android:src="@drawable/ic_baseline_camera_black" />
         </LinearLayout>
 
         <LinearLayout
@@ -137,7 +137,7 @@
                 android:layout_weight="0.75"
                 android:gravity="end|center"
                 android:layoutDirection="rtl"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="30dp"
                 />
         </LinearLayout>
     </LinearLayout>

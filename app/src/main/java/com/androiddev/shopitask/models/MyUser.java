@@ -52,6 +52,7 @@ public class MyUser {
         });
     }
 
+
     public void initListsAndUpdateAdapter(final MyListAdapter myListAdapter, final TaskListsActivity activity) {
         // START
         this.dbReference.child("MyLists").addValueEventListener(new ValueEventListener() {

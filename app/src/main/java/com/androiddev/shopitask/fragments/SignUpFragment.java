@@ -36,6 +36,8 @@ public class SignUpFragment extends Fragment {
 
     private FirebaseAuth mAut;
 
+    String errorMessage = "";
+
     public SignUpFragment() {
         // Required empty public constructor
     }
@@ -64,11 +66,13 @@ public class SignUpFragment extends Fragment {
                 String userEmail = editTextUserEmail.getText().toString();
                 String userPassword = editTextUserPassword.getText().toString();
 
+                errorMessage = getString(R.string.sign_up_no_input);
+
                 if(checkValidInput(userName,userEmail,userPassword)) {
                   SignUp(userName, userEmail,userPassword);
                 }
                 else {
-                    showUndoSnackbar(getString(R.string.sign_up_no_input));
+                    showSnackbar(errorMessage);
                 }
 
             }
@@ -80,7 +84,11 @@ public class SignUpFragment extends Fragment {
     }
 
     private boolean checkName(String userName) {
-        return !userName.isEmpty();
+        if(userName.isEmpty()){
+            errorMessage = getString(R.string.username_empty);
+            return false;
+        }
+        return true;
     }
 
     private boolean checkEmail(String userEmail) {
@@ -88,7 +96,13 @@ public class SignUpFragment extends Fragment {
     }
 
     private boolean checkPassword(String userPassword) {
-        return !userPassword.isEmpty();
+        if(userPassword.isEmpty())
+            return false;
+        if(userPassword.length() < 6) {
+            errorMessage = getString(R.string.password_short);
+            return false;
+        }
+        return true;
     }
 
     private void SignUp(final String name, final String email, final String password){
@@ -98,7 +112,7 @@ public class SignUpFragment extends Fragment {
            @Override
            public void onComplete(@NonNull Task<AuthResult> task) {
                if (!task.isSuccessful()) {
-                   showUndoSnackbar(getString(R.string.sign_up_fail));
+                   showSnackbar(getString(R.string.sign_up_fail));
                    mainActivity.getLoadingDialog().dismissLoadingDialog();
                } else {
                    FirebaseUser user = mAut.getCurrentUser();
@@ -110,7 +124,7 @@ public class SignUpFragment extends Fragment {
                        @Override
                        public void onComplete(@NonNull Task<AuthResult> task) {
                            if (!task.isSuccessful()) {
-                               showUndoSnackbar(getString(R.string.login_fail));
+                               showSnackbar(getString(R.string.login_fail));
                            }
                            else {
                                mainActivity.getLoadingDialog().dismissLoadingDialog();
@@ -124,7 +138,7 @@ public class SignUpFragment extends Fragment {
        });
     }
 
-    private void showUndoSnackbar(String message) {
+    private void showSnackbar(String message) {
         Snackbar snackbar = Snackbar.make(initiateSignUpButton, message , Snackbar.LENGTH_LONG);
         snackbar.setActionTextColor(mainActivity.getResources().getColor(R.color.colorAccent));
         View v = snackbar.getView();

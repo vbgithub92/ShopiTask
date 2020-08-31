@@ -2,17 +2,17 @@ package com.androiddev.shopitask;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.androiddev.shopitask.models.List;
 import com.androiddev.shopitask.models.MyUser;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
 
@@ -53,12 +53,9 @@ class ShareListDialog {
                     myUser.addUserToList(targetEmail, theList,(ListDetailsActivity)activity);
                     dialog.dismiss();
                     ((ListDetailsActivity)activity).updateViews();
+                    showSnackbar(activity.getString(R.string.share_success) + targetEmail);
                 } else {
-                    Context context = activity.getApplicationContext();
-                    CharSequence text = activity.getString(R.string.share_error);
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
+                    showSnackbar(activity.getString(R.string.share_error));
                 }
             }
         });
@@ -74,6 +71,15 @@ class ShareListDialog {
         dialog = builder.create();
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
+    }
+
+    private void showSnackbar(String message) {
+        Snackbar snackbar = Snackbar.make(shareButton, message , Snackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(activity.getResources().getColor(R.color.colorAccent));
+        View v = snackbar.getView();
+        TextView tv = (TextView) v.findViewById(com.google.android.material.R.id.snackbar_text);
+        tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        snackbar.show();
     }
 
 }

@@ -75,10 +75,15 @@ class ToDoListItemAdapter extends RecyclerView.Adapter<ToDoListItemAdapter.MyVie
 
         // Navigation
         int navIconSrc = 0;
-        if(toDoItem.getLocation() != null)
+        String location = toDoItem.getLocation();
+        if(location != null && !location.isEmpty())
             navIconSrc = R.drawable.navigation;
         holder.navigationIcon.setImageResource(navIconSrc);
 
+        // Pic
+        String picString = toDoItem.getPic();
+        if(picString == null || picString.isEmpty())
+            holder.taskPhoto.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -88,5 +93,6 @@ class ToDoListItemAdapter extends RecyclerView.Adapter<ToDoListItemAdapter.MyVie
         else
             return 0;
     }
+
 
 }

@@ -85,9 +85,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:fontFamily="casual"
-                android:gravity="center"
                 android:text="@string/items"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/radioButtonKilos"
@@ -96,9 +95,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:fontFamily="casual"
-                android:gravity="center"
                 android:text="@string/kg"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/radioButtonLiters"
@@ -107,9 +105,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:fontFamily="casual"
-                android:gravity="center"
                 android:text="@string/liters"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/radioButtonPacks"
@@ -118,9 +115,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:fontFamily="casual"
-                android:gravity="center"
                 android:text="@string/packs"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
         </RadioGroup>
 
@@ -151,7 +147,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.75"
-                android:src="@drawable/camera" />
+                android:src="@drawable/ic_baseline_camera_black" />
         </LinearLayout>
     </LinearLayout>
 
