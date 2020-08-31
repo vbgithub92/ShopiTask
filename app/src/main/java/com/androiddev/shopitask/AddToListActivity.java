@@ -280,9 +280,6 @@ public class AddToListActivity extends AppCompatActivity {
                                 if (ds.hasChild("shoppingItems")) {
                                     ref.child("shoppingItems").child(Integer.toString(listSize)).setValue(shoppingItem);
                                 }
-                                else {
-                                    //Toast.makeText(, "TEST!!!!!1", Toast.LENGTH_LONG).show();
-                                }
                             }
 
                             @Override

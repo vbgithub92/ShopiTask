@@ -302,10 +302,29 @@ public class MyUser {
     }
 
     public void deleteList(List theList) {
-        if (theList.getOwnerId().equals(this.user_id)) {
+        final String myId = this.user_id;
+        if (theList.getOwnerId().equals(myId)) {
             this.getDbReference().child("MyLists").child(theList.getListId()).removeValue();
         } else {
             this.getDbReference().child("Contributions").child(theList.getListId()).removeValue();
+            this.getGeneralDbReference().child(theList.getOwnerId()).child("MyLists").child("contributors").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String id = "";
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        id = ds.getValue(String.class);
+                        if (id != null && id.equals(myId)) {
+                            ds.getRef().removeValue();
+                            break;
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.e(TAG, "onCancelled", databaseError.toException());
+                }
+            });
         }
     }
 
