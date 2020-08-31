@@ -123,6 +123,7 @@ public class TaskListsActivity extends AppCompatActivity implements ListAdapter.
 
     @Override
     public void onListClick(int position) {
+        vibe.vibrate(80);
         List selectedList = listAdapter.getLists(position);// tasksList.get(position);
         Intent intent = new Intent(this, ListDetailsActivity.class);
         intent.putExtra(LIST_KEY, selectedList);
